@@ -1,0 +1,88 @@
+/*---------------------tables---------------------*/
+table{
+    margin: auto;
+    border-collapse: collapse;
+}
+
+thead{
+    position: sticky;
+    top:0;
+}/*to leave titles fixed*/ 
+
+.divTable{
+    overflow-y: auto;
+    width: fit-content;
+    margin: auto;
+}
+
+.thCss{
+    text-align: center;
+    background-color: black;
+    color: var(--color1);
+    padding: 4px;
+    font-weight: lighter;
+    height: 1.5rem;
+}
+
+.thxs{
+    width: 50px;
+}
+
+.thm{
+    width: 180px;
+}
+
+.thl{
+    width: 220px;
+}
+
+
+.thLeftBorder{
+    border-top-left-radius: 15px;
+}/*Add radius to left top border*/
+
+.thRightBorder{
+border-top-right-radius: 15px;
+}/*Add radius to right top border*/
+
+.thInfo{
+    font-size: 12px;
+    position: absolute;
+    display: none;
+    text-align: center;
+}
+
+/*------Tbody------*/
+.tBody1{
+    font-weight: lighter;
+    padding: 9px 0px;
+    font-size: 13px;
+}
+
+.tBody2{
+    font-weight: lighter;
+    padding: 2px 0px;
+    font-size: 13px;
+}
+
+.tBodyEven{
+    background-color: white;
+}/*background when row number is even*/
+
+.tBodyOdd{
+    background-color: var(--color1);
+}/*background when row number is odd*/
+
+.allowedIcon{
+    cursor: pointer;
+}
+
+.notAllowedIcon{
+    color: rgb(159, 157, 157);
+}
+
+/*SPECIFIC*/
+#usersTable{
+    max-height: 380px; /*to avoid overflow, it depends on the website landscape*/
+}
+

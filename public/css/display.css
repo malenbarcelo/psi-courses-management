@@ -1,0 +1,21 @@
+/*----------------header----------------*/
+.header{
+    height: 18vh;
+}
+
+/*----------------main title----------------*/
+.mainTitle{
+    height: 10vh;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.mainFilters{
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

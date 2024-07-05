@@ -1,0 +1,136 @@
+/*---------------------Colors---------------------*/
+:root{
+    --color1:#dfdbdb;
+    --color2:#FF6501;
+    --color3:#575656;    
+    --errorColor:rgb(221, 7, 7);
+}
+
+/*---------------------font family---------------------*/
+body{
+    font-family: 'Roboto', sans-serif;
+    overflow: auto;
+    margin: 0px;
+    font-size: 14px;
+}
+
+/*-----------------------------Refs-----------------------------*/
+a{
+    text-decoration: none;
+    color:black
+}
+
+/*-----------------------------uls-----------------------------*/
+ul {
+    list-style-type: none; 
+    padding: 0; 
+}
+
+/*-----------------------------icons-----------------------------*/
+.icon{
+    cursor: pointer;
+}
+
+.unfilterIcon{
+    cursor: pointer;
+    font-size: 17px;
+}
+
+
+/*---------------------margins---------------------*/
+.ma{
+    margin:auto
+}
+
+.mts{
+    margin-top: 5px;
+}
+.mbs{
+    margin-bottom: 5px;
+}
+.mtm{
+    margin-top: 15px;
+}
+.mbm{
+    margin-bottom: 15px;
+}
+.mtl{
+    margin-top: 30px;
+}
+.mbl{
+    margin-bottom: 30px;
+}
+.mtxl{
+    margin-top: 50px;
+}
+.mbxl{
+    margin-bottom: 50px;
+}
+
+.mbxxl{
+    margin-bottom: 80px;
+}
+
+/*---------------------loader---------------------*/
+.loader {
+    border: 10px solid var(--color1);
+    border-radius: 50%;
+    border-top: 10px solid black;
+    width: 40px;
+    height: 40px;
+    animation: spin 3s linear infinite;
+    /*display: none;*/
+    position: absolute;
+    top: 55%;
+    
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#usersLoader{
+    left: calc(50vw - 20px);
+}
+
+/*---------------------predicted items---------------------*/
+.predictedElements{
+    display: none;
+    position: absolute;
+    top:60%;
+    width: 99%;
+    border: black solid 1px;
+    background-color: white;
+    z-index: 1;
+    max-height: 400px;
+    overflow-y: auto;
+    text-align: center;
+}
+.liPredictedElements{
+    font-size: 12px;
+    padding: 5px 0px 5px 3px;
+    cursor: pointer;
+}
+.predictedElementFocused{
+    background-color:var(--color1);
+}
+
+/*---------------------errors---------------------*/
+.divError{
+    color: var(--errorColor);
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2px;
+    display: none;
+}
+
+.invalidInput{
+    border: var(--errorColor) solid 2px !important;
+}
+
+.invalidLabel{
+    color: var(--errorColor);
+    font-weight: bold;
+}

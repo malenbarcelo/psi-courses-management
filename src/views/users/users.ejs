@@ -1,0 +1,102 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<div class="mainTitle">USUARIOS</div>
+
+<!------GENERAL ACTIONS------>
+<div class="divDGAs" id="DGAsCreateUser">
+    <div class="divDGA">
+        <i class="fa-solid fa-plus"></i>
+        <div class="DGAinfo">
+            Crear usuario
+        </div>        
+    </div>
+</div>
+
+<!------MAIN FILTERS------>
+<div class="mainFilters">
+    <div class="divInputsRow">            
+        <div class="divInput">
+            <label class="label1">Institución</label>
+            <select class="input1 sl" id="filterCompany">
+                <option value="">Todas las instituciones</option>
+                <% companies.forEach(company => { %>
+                    <option value="<%= company.id %>">
+                        <%= company.company_name %>
+                    </option>
+                <% }) %>
+            </select>
+        </div>
+    </div>    
+</div>
+
+<div class="mainFilters mtm mbm">
+    <div class="divInputsRow">
+        <div class="divInput">
+            <label class="label2">Apellido</label>
+            <input type="text" class="input1 im" id="filterLastName">
+            <ul class="predictedElements" id="filterLastNameUl"></ul>            
+        </div>            
+        <div class="divInput">
+            <label class="label2">Nombre</label>
+            <input type="text" class="input1 im" id="filterFirstName">
+            <ul class="predictedElements" id="filterFirstNameUl"></ul>            
+        </div>
+        <div class="divInput">
+            <label class="label2">Email</label>
+            <input type="text" class="input1 im" id="filterEmail">
+            <ul class="predictedElements" id="filterEmailUl"></ul>                   
+        </div>
+        <div class="divInput">
+            <label class="label2">Perfil</label>
+            <select class="input1 sm" id="filterCategory">
+                <option value=""></option>
+                <% usersCategories.forEach(category => { %>
+                    <option value="<%= category.id %>">
+                        <%= category.user_category %>
+                    </option>
+                <% }) %>
+            </select>            
+        </div>
+        <div class="unfilterIcon" id="unfilterUsers">
+            <i class="fa-solid fa-filter-circle-xmark"></i>
+        </div>
+    </div>
+</div>
+
+<!------MAIN CONTENT------>
+<div class="divTable" id="usersTable">
+
+    <div class="thInfo" id="euppInfo">Editar usuario</div>
+    <div class="thInfo" id="rpppInfo">Restablecer contraseña</div>
+    <div class="thInfo" id="duppInfo">Baja usuario</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="thCss thl thLeftBorder">Apellido</th>
+                <th class="thCss thl">Nombre</th>
+                <th class="thCss thl">Email</th>
+                <th class="thCss thl">Empresa</th>
+                <th class="thCss thm">Perfil</th>
+                <th class="thCss thxs">
+                    <i class="fa-regular fa-pen-to-square icon" id="euppIcon"></i>
+                </th>
+                <th class="thCss thxs">
+                    <i class="fa-solid fa-unlock-keyhole icon" id="rpppIcon"></i>
+                </th>
+                <th class="thCss thxs thRightBorder">
+                    <i class="fa-solid fa-ban icon" id="duppIcon"></i>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="bodyUsers"></tbody>
+    </table>
+</div>
+
+
+<!----------LOADER---------->
+<div class="loader" id="usersLoader"></div>
+<%- include('./usersConfirmPopups') %>
+<%- include('./usersEditPopup') %>
+<script type="module" src="/js/users/users.js"></script>

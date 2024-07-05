@@ -1,0 +1,95 @@
+/*----------GENERAL----------*/
+input, select, textarea{
+    outline:none
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}/*Hide arrows from input type number*/
+
+input[type="checkbox"]:checked {
+    accent-color: black
+}
+
+input[type="radio"]:checked {
+accent-color: black
+}
+
+/*----------DIV INPUTS----------*/
+.divInputsRow{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 15px;
+    position: relative;
+}
+
+.divInputsColumn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/*----------INPUTS ADN LABELS----------*/
+.divInput{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.input1{
+    text-align: center;
+    border:black solid 1px;
+}
+
+.enabledInput{
+    color:grey
+}
+
+.label1{
+    position: absolute;
+    left: 8px;
+    top: -8px;
+    padding: 0px 5px;
+    font-weight: bold;
+    background-color: white;
+}
+
+.label2{
+    position: absolute;
+    left: 8px;
+    top: -8px;
+    padding: 0px 5px;
+    font-size: 13px;
+    background-color: white;
+}
+
+/*----------INPUTS AND SELECTS SIZES----------*/
+
+.im{
+    width: 200px;
+    padding: 7px 0px 4px 0px;
+}
+
+.sm{
+    width: 200px;
+    padding: 6px 0px 3px 0px;
+}
+
+.il{
+    width: 250px;
+    padding: 8px 0px 6px 0px;
+}
+
+.sl{
+    width: 250px;
+    padding: 8px 0px 6px 0px;
+}
+
+.ixl{
+    width: 300px;
+    padding: 12px 0px 10px 0px;
+}

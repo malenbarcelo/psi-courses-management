@@ -1,0 +1,55 @@
+<!----------Edit user popup---------->
+<div class="popup" id="eupp">
+    
+    <div class="popupContent" id="euppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-pen-to-square"></i></div>
+            <div class="popupClose1" id="euppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1" id="euppTitle">EDITAR USUARIO</div>       
+        
+        <div class="divInputsColumn mtl mbl">
+            <div class="divInput">
+                <label class="label2">Empresa</label>
+                <input type="text" class="input1 il enabledInput" id="userCompany" readonly>
+            </div>
+            <div class="divInput mtm">
+                <label class="label2">Perfil</label>
+                <select class="input1 sl" id="userCategory">
+                </select>
+            </div>
+            <div class="divInput mtm">
+                <label class="label2" id="userLastNameLabel">Apellido</label>
+                <input type="text" class="input1 il" id="userLastName">
+                <div class="divError" id="userLastNameError">Debe completar el apellido</div>
+            </div>
+            <div class="divInput mtm">
+                <label class="label2" id="userFirstNameLabel">Nombre</label>
+                <input type="text" class="input1 il" id="userFirstName">
+                <div class="divError" id="userFirstNameError">Debe completar el nombre</div>
+            </div>            
+            <div class="divInput mtm">
+                <label class="label2">Email</label>
+                <input type="text" class="input1 il enabledInput" id="userEmail" readonly>
+            </div>
+            
+
+        </div>
+
+        <div class="divButtonsRow mbs">
+            <div id="euppAccept" class="button1 bs">Aceptar</div>
+            <div id="euppCancel" class="button1 bs">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<div class="okPopup" id="euppOk">    
+    <div class="okContent" id="euppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Usuario creado con éxito</div>
+        </div>
+    </div>
+</div>

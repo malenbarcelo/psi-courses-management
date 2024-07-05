@@ -1,0 +1,45 @@
+/*-----------------------------general actions-----------------------------*/
+.divDGAs{
+    display: flex;
+    column-gap: 20px;
+    position: absolute;    
+}
+
+.divDGA{
+    border: black solid 3px;
+    font-size: 30px;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.divDGA:hover{
+    color:var(--color2);
+    border: var(--color2) solid 3px;
+}
+
+.DGAinfo{
+    display: none;
+    padding: 2px 5px;
+    position: absolute;
+    font-size: 13px;
+    border-radius: 3px;
+    top:-25px;
+    text-align: center;
+    width: 120px;
+    color: var(--color2);
+    font-weight: bold;
+}
+
+.divDGA:hover .DGAinfo{
+    display: block;
+}
+
+#DGAsCreateUser{
+    top: 23%;
+    right: 8%;
+}
