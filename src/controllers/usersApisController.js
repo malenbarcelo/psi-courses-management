@@ -28,6 +28,20 @@ const usersApisController = {
       return res.send('Ha ocurrido un error')
     }
   },
+  createCompanyProcess: async(req,res) =>{
+    try{
+
+      const companyName = req.body.company_name
+
+      await companiesQueries.createCompany(companyName)
+
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
   usersCategories: async(req,res) =>{
     try{
 

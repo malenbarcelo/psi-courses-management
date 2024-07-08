@@ -1,13 +1,12 @@
 /*-----------------------------general actions-----------------------------*/
 .divDGAs{
     display: flex;
-    column-gap: 20px;
+    column-gap: 10px;
     position: absolute;    
 }
 
 .divDGA{
-    border: black solid 3px;
-    font-size: 30px;
+    border: #000000 solid 3px;    
     height: 50px;
     width: 50px;
     display: flex;
@@ -15,6 +14,10 @@
     align-items: center;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.divDGAm{
+    font-size: 25px;
 }
 
 .divDGA:hover{
@@ -30,7 +33,7 @@
     border-radius: 3px;
     top:-25px;
     text-align: center;
-    width: 120px;
+    width: 150px;
     color: var(--color2);
     font-weight: bold;
 }
@@ -39,7 +42,14 @@
     display: block;
 }
 
-#DGAsCreateUser{
+/*specific*/
+
+#DGAsUsers{
+    top: 23%;
+    right: 8%;
+}
+
+#DGAsCourses{
     top: 23%;
     right: 8%;
 }

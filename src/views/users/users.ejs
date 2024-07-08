@@ -4,9 +4,9 @@
 <div class="mainTitle">USUARIOS</div>
 
 <!------GENERAL ACTIONS------>
-<div class="divDGAs" id="DGAsCreateUser">
-    <div class="divDGA">
-        <i class="fa-solid fa-plus"></i>
+<div class="divDGAs" id="DGAsUsers">
+    <div class="divDGA divDGAm" id="DGAcreateUser">
+        <i class="fa-solid fa-user-plus"></i>
         <div class="DGAinfo">
             Crear usuario
         </div>        
@@ -25,7 +25,7 @@
                         <%= company.company_name %>
                     </option>
                 <% }) %>
-            </select>
+            </select>            
         </div>
     </div>    
 </div>
@@ -99,4 +99,5 @@
 <div class="loader" id="usersLoader"></div>
 <%- include('./usersConfirmPopups') %>
 <%- include('./usersEditPopup') %>
+<%- include('./usersCreatePopup') %>
 <script type="module" src="/js/users/users.js"></script>

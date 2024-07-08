@@ -46,25 +46,24 @@ function addUsersEventListeners(dataToPrint) {
         //edit user        
         edit.addEventListener('click',async()=>{
             ug.idUserToEdit = element.id
-            userCompany.value = element.users_companies.company_name
-            userLastName.value = element.last_name
-            userFirstName.value = element.first_name
-            userEmail.value = element.email
+            euppCompany.value = element.users_companies.company_name
+            euppLastName.value = element.last_name
+            euppFirstName.value = element.first_name
+            euppEmail.value = element.email
 
             //clear inputs
-            const inputs = [userLastName,userFirstName]
+            const inputs = [euppLastName,euppFirstName]
             isValid(inputs)
             
             //complete input select category
-            userCategory.innerHTML = ''
-            const categoriesIds = element.id_companies == 1 ? ug.psiCategoriesIds : ug.customersCtegoriesIds
+            euppCategory.innerHTML = ''
+            const categoriesIds = element.id_companies == 1 ? ug.psiCategoriesIds : ug.customersCategoriesIds
             categoriesIds.forEach(category => {
                 const categoryName = ug.usersCategories.filter(uc => uc.id == category)[0].user_category
                 const selected = element.id_users_categories == category ? 'selected' : ''
-                userCategory.innerHTML += '<option value="' + category + '" ' + selected + '>' + categoryName + '</option>'
+                euppCategory.innerHTML += '<option value="' + category + '" ' + selected + '>' + categoryName + '</option>'
                 
             })
-
             
             eupp.style.display = 'block'
         })

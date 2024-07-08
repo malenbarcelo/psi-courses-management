@@ -79,6 +79,19 @@ const usersQueries = {
             { where: { id:idUser } }
         )
     },
+    createUser: async(data,password) => {        
+        await db.Users.create(
+            {
+                first_name: data.cuppFirstName,
+                last_name: data.cuppLastName,
+                email: data.cuppEmail,
+                id_users_categories: data.cuppCategory,
+                id_companies: data.cuppCompany,
+                password:password,
+                enabled:1
+            },
+        )
+    },
 }
 
 module.exports = usersQueries

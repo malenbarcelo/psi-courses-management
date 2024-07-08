@@ -21,6 +21,11 @@
     color: black;
 }
 
+.submitButton{
+    background-color: transparent;
+    border: none;
+}
+
 /*---sizes---*/
 .bs{
     font-size: 12px;

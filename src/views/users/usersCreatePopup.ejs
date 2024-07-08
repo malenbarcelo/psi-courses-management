@@ -1,0 +1,101 @@
+<!----------Create user popup---------->
+<form action="/users/create-user" method="POST">
+    <div class="popup" id="cupp">
+    
+        <div class="popupContent" id="cuppContent">
+    
+            <div class="popupIcons">
+                <div class="popupIcon1"><i class="fa-solid fa-user-plus"></i></div>
+                <div class="popupClose1" id="cuppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+            </div>
+    
+            <div class="popupTitle1" id="cuppTitle">CREAR USUARIO</div>       
+            
+            <div class="divInputsColumn mtl mbl">
+                <div class="divInput">
+                    <label class="label2" id="cuppCompanyLabel">Institución</label>
+                    <select class="input1 sl" name="cuppCompany" id="cuppCompany">
+                        <option value=""></option>
+                        <% companies.forEach(company => { %>
+                            <option value="<%= company.id %>">
+                                <%= company.company_name %>
+                            </option>
+                        <% }) %>
+                    </select>
+                    <div id="cuppCreateCompany">
+                        <i class="fa-regular fa-square-plus icon"></i>
+                        <div id="cuppCreateCompanyInfo">Crear institución</div>
+                    </div>
+                    <div class="divError" id="cuppCompanyError">Debe seleccionar una institución</div>
+                </div>
+
+                <div class="divInput mtm">
+                    <label class="label2" id="cuppCategoryLabel">Perfil</label>
+                    <select class="input1 sl" name="cuppCategory" id="cuppCategory">
+                        <option value=""></option>
+                    </select>
+                    <div class="divError" id="cuppCategoryError">Debe seleccionar un perfil</div>
+                </div>
+                <div class="divInput mtm">
+                    <label class="label2" id="cuppLastNameLabel">Apellido</label>
+                    <input type="text" class="input1 il" name="cuppLastName" id="cuppLastName">
+                    <div class="divError" id="cuppLastNameError">Debe completar el apellido</div>
+                </div>
+                <div class="divInput mtm">
+                    <label class="label2" id="cuppFirstNameLabel">Nombre</label>
+                    <input type="text" class="input1 il" name="cuppFirstName" id="cuppFirstName">
+                    <div class="divError" id="cuppFirstNameError">Debe completar el nombre</div>
+                </div>            
+                <div class="divInput mtm">
+                    <label class="label2" id="cuppEmailLabel">Email</label>
+                    <input type="text" class="input1 il" name="cuppEmail" id="cuppEmail">
+                    <div class="divError" id="cuppEmailError">Email inválido</div>
+                    <div class="divError" id="cuppEmailExistingError"></div>
+                </div>
+            </div>
+    
+            <div class="divButtonsRow mbs">
+                <button type="submit" class="button1 bs" id="cuppAccept">Guardar</button>
+                <div id="cuppCancel" class="button1 bs">Cancelar</div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!----------Create user OK---------->
+<div class="okPopup" id="cuppOk">    
+    <div class="okContent" id="cuppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Usuario creado con éxito</div>
+        </div>
+    </div>
+</div>
+
+<!----------Create company---------->
+<div class="popup" id="ccpp">
+
+    <div class="popupContent" id="ccppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-square-plus"></i></div>
+            <div class="popupClose1" id="ccppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1" id="ccppTitle">CREAR INSTITUCIÓN</div>       
+        
+        <div class="divInputsColumn mtl mbl">
+            <div class="divInput">
+                <label class="label3" id="ccppCompanyLabel">Nombre de la institución</label>
+                <input type="text" class="input1 sl" id="ccppCompany">
+                <div class="divError" id="ccppCompanyError">Debe completar el nombre de la institución</div>
+                <div class="divError" id="ccppCompanyExistingError"></div>
+            </div>
+        </div>
+
+        <div class="divButtonsRow mbs">
+            <div id="ccppAccept" class="button1 bs">Crear</div>
+            <div id="ccppCancel" class="button1 bs">Cancelar</div>
+        </div>
+    </div>
+</div>

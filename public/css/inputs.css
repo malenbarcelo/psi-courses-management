@@ -67,6 +67,16 @@ accent-color: black
     background-color: white;
 }
 
+.label3{
+    position: absolute;
+    left: 8px;
+    top: -8px;
+    padding: 0px 5px;
+    font-size: 13px;
+    background-color: white;
+    font-weight: bold;
+}
+
 /*----------INPUTS AND SELECTS SIZES----------*/
 
 .im{
@@ -89,7 +99,12 @@ accent-color: black
     padding: 8px 0px 6px 0px;
 }
 
-.ixl{
+.sxxl{
+    width: 350px;
+    padding: 8px 0px 6px 0px;
+}
+
+.ixxxl{
     width: 300px;
     padding: 12px 0px 10px 0px;
 }

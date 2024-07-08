@@ -12,7 +12,7 @@ let ug = {
     idUserToRestore:0,
     idUserToEdit:0,
     psiCategoriesIds:[2,3],
-    customersCtegoriesIds:[4],
+    customersCategoriesIds:[4],
     elementsToPredict:[
         {
             input:filterLastName,

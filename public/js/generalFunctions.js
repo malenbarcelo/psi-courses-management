@@ -174,8 +174,7 @@ function isValid(inputs) {
         input.classList.remove('invalidInput')
         label.classList.remove('invalidLabel')
         error.style.display = 'none'
-    })
-    
+    })    
 }
 
 function isInvalid(inputs) {
@@ -185,8 +184,33 @@ function isInvalid(inputs) {
         input.classList.add('invalidInput')
         label.classList.add('invalidLabel')
         error.style.display = 'block'
+    })    
+}
+
+function inputsValidation(inputs) {
+    let errors = 0
+    inputs.forEach(input => {
+        if (input.value == '') {
+            isInvalid([input])
+                errors += 1
+        }else{
+            isValid([input])
+        }
     })
+    return errors
+}
+
+function emailValidation(email) {
+    let emailErrors = 0
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!regex.test(email)) {
+        emailErrors += 1
+    }
+
+    return emailErrors
     
 }
 
-export {dateToString,showOkPopup,predictElements,selectFocusedElement,closePopupsEventListeners,acceptWithEnter,showTableInfo,clearInputs, isValid, isInvalid}
+
+
+export {dateToString,showOkPopup,predictElements,selectFocusedElement,closePopupsEventListeners,acceptWithEnter,showTableInfo,clearInputs, isValid, isInvalid,inputsValidation,emailValidation}

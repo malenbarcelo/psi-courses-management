@@ -2,3 +2,63 @@
 <%- include('../partials/header') %>
 
 <div class="mainTitle">CURSOS</div>
+
+<!------GENERAL ACTIONS------>
+<div class="divDGAs" id="DGAsCourses">
+    <div class="divDGA divDGAm" id="DGAcreateCourse">
+        <i class="fa-regular fa-square-plus"></i>
+        <div class="DGAinfo">
+            Crear curso
+        </div>        
+    </div>
+    <div class="divDGA divDGAm" id="DGAcreateEvent">
+        <i class="fa-regular fa-calendar-plus"></i>
+        <div class="DGAinfo">
+            Crear evento
+        </div>        
+    </div>
+    <div class="divDGA divDGAm" id="DGAeventsCalendar">
+        <i class="fa-solid fa-calendar-days"></i>
+        <div class="DGAinfo">
+            Calendario de eventos
+        </div>        
+    </div>
+    <div class="divDGA divDGAm" id="DGAeventsHistory">
+        <i class="fa-regular fa-folder-open"></i>
+        <div class="DGAinfo">
+            Historial de eventos
+        </div>        
+    </div>
+    <div class="divDGA divDGAm" id="DGAstudents">
+        <i class="fa-solid fa-user-group"></i>
+        <div class="DGAinfo">
+            Alumnos
+        </div>        
+    </div>
+</div>
+
+<!------MAIN FILTERS------>
+<div class="mainFilters">
+    <div class="divInputsRow">            
+        <div class="divInput">
+            <label class="label1">Curso</label>
+            <select class="input1 sxxl" id="filterCompany">
+                <option value="">Todos los cursos</option>
+                <% courses.forEach(course => { %>
+                    <option value="<%= course.id %>">
+                        <%= course.course_name %>
+                    </option>
+                <% }) %>
+            </select>            
+        </div>
+    </div>    
+</div>
+
+<!------MAIN CONTENT------>
+<div id="divCourses">
+    <% courses.forEach(course => { %>
+        <div class="divCourse">
+            <div class="courseTitle"><%= course.course_name %></div>
+        </div>
+    <% }) %>
+</div>

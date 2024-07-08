@@ -60,18 +60,6 @@
     line-height: 1.8;
 }
 
-#buppContent,#rpppContent{
-    top: 35%;
-    width: 400px;
-    left: calc(50vw - 200px);
-}
-
-#euppContent{
-    top: 28%;
-    width: 400px;
-    left: calc(50vw - 200px);
-}
-
 /*----------okPopup----------*/
 .okPopup{
     display: none;
@@ -107,7 +95,39 @@
     font-size: 25px;
 }
 
-#buppOkContent,#rpppOkContent,#euppOkContent{
+/*----------SPECIFIC----------*/
+/*Popups*/
+#ccpp{
+    background-color: rgba(0,0,0,0.4);
+}
+
+/*Contents*/
+#buppContent,#rpppContent{
+    top: 35%;
+    width: 400px;
+    left: calc(50vw - 200px);
+}
+
+#euppContent{
+    top: 28%;
+    width: 400px;
+    left: calc(50vw - 200px);
+}
+
+#cuppContent{
+    top: 28%;
+    width: 450px;
+    left: calc(50vw - 225px);
+}
+
+#ccppContent{
+    top: 42%;
+    width: 350px;
+    left: calc(50vw - 175px);
+}
+
+/*ok contents*/
+#buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent{
     top: 40%;
     left: calc(50vw - 150px);
 }

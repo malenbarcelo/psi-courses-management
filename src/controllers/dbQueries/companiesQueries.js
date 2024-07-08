@@ -10,6 +10,12 @@ const companiesQueries = {
         })
         return companies
     },
+    createCompany: async(companyName) => {        
+        await db.Users_companies.create({
+            company_name: companyName,
+            enabled:1
+        })
+    },
 }
 
 module.exports = companiesQueries
