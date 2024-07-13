@@ -1,0 +1,37 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<div id="idCompany" class="notVisible">3</div>
+
+<div class="mainTitle">
+    PRÓXIMOS EVENTOS
+    <div class="divCheckbox1 absoluteCheck">
+        <input type="checkbox" id="filterReserved">
+        <label>Mostrar sólo eventos reservados</label>
+    </div>
+</div>
+
+<!------MAIN FILTERS------>
+<div class="mainFilters mtm">
+    <div class="divInputsRow">            
+        <div class="divInput">
+            <label class="label1">Curso</label>
+            <select class="input1 sxxl" id="filterCourse">
+                <option value="">Todos los cursos</option>
+                <% courses.forEach(course => { %>
+                    <option value="<%= course.id %>"><%= course.course_name %></option>
+                <% }) %>                
+            </select>            
+        </div>
+    </div>    
+</div>
+
+<!------MAIN CONTENT------>
+<div id="divCourses"></div>
+
+
+<!----------LOADER---------->
+<div class="loader" id="eventsLoader"></div>
+
+<%- include('./nextEventsPopups') %>
+<script type="module" src="/js/nextEvents/nextEvents.js"></script>

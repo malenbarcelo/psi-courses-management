@@ -11,12 +11,6 @@
             Crear curso
         </div>        
     </div>
-    <div class="divDGA divDGAm" id="DGAcreateEvent">
-        <i class="fa-regular fa-calendar-plus"></i>
-        <div class="DGAinfo">
-            Crear evento
-        </div>        
-    </div>
     <div class="divDGA divDGAm" id="DGAeventsCalendar">
         <i class="fa-solid fa-calendar-days"></i>
         <div class="DGAinfo">
@@ -42,23 +36,18 @@
     <div class="divInputsRow">            
         <div class="divInput">
             <label class="label1">Curso</label>
-            <select class="input1 sxxl" id="filterCompany">
-                <option value="">Todos los cursos</option>
-                <% courses.forEach(course => { %>
-                    <option value="<%= course.id %>">
-                        <%= course.course_name %>
-                    </option>
-                <% }) %>
-            </select>            
+            <select class="input1 sxxl" id="filterCourse"></select>            
         </div>
     </div>    
 </div>
 
 <!------MAIN CONTENT------>
-<div id="divCourses">
-    <% courses.forEach(course => { %>
-        <div class="divCourse">
-            <div class="courseTitle"><%= course.course_name %></div>
-        </div>
-    <% }) %>
-</div>
+<div id="divCourses"></div>
+
+
+<!----------LOADER---------->
+<div class="loader" id="coursesLoader"></div>
+
+<%- include('./coursesCreatePopup') %>
+<%- include('./coursesCreateEventPopup') %>
+<script type="module" src="/js/courses/courses.js"></script>

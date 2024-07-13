@@ -9,7 +9,7 @@ const usersController = {
     users: async(req,res) => {
         try{
 
-            const idSelectedItem = 3
+            const idSelectedItem = 4
             const companies = await companiesQueries.companies()
             const usersCategories = await usersCategoriesQueries.usersCategories()
             
@@ -39,30 +39,33 @@ const usersController = {
 
             await usersQueries.createUser(data, password)
 
-            return res.redirect('/users')
+            const transporter = nodemailer.createTransport({
+                host: 'mail.multibrand.wnpower.host', // Servidor de correo saliente
+                port: 465, // Puerto SMTP
+                secure: true, // true para puerto 465, false para otros puertos
+                auth: {
+                  user: 'administracion@multibrand.wnpower.host', // Tu nombre de usuario
+                  pass: ']p66RdoWHDuE' // Tu contraseña
+                }
+              });
 
-            // const transporter = nodemailer.createTransport({
-            //     service: 'schemasim',
-            //     auth: {
-            //       user: 'notificaciones@schemasim.com',
-            //       pass: 'G4Ul/k@4qC'
-            //     }
-            //   });
+            const mailOptions = {
+            from: 'administracion@multibrand.wnpower.host',
+            to: 'barcelomalen@gmail.com',
+            subject: 'Avisa de alta de usuario',
+            text: 'Hola, se ha dado de alta tu usuario'
+            };
             
-            // const mailOptions = {
-            // from: 'notificaciones@schemasim.com',
-            // to: 'barcelomalen@gmail.com',
-            // subject: 'hola',
-            // text: 'hola estot probando'
-            // };
+            transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return res.status(500).send(error.toString())
+            }
             
-            // transporter.sendMail(mailOptions, (error, info) => {
-            // if (error) {
-            //     return res.status(500).send(error.toString())
-            // }
-            // Redirigir solo si el envío del correo fue exitoso
-            // return res.redirect('/users')
-            // })
+            return res.redirect('/users')
+            
+        })
+
+            //return res.redirect('/users')
 
 
 

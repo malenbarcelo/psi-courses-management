@@ -1,0 +1,89 @@
+<!---------reserve quota popup---------->
+<div class="popup" id="rqpp">
+    
+    <div class="popupContent" id="rqppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon2"><i class="fa-regular fa-pen-to-square"></i></div>
+            <div class="popupClose2" id="rqppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1 mtm">RESERVAR CUPO</div>
+        <div class="popupTitle1 mts" id="rqppCourse"></div>
+        <div class="popupTitle2 mtm" id="rqppDate"></div>
+        <div class="popupTitle2 mts" id="rqppTime"></div>
+        <div class="popupTitle2 mtm" id="rqppAvailableQuota"></div>
+        
+        <div class="divInputsColumn mtl">
+            <div class="divInput">
+                <label class="label3" id="rqppQuotaLabel">Cupos a reservar</label>
+                <input type="number" class="input1 im" id="rqppQuota">                
+            </div>
+            <div class="divError" id="rqppQuotaError"></div>
+        </div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="rqppAccept" class="button1 bm">Reservar</div>
+            <div id="rqppCancel" class="button1 bm">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<div class="okPopup" id="rqppOk">    
+    <div class="okContent" id="rqppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Cupos reservados con éxito</div>
+        </div>
+    </div>
+</div>
+
+<!---------confirm reservation popup---------->
+<div class="popup2" id="crpp">
+    
+    <div class="popupContent" id="crppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon2"><i class="fa-regular fa-circle-question"></i></div>
+            <div class="popupClose2" id="crppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupQuestion" id="crppQuestion"></div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="crppAccept" class="button1 bs">Aceptar</div>
+            <div id="crppCancel" class="button1 bs">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<!---------cancel reservation popup---------->
+<div class="popup2" id="crepp">
+    
+    <div class="popupContent" id="creppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-circle-question"></i></div>
+            <div class="popupClose1" id="creppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupQuestion" id="creppQuestion"></div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="creppAccept" class="button1 bs">Aceptar</div>
+            <div id="creppCancel" class="button1 bs">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<div class="okPopup" id="creppOk">    
+    <div class="okContent" id="creppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Reserva cancelada con éxito</div>
+        </div>
+    </div>
+</div>

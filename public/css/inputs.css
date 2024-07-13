@@ -79,9 +79,14 @@ accent-color: black
 
 /*----------INPUTS AND SELECTS SIZES----------*/
 
+.is{
+    width: 110px;
+    padding: 8px 0px 6px 0px;
+}
+
 .im{
-    width: 200px;
-    padding: 7px 0px 4px 0px;
+    width: 150px;
+    padding: 8px 0px 6px 0px;
 }
 
 .sm{
@@ -99,6 +104,11 @@ accent-color: black
     padding: 8px 0px 6px 0px;
 }
 
+.ixxl{
+    width: 350px;
+    padding: 8px 0px 6px 0px;
+}
+
 .sxxl{
     width: 350px;
     padding: 8px 0px 6px 0px;
@@ -107,4 +117,27 @@ accent-color: black
 .ixxxl{
     width: 300px;
     padding: 12px 0px 10px 0px;
+}
+
+/*----------DIV CHECKBOX----------*/
+.divCheckbox1{
+    font-size: 13px;
+    font-weight: lighter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divCheckbox2{
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    width: 200px;
+    background-color: white;
+    padding: 3px 0px;    
+}
+
+.absoluteCheck{
+    position: absolute;
+    bottom: 0px;
 }

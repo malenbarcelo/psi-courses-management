@@ -3,19 +3,22 @@ const bottomHeaderMenu = [
         id:1,
         name:'CURSOS',
         href:'/courses',
-        subitems:[
-            {'subitem':'Resumen de pedidos', 'href':''},
-            {'subitem':'Detalle de pedidos', 'href':''}
-        ]
+        subitems:[]
     },
     {
         id:2,
+        name:'PRÓXIMOS EVENTOS',
+        href:'/courses/next-events',
+        subitems:[]
+    },
+    {
+        id:3,
         name:'COTIZACIONES',
         href:'',
         subitems:[]
     },
     {
-        id:3,
+        id:4,
         name:'USUARIOS',
         href:'/users',
         subitems:[]

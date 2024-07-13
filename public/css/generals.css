@@ -2,7 +2,8 @@
 :root{
     --color1:#dfdbdb;
     --color2:#FF6501;
-    --color3:#575656;    
+    --color3:#575656;
+    --color4:#848282;    
     --errorColor:rgb(221, 7, 7);
 }
 
@@ -55,10 +56,10 @@ ul {
     margin-bottom: 15px;
 }
 .mtl{
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .mbl{
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 .mtxl{
     margin-top: 50px;
@@ -79,9 +80,8 @@ ul {
     width: 40px;
     height: 40px;
     animation: spin 3s linear infinite;
-    /*display: none;*/
+    display: none;
     position: absolute;
-    top: 55%;
     
 }
 
@@ -91,8 +91,16 @@ ul {
 }
 
 #usersLoader{
+    top: 55%;
     left: calc(50vw - 20px);
 }
+
+#coursesLoader,#eventsLoader{
+    top: 45%;
+    left: calc(50vw - 20px);
+}
+
+
 
 /*---------------------predicted items---------------------*/
 .predictedElements{
@@ -133,4 +141,9 @@ ul {
 .invalidLabel{
     color: var(--errorColor);
     font-weight: bold;
+}
+
+/*---------------------display---------------------*/
+.notVisible{
+    display: none;
 }

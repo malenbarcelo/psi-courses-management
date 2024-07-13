@@ -1,0 +1,99 @@
+<!----------Create course popup---------->
+<div class="popup" id="cepp">
+    
+    <div class="popupContent" id="ceppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon2"><i class="fa-regular fa-square-plus"></i></div>
+            <div class="popupClose2" id="ceppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1" id="ceppTitle"></div>
+        <div class="popupTitle1 mtm">CREAR EVENTO</div>
+        
+        <div class="divEventData">
+            <div class="popupSubtitle1">DATOS DEL EVENTO</div>
+            <div id="ceppEventData" class="divEventInfo mtm">
+                <div class="divEventDate">
+                    <div class="popupSubtitle1 mbm">FECHA</div>
+                    <div class="divInputsRow">
+                        <div class="divInput">
+                            <label class="label3" id="ceppStartDateLabel">Inicio</label>
+                            <input type="date" class="input1 is" id="ceppStartDate">
+                        </div>
+                        <div class="divInput">
+                            <label class="label3" id="ceppEndDateLabel">Fin</label>
+                            <input type="date" class="input1 is" id="ceppEndDate">
+                        </div>                
+                    </div>
+                    <div id="ceppDateError" class="divError"></div>
+                </div>
+    
+                <div class="divEventDate">
+                    <div class="popupSubtitle1 mbm">HORARIO</div>
+                    <div class="divInputsRow">
+                        <div class="divInput">
+                            <label class="label3" id="ceppStartTimeLabel">Inicio</label>
+                            <input type="time" class="input1 inputTime" id="ceppStartTime">
+                        </div>
+                        <div class="divInput">
+                            <label class="label3" id="ceppEndTimeLabel">Fin</label>
+                            <input type="time" class="input1 inputTime" id="ceppEndTime">
+                        </div>
+                    </div>
+                    <div id="ceppTimeError" class="divError"></div>
+                </div>
+    
+                <div class="divEventDate">
+                    <div class="popupSubtitle1 mbm">CUPO</div>
+                    <div class="divInputsRow">
+                        <div class="divInput">
+                            <label class="label3" id="ceppEventQuotaLabel">Cupo</label>
+                            <input type="nuumber" class="input1 is" id="ceppEventQuota">
+                        </div>
+                    </div>
+                    <div id="ceppEventQuotaError" class="divError"></div>
+                </div>
+    
+            </div>
+
+        </div>
+
+        <div class="divEventData">
+            <div class="popupSubtitle1">EMPRESAS INVITADAS</div>
+            <div class="divCheckbox1 mbs mts">
+                <input type="checkbox" id="ceppAllCompanies" checked>
+                <label>Todas las empresas</label><br>
+            </div>
+
+            <div id="ceppCompaniesError" class="divError mbs">Debe seleccionar al menos una empresa</div>
+
+            <div class="divEventCompanies">
+                <% companies.forEach(company => { %>
+                    <div class="divCheckbox2 mts">
+                        <input type="checkbox" id="<%= 'ceppCompany_' + company.id %>" checked>
+                        <label><%= company.company_name %></label><br>
+                    </div>
+                <% }) %>
+            </div>
+
+            
+
+        </div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="ceppAccept" class="button1 bm">Guardar</div>
+            <div id="ceppCancel" class="button1 bm">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<div class="okPopup" id="ceppOk">    
+    <div class="okContent" id="ceppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Curso creado con éxito</div>
+        </div>
+    </div>
+</div>

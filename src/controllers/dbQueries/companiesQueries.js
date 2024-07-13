@@ -5,6 +5,7 @@ const Users_companies = db.Users_companies
 const companiesQueries = {
     companies: async() => {        
         const companies = await db.Users_companies.findAll({
+            where:{enabled:1},
             order:['company_name'],
             raw:true,
         })

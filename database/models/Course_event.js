@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
          type:DataTypes.TIME,
          allowNull: false
       },
+      event_quota:{
+         type: DataTypes.INTEGER,
+         allowNull: false,
+      },
       enabled:{
          type: DataTypes.INTEGER,
          allowNull: false,
@@ -45,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
       Course_event.belongsTo(models.Courses,{
          as:'course_course_event',
          foreignKey: 'id_courses'
+      })
+      Course_event.hasMany(models.Courses_quota_reservations,{
+         as:'events_quota_reservations',
+         foreignKey: 'id_events'
       })
    }
 

@@ -10,7 +10,7 @@ function dateToString(date) {
     const month = dateAsArray[1]
     const day = dateAsArray[2]
     
-    const stringDate = day + '-' + month + '-' + year
+    const stringDate = day + '/' + month + '/' + year
 
     return stringDate    
 }
@@ -173,7 +173,9 @@ function isValid(inputs) {
         const error = document.getElementById(input.id + 'Error')
         input.classList.remove('invalidInput')
         label.classList.remove('invalidLabel')
-        error.style.display = 'none'
+        if (error) {
+            error.style.display = 'none'
+        }
     })    
 }
 
@@ -183,7 +185,10 @@ function isInvalid(inputs) {
         const error = document.getElementById(input.id + 'Error')
         input.classList.add('invalidInput')
         label.classList.add('invalidLabel')
-        error.style.display = 'block'
+        if (error) {
+            error.style.display = 'block'
+        }
+        
     })    
 }
 
@@ -210,7 +215,6 @@ function emailValidation(email) {
     return emailErrors
     
 }
-
 
 
 export {dateToString,showOkPopup,predictElements,selectFocusedElement,closePopupsEventListeners,acceptWithEnter,showTableInfo,clearInputs, isValid, isInvalid,inputsValidation,emailValidation}
