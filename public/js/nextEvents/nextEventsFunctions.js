@@ -80,29 +80,59 @@ function addEventsEventListeners(dataToPrint) {
 
         const reserve = document.getElementById('reserve_' + element.id)
         const cancel = document.getElementById('cancel_' + element.id)
+        const edit = document.getElementById('edit_' + element.id)
+        const students = document.getElementById('students_' + element.id)
 
         //reserve quota
-        reserve.addEventListener('click',async()=>{
-            const startTime = element.events_companies_events.start_time.split(':')[0] + ':' + element.events_companies_events.start_time.split(':')[1]
-            const endTime = element.events_companies_events.end_time.split(':')[0] + ':' + element.events_companies_events.end_time.split(':')[1]
-            const quota = element.events_companies_events.event_quota
-            const eventReservations = element.events_companies_events.events_quota_reservations.filter(r => r.enabled == 1)
-            const reservedQuota = eventReservations.reduce((sum, item) => sum + item.reserved_quota, 0)            
-            const availableQuota = quota - reservedQuota
-        
-            clearInputs([rqppQuota])
-            rqppQuotaError.style.display = 'none'            
-            rqppCourse.innerText = element.events_companies_courses.course_name
-            rqppDate.innerText = dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date)
-            rqppTime.innerText = startTime + ' a ' + endTime + ' hs.'
-            rqppAvailableQuota.innerText = 'Cupos disponibles: ' + availableQuota
-            neg.eventId = element.id_events
-            neg.eventAvailableQuota = availableQuota
-            neg.eventCourseName = element.events_companies_courses.course_name
-            neg.eventCourseId = element.id_courses
-            rqpp.style.display = 'block'
-        })
+        const inputs = [reserve,edit]
+        inputs.forEach(input => {
+            input.addEventListener('click',async()=>{
+            
+                //get element data
+                const eventData = getEventData()
+                
+                //complete info
+                rqppQuotaError.style.display = 'none'
+                rqppCourse.innerText = element.events_companies_courses.course_name
+                rqppDate.innerText = dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date)
+                rqppTime.innerText = startTime + ' a ' + endTime + ' hs.'
+                rqppAvailableQuota.innerText = 'Cupos disponibles: ' + availableQuota
+                neg.eventId = element.id_events
+                neg.eventAvailableQuota = availableQuota
+                neg.eventCourseName = element.events_companies_courses.course_name
+                neg.eventCourseId = element.id_courses
+                rqppQuotaError.style.display = 'none'
+                rqppQuotaError.style.display = 'none'            
+                rqppCourse.innerText = element.events_companies_courses.course_name
+                rqppDate.innerText = dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date)
+                rqppTime.innerText = startTime + ' a ' + endTime + ' hs.'
+                rqppAvailableQuota.innerText = 'Cupos disponibles: ' + availableQuota
+                neg.eventId = element.id_events
+                neg.eventAvailableQuota = availableQuota
+                neg.eventCourseName = element.events_companies_courses.course_name
+                neg.eventCourseId = element.id_courses
+                
+                if (input.id.split('_')[0] == 'reserve') {
+                    rqppMainTitle.innerText = 'RESERVAR CUPO'
+                    clearInputs([rqppQuota])
+                    rqppAccept.innerText = 'Reservar'
+                    neg.editReservationType = 'reserve'                    
+                }else{
+                    rqppMainTitle.innerText = 'EDITAR RESERVA'
+                    //const companyReservations = eventReservations.filter(e => e.id_companies == neg.idCompany)
+                    //const companyReservationsQty = companyReservations.reduce((sum, item) => sum + item.reserved_quota, 0)
+                    rqppQuota.value = companyReservationsQty
+                    rqppAccept.innerText = 'Editar'
+                    neg.editReservationType = 'edit'  
+                }
 
+                rqpp.style.display = 'block'
+
+                
+            })
+            
+        })
+        
         //cancel reservation
         cancel.addEventListener('click',async()=>{
             neg.eventId = element.id_events           
@@ -110,8 +140,39 @@ function addEventsEventListeners(dataToPrint) {
             creppQuestion.innerHTML = '¿Confirma que desea cancelar la reserva del curso <b>' + neg.eventCourseName + '</b> que se dictará el <b>' + dateToString(element.events_companies_events.start_date) + '</b>?'
             crepp.style.display = 'block'
         })
+
+        //students
+        students.addEventListener('click',async()=>{
+            const eventData = getEventData(element)
+            stppMainTitle.innerText = element.events_companies_courses.course_name
+            stppSubtitle.innerHTML = '<b>Fecha:</b> ' + eventData.startDate + ' - ' + eventData.endDate + ' || ' + eventData.startTime + 'hs. a ' +eventData.endTime + 'hs.'
+            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eventData.companyReservationsQty + ' || <b>Cupos asignados: </b>' + 30 
+            stpp.style.display = 'block'
+        })
         
     })
+}
+
+async function getEventData(element) {
+
+    const assignedQuota = await (await fetch(dominio + 'apis/assigned-quota/' + neg.idCompany + '/' + element.id_events)).json()
+
+
+    const startDate = dateToString(element.events_companies_events.start_date)
+    const endDate = dateToString(element.events_companies_events.end_date)
+    const startTime = element.events_companies_events.start_time.split(':')[0] + ':' + element.events_companies_events.start_time.split(':')[1]
+    const endTime = element.events_companies_events.end_time.split(':')[0] + ':' + element.events_companies_events.end_time.split(':')[1]
+    const quota = element.events_companies_events.event_quota
+    const eventReservations = element.events_companies_events.events_quota_reservations.filter(r => r.enabled == 1)
+    const reservedQuota = eventReservations.reduce((sum, item) => sum + item.reserved_quota, 0)            
+    const availableQuota = quota - reservedQuota
+    dateToString(element.events_companies_events.start_date)
+    const companyReservations = eventReservations.filter(e => e.id_companies == neg.idCompany)
+    const companyReservationsQty = companyReservations.reduce((sum, item) => sum + item.reserved_quota, 0)
+
+    const eventData = {startDate,endDate,startTime,endTime,companyReservationsQty}
+
+    return eventData
 }
 
 function filterEvents() {
@@ -122,19 +183,23 @@ function filterEvents() {
     neg.companyEventsFiltered = filterCourse.value == '' ? neg.companyEventsFiltered : neg.companyEventsFiltered.filter(e => e.id_courses == filterCourse.value)
 
     //reserved events
-    // if (filterReserved.checked) {
+    if (filterReserved.checked) {
 
-    //     console.log(neg.companyEventsFiltered.events_companies_events)
+        const reservationsIds = neg.companyReservations.map(r => r.id_events)
 
-    //     const prueba = neg.companyEventsFiltered.events_companies_events.events_quota_reservations.filter( eqr => eqr.enabled == 1)
-    //     console.log(events_company_events.events_quota_reservations)
-    //     console.log(prueba)
+        console.log(reservationsIds)
+        console.log(neg.companyReservations)
+        neg.companyEventsFiltered = neg.companyEventsFiltered.filter(e => reservationsIds.includes(e.id_events))
+
+        // const prueba = neg.companyEventsFiltered.events_companies_events.events_quota_reservations.filter( eqr => eqr.enabled == 1)
+        // console.log(events_company_events.events_quota_reservations)
+        // console.log(prueba)
         
 
-    //     console.log(neg.companyEventsFiltered)
-    // }else{
-    //     neg.companyEventsFiltered = neg.companyEventsFiltered
-    // }
+        // console.log(neg.companyEventsFiltered)
+    }else{
+        neg.companyEventsFiltered = neg.companyEventsFiltered
+    }
 
 }
 
@@ -161,5 +226,7 @@ function reserveQuotaValidations() {
     }
     return errors
 }
+
+
 
 export {printEvents,filterEvents,reserveQuotaValidations}

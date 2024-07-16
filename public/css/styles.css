@@ -160,3 +160,91 @@
     width: 110px;
     padding: 7px 0px 5px 0px;
 }
+
+/*----------------------nextEventsUsersPopups.ejs----------------------*/
+#uploadExcel{
+    position: absolute;
+    right: 10%;
+    top: 10%;
+    border: black solid 2px;
+    font-size: 18px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#downloadTemplate{
+    position: absolute;
+    right: 3%;
+    top: 5%;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#uploadExcelIcon,#downloadTemplateIcon{
+    font-size: 20px;
+    color:black
+}
+
+#uploadExcel:hover{
+    color:white;
+    background-color: black;
+}
+
+#uploadExcel:hover #uploadExcelIcon{
+    color: white;
+}
+
+#uploadExcel:hover #showActionExcel{
+    display: block;
+}
+
+#downloadTemplate:hover #showActionTemplate{
+    display: block;
+}
+
+#showActionExcel{
+    display: none;
+    padding: 2px 5px;
+    position: absolute;
+    font-size: 12px;
+    border-radius: 3px;
+    color: black;
+    top:105%;
+    text-align: center;
+    width: 80px;
+}
+
+#showActionTemplate{
+    display: none;
+    padding: 2px 5px;
+    position: absolute;
+    font-size: 12px;
+    border-radius: 3px;
+    color: var(--color1);
+    top:-4%;
+    right: 40%;
+    text-align: center;
+    width: 80px;
+}
+
+#stppAddStudent{
+    border: black solid 2px;
+    padding:    1px 2px;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-left: -5px;
+}
+
+#stppAddStudent:hover{
+    background-color: black;
+    color: white;
+}
+
+#stppTable{
+    height: 300px;
+}

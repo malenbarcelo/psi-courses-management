@@ -13,6 +13,7 @@ async function printCourses(dataToPrint) {
         const today = new Date();
         const todayNormalized = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
+
         //get next events
         let filterEvents = element.courses_courses_events.filter(e => {
             const startDate = new Date(e.start_date)

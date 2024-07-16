@@ -44,6 +44,10 @@
     font-size: 23px;
 }
 
+.popupIcon3{
+    font-size: 26px;
+}
+
 .popupClose1{
     font-size: 20px;
     cursor: pointer;
@@ -51,6 +55,11 @@
 
 .popupClose2{
     font-size: 23px;
+    cursor: pointer;
+}
+
+.popupClose3{
+    font-size: 26px;
     cursor: pointer;
 }
 
@@ -176,7 +185,14 @@
 #crppContent,#creppContent{
     top: 37%;
     width: 300px;
-    left: calc(50vw - 150px);
+    left: calc(50vw - 157px);
+}
+
+#stppContent{
+    top: 10%;
+    width: 1000px;
+    left: calc(50vw - 500px);
+    position: relative;
 }
 
 /*ok contents*/

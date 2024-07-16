@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const publicPath =  path.resolve('./public')
 const session = require('express-session')
+const FileStore = require('session-file-store')(session);
 const bcrypt = require('bcryptjs')
 const userLoggedMiddleware = require('./src/middlewares/userLoggedMiddleware.js')
 const bodyParser = require("body-parser")
@@ -30,9 +31,11 @@ app.set('view engine','ejs')
 
 //configure session
 app.use(session({
+    store: new FileStore(),
     secret:'secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: { secure: false } // Change to true in PRD to use HTTPS
 }))
 
 //middlewares

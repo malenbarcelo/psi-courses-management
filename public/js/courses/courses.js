@@ -87,14 +87,13 @@ window.addEventListener('load',async()=>{
     ceppAccept.addEventListener("click", async() => {
 
         const errors = createEventValidations()
-
         if (errors == 0) {
             
             const data = {
                 id_courses:cg.newEventCourseId,
                 invited_companies:cg.newEventInvitedCompanies,
-                start_date:ceppStartDate.value,
-                end_date:ceppEndDate.value,
+                start_date:new Date(ceppStartDate.value + 'T03:00:00Z'),//to get argentina time
+                end_date:new Date(ceppEndDate.value + 'T03:00:00Z'),//to get argentina time
                 start_time:ceppStartTime.value,
                 end_time:ceppEndTime.value,
                 event_quota:ceppEventQuota.value

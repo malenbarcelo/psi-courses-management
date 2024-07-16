@@ -9,6 +9,7 @@ window.addEventListener('load',async()=>{
     neg.idCompany = document.getElementById('idCompany').innerText
     neg.companyEvents = await (await fetch(dominio + 'apis/courses/company-next-events/' + neg.idCompany)).json()
     neg.companyEventsFiltered = neg.companyEvents
+    neg.companyReservations = await (await fetch(dominio + 'apis/company-reservations/' + neg.idCompany)).json()
     
     //print events
     printEvents(neg.companyEventsFiltered)
@@ -23,7 +24,7 @@ window.addEventListener('load',async()=>{
     })
 
     //close popups
-    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel]
+    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel]
     closePopupsEventListeners(closePopups)
 
     //reserve quota
@@ -32,7 +33,12 @@ window.addEventListener('load',async()=>{
         const errors = reserveQuotaValidations()
 
         if (errors == 0) {
-            crppQuestion.innerHTML = '¿Confirma que desea reservar <b>' + rqppQuota.value + '</b> cupos para el curso <b>' + neg.eventCourseName + '</b>?'
+            if (neg.editReservationType == 'reserve') {
+                crppQuestion.innerHTML = '¿Confirma que desea reservar <b>' + rqppQuota.value + '</b> cupos para el curso <b>' + neg.eventCourseName + '</b>?'
+            }else{
+                crppQuestion.innerHTML = '¿Confirma que desea editar la reserva a <b>' + rqppQuota.value + '</b> cupos para el curso <b>' + neg.eventCourseName + '</b>?'
+            }
+            
             crpp.style.display = 'block'            
         }
     })
@@ -40,22 +46,37 @@ window.addEventListener('load',async()=>{
     acceptWithEnter(rqppQuota,rqppAccept)
 
     crppAccept.addEventListener("click", async() => {
+
+
         const data = {
             id_events: neg.eventId,
             id_courses: neg.eventCourseId,
-            id_companies: neg.idCompany,
-            reserved_quota: rqppQuota.value
+            id_companies: parseInt(neg.idCompany),
+            reserved_quota: parseInt(rqppQuota.value)
         }
 
-        await fetch(dominio + 'apis/courses/next-events/reserve-quota',{
-            method:'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        })
+        if (neg.editReservationType == 'reserve') {
+            rqppOkText.innerText = 'Cupos reservados con éxito'
+            await fetch(dominio + 'apis/courses/next-events/reserve-quota',{
+                method:'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+        }else{
+            rqppOkText.innerText = 'Reserva editada con éxito'
+            await fetch(dominio + 'apis/courses/next-events/edit-reservation',{
+                method:'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+        }
 
         //get data and complete globals
         neg.companyEvents = await (await fetch(dominio + 'apis/courses/company-next-events/' + neg.idCompany)).json()
+        neg.companyReservations = await (await fetch(dominio + 'apis/company-reservations/' + neg.idCompany)).json()
         neg.companyEventsFiltered = neg.companyEvents
+
+        filterEvents()
         
         //print events
         printEvents(neg.companyEventsFiltered)

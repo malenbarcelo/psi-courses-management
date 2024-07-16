@@ -1,0 +1,97 @@
+<!---Users popup--->
+<div class="popup" id="stpp">
+    
+    <div class="popupContent" id="stppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon3"><i class="fa-regular fa-user"></i></div>
+            <div class="popupClose3" id="stppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1 mtm" id="stppMainTitle"></div>
+        <div class="popupTitle2 mts" id="stppSubtitle"></div>
+        <div class="popupTitle1 mtl">ALUMNOS</div>
+        <div class="popupTitle2 mts" id="stppSubtitle2"></div>
+                
+        <div id="uploadExcel">                
+            <i class="fa-regular fa-file-excel" id="uploadExcelIcon"></i>
+            <div id="showActionExcel">
+                Subir datos desde Excel
+            </div>
+        </div>
+        <div class="popup" id="uepp">                
+            <div id="ueppContent">
+                <div id="downloadTemplate">                
+                    <i class="fa-solid fa-download" id="downloadTemplateIcon"></i>
+                    <div id="showActionTemplate">
+                        Descargar template
+                    </div>
+                </div>
+                <div class="acceptCancelTitle">SUBIR ARCHIVO</div>
+                <div id="uploadInputContent" class="mts">
+                    <input type="file" id="uploadExcelInput" name="excelFile">                        
+                </div>
+                <div id="excelErrors" class="mbm">
+                    <div id="excelError" class="notVisible"></div>
+                </div>
+                <div class="divButtonsRow">
+                    <button id="uploadExcelPopupAccept" type="button" class="button1 bs">Subir</button>
+                    <button id="uploadExcelPopupCancel" type="button" class="button1 bs">Cancelar</button>
+                </div>
+            </div>                                
+        </div>
+        
+        <div class="divInputsRow mtm mbm">
+            <div class="divInput">
+                <label class="label1 fwb">Apellido</label>
+                <input type="text" class="input1 il ipm" id="createUserLastName">                    
+            </div>
+            <div class="divInput">
+                <label class="label1 fwb">Nombre</label>
+                <input type="text" class="input1 il ipm" id="createUserFirstName">                    
+            </div>
+            <div class="divInput">
+                <label class="label1 fwb">Email</label>
+                <input type="text" class="input1 il ipm" id="createUserEmail">                    
+            </div>
+            <div class="divInput">
+                <label class="label1 fwb">DNI</label>
+                <input type="number" class="input1 im ipm" id="createUserDNI">                    
+            </div>
+            <div id="stppAddStudent">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+        </div>
+
+        <table id="stppTable">
+            <thead>
+                <tr>
+                    <th class="thCss thl thLeftBorder">Apellido</th>
+                    <th class="thCss thl">Nombre</th>
+                    <th class="thCss thm">Email</th>
+                    <th class="thCss ths">DNI</th>
+                    <th class="thCss thxs thRightBorder">
+                        <i class="fa-solid fa-ban icon"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="bodyStudents"></tbody>
+        </table>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="stppAccept" class="button1 bm">Guardar</div>
+            <div id="stppCancel" class="button1 bm">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<div class="okPopup" id="stppOk">    
+    <div class="okContent" id="stppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText" id="stppOkText"></div>
+        </div>
+    </div>
+</div>
+

@@ -14,6 +14,13 @@ const coursesQueries = {
         })
         return courses
     },
+    findCourse: async(idCourse) => {        
+        const findCourse = await db.Courses.findOne({
+            where:{id:idCourse},
+            raw:true,
+        })
+        return findCourse
+    },
     createCourse: async(data) => {        
         await db.Courses.create({
             course_name: data.course_name,

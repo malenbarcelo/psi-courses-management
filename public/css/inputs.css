@@ -81,42 +81,38 @@ accent-color: black
 
 .is{
     width: 110px;
-    padding: 8px 0px 6px 0px;
 }
 
 .im{
     width: 150px;
-    padding: 8px 0px 6px 0px;
 }
 
 .sm{
     width: 200px;
-    padding: 6px 0px 3px 0px;
 }
 
 .il{
     width: 250px;
-    padding: 8px 0px 6px 0px;
 }
 
 .sl{
     width: 250px;
-    padding: 8px 0px 6px 0px;
 }
 
 .ixxl{
     width: 350px;
-    padding: 8px 0px 6px 0px;
 }
 
 .sxxl{
     width: 350px;
-    padding: 8px 0px 6px 0px;
 }
 
 .ixxxl{
     width: 300px;
-    padding: 12px 0px 10px 0px;
+}
+
+.ipm{
+    padding: 7px 0px 6px 0px;
 }
 
 /*----------DIV CHECKBOX----------*/
@@ -139,5 +135,5 @@ accent-color: black
 
 .absoluteCheck{
     position: absolute;
-    bottom: 0px;
+    bottom: 3px;
 }

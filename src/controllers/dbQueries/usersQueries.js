@@ -27,6 +27,13 @@ const usersQueries = {
         })
         return user
     },
+    findUserByEmail: async(email) => {        
+        const user = await db.Users.findOne({
+            where:{email:email},
+            raw:true,
+        })
+        return user
+    },
     usersLastNames: async() => {        
         const lastNames = await db.Users.findAll({
             attributes: [

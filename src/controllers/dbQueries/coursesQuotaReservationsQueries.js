@@ -4,13 +4,13 @@ const { Op } = require('sequelize')
 const model = db.Courses_quota_reservations
 
 const coursesQuotaReservationsQueries = {
-    reserveQuota: async(data) => {        
+    reserveQuota: async(idCourse,idEvent,idCompany,reservedQuota,idUser) => {        
         await model.create({
-            id_courses:data.id_courses,
-            id_events:data.id_events,
-            id_companies:data.id_companies,
-            reserved_quota:data.reserved_quota,
-            id_users:1,
+            id_courses:idCourse,
+            id_events:idEvent,
+            id_companies:idCompany,
+            reserved_quota:reservedQuota,
+            id_users:idUser,
             enabled:1
 
         })
@@ -26,11 +26,24 @@ const coursesQuotaReservationsQueries = {
             }
         );
     },
-    findCompanyReservations: async(idEvent,idCompany) => {        
-        const findCompanyReservations = await Courses_quota_reservations.findAll({
-            where:{id_events:idCompany}
+    companyReservations: async(idCompany) => {        
+        const companyReservations = await model.findAll({
+            where:{
+                id_companies:idCompany,
+                enabled:1
+            }
         })
-        return findCompanyReservations
+        return companyReservations
+    },
+    eventReservedQuota: async(idCompany,idEvent) => {        
+        const eventReservedQuota = await model.sum('reserved_quota', {
+            where: {
+                id_companies: idCompany,
+                id_events: idEvent,
+                enabled: 1
+            }
+        })
+        return eventReservedQuota
     },
 }
 

@@ -17,6 +17,13 @@ const coursesEventsQueries = {
         })
         return courseEvents
     },
+    findEvent: async(idEvent) => {        
+        const findEvent = await Courses_events.findOne({
+            where:{id:idEvent},
+            raw:true,
+        })
+        return findEvent
+    },
     lastEvent: async() => {        
         const coursesEvents = await Courses_events.findAll({
             order:[['id','DESC']],

@@ -1,3 +1,6 @@
+const {validationResult} = require('express-validator')
+const usersQueries = require('../controllers/dbQueries/usersQueries')
+
 const mainController = {
     login: (req,res) => {
         try{
@@ -14,7 +17,7 @@ const mainController = {
     loginProcess: async(req,res) => {
         try{
 
-            /*const resultValidation = validationResult(req)
+            const resultValidation = validationResult(req)
 
             if (resultValidation.errors.length > 0){
                 return res.render('login',{
@@ -25,10 +28,10 @@ const mainController = {
             }
 
             //login
-            const userToLogin = await usersQueries.findUser(req.body.userName)
+            const userToLogin = await usersQueries.findUserByEmail(req.body.email)
 
             delete userToLogin.password
-            req.session.userLogged = userToLogin*/
+            req.session.userLogged = userToLogin
 
             return res.redirect('/courses')
 
@@ -36,6 +39,12 @@ const mainController = {
             console.log(error)
             res.send('Ha ocurrido un error')
         }
+    },
+    logout: (req,res) => {
+
+        req.session.destroy()
+
+        return res.redirect('/')
     },
 }
 

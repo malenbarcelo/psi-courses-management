@@ -1,6 +1,7 @@
 const express = require('express')
 const usersApisController = require('../controllers/usersApisController.js')
-const coursesApisController = require('../controllers/coursesApisController.js')
+const apisCoursesController = require('../controllers/apisCoursesController.js')
+const apisStudentsController = require('../controllers/apisStudentsController.js')
 const router = express.Router()
 
 //users
@@ -20,15 +21,24 @@ router.post('/companies/create-company',usersApisController.createCompanyProcess
 router.get('/users-categories',usersApisController.usersCategories)
 
 //courses
-router.get('/courses',coursesApisController.courses)
-router.get('/courses/courses-events/:courseId',coursesApisController.coursesEvents)
-router.post('/courses/create-course',coursesApisController.createCourse)
-router.post('/courses/create-event',coursesApisController.createEvent)
+router.get('/courses',apisCoursesController.courses)
+router.get('/courses/courses-events/:courseId',apisCoursesController.coursesEvents)
+router.post('/courses/create-course',apisCoursesController.createCourse)
+router.post('/courses/create-event',apisCoursesController.createEvent)
 
 //next-events
-router.get('/courses/company-next-events/:idCompany',coursesApisController.companyNextEvents)
-router.post('/courses/next-events/reserve-quota',coursesApisController.reserveQuota)
-router.post('/courses/next-events/cancel-reservation',coursesApisController.cancelReservation)
+router.get('/courses/company-next-events/:idCompany',apisCoursesController.companyNextEvents)
+router.post('/courses/next-events/reserve-quota',apisCoursesController.reserveQuota)
+router.post('/courses/next-events/cancel-reservation',apisCoursesController.cancelReservation)
+router.post('/courses/next-events/edit-reservation',apisCoursesController.editReservation)
+
+//courses-quota-reservations
+router.get('/company-reservations/:idCompany',apisCoursesController.companyReservations)
+
+//courses-events-students
+//router.get('/assigned-quota/:idCompany/:idEvents',apisStudentsController.assignedStudents)
+
+
 
 
 module.exports = router
