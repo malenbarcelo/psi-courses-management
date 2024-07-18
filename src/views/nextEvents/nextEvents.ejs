@@ -5,18 +5,14 @@
 
 <div class="mainTitle">
     PRÓXIMOS EVENTOS
-    <div class="divCheckbox1 absoluteCheck">
-        <input type="checkbox" id="filterReserved">
-        <label>Mostrar sólo eventos reservados</label>
-    </div>
 </div>
 
 <!------MAIN FILTERS------>
-<div class="mainFilters ">
+<div class="mainFilters" id="nextEventsMainFilters">
     <div class="divInputsRow">            
         <div class="divInput">
             <label class="label1">Curso</label>
-            <select class="input1 sxxl" id="filterCourse">
+            <select class="input1 sxxl spl" id="filterCourse">
                 <option value="">Todos los cursos</option>
                 <% courses.forEach(course => { %>
                     <option value="<%= course.id %>"><%= course.course_name %></option>
@@ -27,12 +23,18 @@
 </div>
 
 <!------MAIN CONTENT------>
+<div class="divCheckbox1" id="nextEventsCheckbox">
+    <input type="checkbox" id="filterReserved">
+    <label>Mostrar sólo eventos reservados</label>
+</div>
+
 <div id="divCourses"></div>
+
 
 
 <!----------LOADER---------->
 <div class="loader" id="eventsLoader"></div>
 
 <%- include('./nextEventsPopups') %>
-<%- include('./nextEventsUsersPopups') %>
+<%- include('./nextEventsStudentsPopups') %>
 <script type="module" src="/js/nextEvents/nextEvents.js"></script>

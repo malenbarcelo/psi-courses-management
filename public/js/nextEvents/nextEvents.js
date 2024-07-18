@@ -1,5 +1,5 @@
 import { dominio } from "../dominio.js"
-import { printEvents, filterEvents, reserveQuotaValidations} from "./nextEventsFunctions.js"
+import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations} from "./nextEventsFunctions.js"
 import neg from "./nextEventsGlobals.js"
 import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,isValid} from "../generalFunctions.js"
 
@@ -29,8 +29,14 @@ window.addEventListener('load',async()=>{
 
     //reserve quota
     rqppAccept.addEventListener("click", async() => {
-        
-        const errors = reserveQuotaValidations()
+
+        let errors = 0
+
+        if (neg.editReservationType == 'reserve') {
+            errors = reserveQuotaValidations()
+        }else{
+            errors = editQuotaValidations()
+        }
 
         if (errors == 0) {
             if (neg.editReservationType == 'reserve') {
@@ -46,7 +52,6 @@ window.addEventListener('load',async()=>{
     acceptWithEnter(rqppQuota,rqppAccept)
 
     crppAccept.addEventListener("click", async() => {
-
 
         const data = {
             id_events: neg.eventId,

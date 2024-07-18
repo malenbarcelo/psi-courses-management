@@ -63,20 +63,22 @@
             </div>
         </div>
 
-        <table id="stppTable">
-            <thead>
-                <tr>
-                    <th class="thCss thl thLeftBorder">Apellido</th>
-                    <th class="thCss thl">Nombre</th>
-                    <th class="thCss thm">Email</th>
-                    <th class="thCss ths">DNI</th>
-                    <th class="thCss thxs thRightBorder">
-                        <i class="fa-solid fa-ban icon"></i>
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="bodyStudents"></tbody>
-        </table>
+        <div class="divTable" id="studentsTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="thCss fsm thl thLeftBorder">Apellido</th>
+                        <th class="thCss fsm thl">Nombre</th>
+                        <th class="thCss fsm thl">Email</th>
+                        <th class="thCss fsm ths">DNI</th>
+                        <th class="thCss fsm thxs thRightBorder">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="bodyStudents"></tbody>
+            </table>
+        </div>
 
         <div class="divButtonsRow mtl mbs">
             <div id="stppAccept" class="button1 bm">Guardar</div>
@@ -94,4 +96,7 @@
         </div>
     </div>
 </div>
+
+<!----------LOADER---------->
+<div class="loader" id="studentsLoader"></div>
 

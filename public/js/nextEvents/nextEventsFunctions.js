@@ -69,12 +69,12 @@ async function printEvents(dataToPrint) {
 
     divCourses.appendChild(fragment);
 
-    addEventsEventListeners(dataToPrint);
+    await addEventsEventListeners(dataToPrint);
 
     eventsLoader.style.display = 'none';
 }
 
-function addEventsEventListeners(dataToPrint) {
+async function addEventsEventListeners(dataToPrint) {
 
     dataToPrint.forEach(element => {
 
@@ -89,46 +89,23 @@ function addEventsEventListeners(dataToPrint) {
             input.addEventListener('click',async()=>{
             
                 //get element data
-                const eventData = getEventData()
-                
-                //complete info
-                rqppQuotaError.style.display = 'none'
-                rqppCourse.innerText = element.events_companies_courses.course_name
-                rqppDate.innerText = dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date)
-                rqppTime.innerText = startTime + ' a ' + endTime + ' hs.'
-                rqppAvailableQuota.innerText = 'Cupos disponibles: ' + availableQuota
-                neg.eventId = element.id_events
-                neg.eventAvailableQuota = availableQuota
-                neg.eventCourseName = element.events_companies_courses.course_name
-                neg.eventCourseId = element.id_courses
-                rqppQuotaError.style.display = 'none'
-                rqppQuotaError.style.display = 'none'            
-                rqppCourse.innerText = element.events_companies_courses.course_name
-                rqppDate.innerText = dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date)
-                rqppTime.innerText = startTime + ' a ' + endTime + ' hs.'
-                rqppAvailableQuota.innerText = 'Cupos disponibles: ' + availableQuota
-                neg.eventId = element.id_events
-                neg.eventAvailableQuota = availableQuota
-                neg.eventCourseName = element.events_companies_courses.course_name
-                neg.eventCourseId = element.id_courses
+                const eventData = await getEventData(element)
                 
                 if (input.id.split('_')[0] == 'reserve') {
                     rqppMainTitle.innerText = 'RESERVAR CUPO'
                     clearInputs([rqppQuota])
+                    rqppQuota.classList.remove('invalidInput')
+                    rqppQuotaLabel.classList.remove('invalidLabel')
                     rqppAccept.innerText = 'Reservar'
                     neg.editReservationType = 'reserve'                    
                 }else{
                     rqppMainTitle.innerText = 'EDITAR RESERVA'
-                    //const companyReservations = eventReservations.filter(e => e.id_companies == neg.idCompany)
-                    //const companyReservationsQty = companyReservations.reduce((sum, item) => sum + item.reserved_quota, 0)
-                    rqppQuota.value = companyReservationsQty
+                    rqppQuota.value = eventData.companyReservationsQty
                     rqppAccept.innerText = 'Editar'
                     neg.editReservationType = 'edit'  
                 }
 
                 rqpp.style.display = 'block'
-
-                
             })
             
         })
@@ -143,10 +120,11 @@ function addEventsEventListeners(dataToPrint) {
 
         //students
         students.addEventListener('click',async()=>{
-            const eventData = getEventData(element)
+            const eventData = await getEventData(element)
             stppMainTitle.innerText = element.events_companies_courses.course_name
             stppSubtitle.innerHTML = '<b>Fecha:</b> ' + eventData.startDate + ' - ' + eventData.endDate + ' || ' + eventData.startTime + 'hs. a ' +eventData.endTime + 'hs.'
-            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eventData.companyReservationsQty + ' || <b>Cupos asignados: </b>' + 30 
+            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eventData.companyReservationsQty + ' || <b>Cupos asignados: </b>' + eventData.assignedStudents.length
+            printStudents(neg.assignedStudents)
             stpp.style.display = 'block'
         })
         
@@ -155,8 +133,7 @@ function addEventsEventListeners(dataToPrint) {
 
 async function getEventData(element) {
 
-    const assignedQuota = await (await fetch(dominio + 'apis/assigned-quota/' + neg.idCompany + '/' + element.id_events)).json()
-
+    const assignedStudents = await (await fetch(dominio + 'apis/assigned-students/' + neg.idCompany + '/' + element.id_events)).json()
 
     const startDate = dateToString(element.events_companies_events.start_date)
     const endDate = dateToString(element.events_companies_events.end_date)
@@ -170,7 +147,26 @@ async function getEventData(element) {
     const companyReservations = eventReservations.filter(e => e.id_companies == neg.idCompany)
     const companyReservationsQty = companyReservations.reduce((sum, item) => sum + item.reserved_quota, 0)
 
-    const eventData = {startDate,endDate,startTime,endTime,companyReservationsQty}
+    //complete info
+    neg.eventId = element.id_events
+    neg.eventAvailableQuota = availableQuota
+    neg.eventCourseName = element.events_companies_courses.course_name
+    neg.eventCourseId = element.id_courses
+    neg.companyReservationsQty = companyReservationsQty
+    neg.assignedStudents = assignedStudents
+    rqppQuotaError.style.display = 'none'
+    rqppCourse.innerText = element.events_companies_courses.course_name
+    rqppDate.innerText = dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date)
+    rqppTime.innerText = startTime + ' a ' + endTime + ' hs.'
+    rqppAvailableQuota.innerText = 'Cupos disponibles: ' + availableQuota
+    rqppQuotaError.style.display = 'none'
+    rqppQuotaError.style.display = 'none'            
+    rqppCourse.innerText = element.events_companies_courses.course_name
+    rqppDate.innerText = dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date)
+    rqppTime.innerText = startTime + ' a ' + endTime + ' hs.'
+    rqppAvailableQuota.innerText = 'Cupos disponibles: ' + availableQuota
+
+    const eventData = {startDate,endDate,startTime,endTime,companyReservationsQty,availableQuota,assignedStudents}
 
     return eventData
 }
@@ -186,9 +182,6 @@ function filterEvents() {
     if (filterReserved.checked) {
 
         const reservationsIds = neg.companyReservations.map(r => r.id_events)
-
-        console.log(reservationsIds)
-        console.log(neg.companyReservations)
         neg.companyEventsFiltered = neg.companyEventsFiltered.filter(e => reservationsIds.includes(e.id_events))
 
         // const prueba = neg.companyEventsFiltered.events_companies_events.events_quota_reservations.filter( eqr => eqr.enabled == 1)
@@ -227,6 +220,63 @@ function reserveQuotaValidations() {
     return errors
 }
 
+function editQuotaValidations() {
+
+    let errors = 0
+
+    //quota
+    if (rqppQuota.value == '' || rqppQuota.value <= 0) {
+        rqppQuotaError.innerText = 'El cupo debe ser un número mayor a 0'
+        isInvalid([rqppQuota])
+        rqppQuotaError.style.display = 'block'
+        errors +=1
+    }else{
+        if (rqppQuota.value > (neg.eventAvailableQuota + neg.companyReservationsQty)) {
+            rqppQuotaError.innerText = 'Se puede reservar una cantidad máxima de ' + (neg.eventAvailableQuota + neg.companyReservationsQty) + ' cupos'
+            isInvalid([rqppQuota])
+            rqppQuotaError.style.display = 'block'
+            errors +=1
+        }else{
+            isValid([rqppQuota])
+            rqppQuotaError.style.display = 'none'
+        }
+    }
+    return errors
+}
+
+async function printStudents(dataToPrint) {
+
+    studentsLoader.style.display = 'block'
+    
+    bodyStudents.innerHTML = ''
+    let counter = 0
+
+    let html = '';
+    dataToPrint.forEach(element => {
+        const rowClass = counter % 2 == 0 ? 'tBody1 tBodyEven' : 'tBody1 tBodyOdd';
+        
+        // Construir las filas de la tabla
+        html += `
+            <tr>
+                <th class="${rowClass}">${element.last_name}</th>
+                <th class="${rowClass}">${element.first_name}</th>
+                <th class="${rowClass}">${element.email}</th>
+                <th class="${rowClass}">${element.dni}</th>
+                <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
+            </tr>
+        `;
+        
+        counter += 1;
+    });
+
+// Insertar todo el HTML en el DOM de una sola vez
+bodyStudents.innerHTML += html;
+
+    //addStudentsEventListeners(dataToPrint)
+
+    studentsLoader.style.display = 'none'
+}
 
 
-export {printEvents,filterEvents,reserveQuotaValidations}
+
+export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations}

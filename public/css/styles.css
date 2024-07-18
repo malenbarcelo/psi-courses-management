@@ -161,6 +161,17 @@
     padding: 7px 0px 5px 0px;
 }
 
+/*----------------------nextEvents.ejs----------------------*/
+#nextEventsMainFilters{
+    margin-top: -3px;
+}
+
+#nextEventsCheckbox{
+    margin-top: 3px;
+    margin-bottom: -14px;
+}
+
+
 /*----------------------nextEventsUsersPopups.ejs----------------------*/
 #uploadExcel{
     position: absolute;
@@ -246,5 +257,5 @@
 }
 
 #stppTable{
-    height: 300px;
+    max-height: 100px;
 }

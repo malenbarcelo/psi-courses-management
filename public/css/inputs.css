@@ -115,6 +115,18 @@ accent-color: black
     padding: 7px 0px 6px 0px;
 }
 
+.spm{
+    padding: 7px 0px 5px 0px;
+}
+
+.ipl{
+    padding: 10px 0px 8px 0px;
+}
+
+.spl{
+    padding: 10px 0px 8px 0px;
+}
+
 /*----------DIV CHECKBOX----------*/
 .divCheckbox1{
     font-size: 13px;

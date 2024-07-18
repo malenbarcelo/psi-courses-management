@@ -80,7 +80,7 @@ ul {
     width: 40px;
     height: 40px;
     animation: spin 3s linear infinite;
-    /*display: none;*/
+    display: none;
     position: absolute;
     
 }
@@ -99,6 +99,13 @@ ul {
     top: 45%;
     left: calc(50vw - 20px);
 }
+
+#studentsLoader{
+    top: 50%;
+    left: calc(50vw - 20px);
+    z-index: 1;
+}
+
 
 
 
@@ -154,5 +161,10 @@ ul {
 /*---------------------display---------------------*/
 .notVisible{
     display: none;
+}
+
+/*---------------------font size---------------------*/
+.fsm{
+    font-size: 13px
 }
 

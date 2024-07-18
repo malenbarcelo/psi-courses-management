@@ -36,7 +36,7 @@ router.post('/courses/next-events/edit-reservation',apisCoursesController.editRe
 router.get('/company-reservations/:idCompany',apisCoursesController.companyReservations)
 
 //courses-events-students
-//router.get('/assigned-quota/:idCompany/:idEvents',apisStudentsController.assignedStudents)
+router.get('/assigned-students/:companyId/:eventId',apisStudentsController.assignedStudents)
 
 
 

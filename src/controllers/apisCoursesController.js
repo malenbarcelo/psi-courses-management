@@ -88,7 +88,7 @@ const coursesApisController = {
       const idUser = req.session.userLogged.id
 
       //reserve quota
-      await coursesQuotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,data.reserved_quota,idUser)
+      await coursesQuotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,data.reserved_quota,idUser  )
 
       //send email
       const courseData = await coursesQueries.findCourse(data.id_courses)

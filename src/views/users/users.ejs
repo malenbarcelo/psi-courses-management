@@ -18,7 +18,7 @@
     <div class="divInputsRow">            
         <div class="divInput">
             <label class="label1">Institución</label>
-            <select class="input1 sl" id="filterCompany">
+            <select class="input1 sxxl spl" id="filterCompany">
                 <option value="">Todas las instituciones</option>
                 <% companies.forEach(company => { %>
                     <option value="<%= company.id %>">
@@ -34,22 +34,22 @@
     <div class="divInputsRow">
         <div class="divInput">
             <label class="label2">Apellido</label>
-            <input type="text" class="input1 im" id="filterLastName">
+            <input type="text" class="input1 il ipm" id="filterLastName">
             <ul class="predictedElements" id="filterLastNameUl"></ul>            
         </div>            
         <div class="divInput">
             <label class="label2">Nombre</label>
-            <input type="text" class="input1 im" id="filterFirstName">
+            <input type="text" class="input1 il ipm" id="filterFirstName">
             <ul class="predictedElements" id="filterFirstNameUl"></ul>            
         </div>
         <div class="divInput">
             <label class="label2">Email</label>
-            <input type="text" class="input1 im" id="filterEmail">
+            <input type="text" class="input1 il ipm" id="filterEmail">
             <ul class="predictedElements" id="filterEmailUl"></ul>                   
         </div>
         <div class="divInput">
             <label class="label2">Perfil</label>
-            <select class="input1 sm" id="filterCategory">
+            <select class="input1 sl spm" id="filterCategory">
                 <option value=""></option>
                 <% usersCategories.forEach(category => { %>
                     <option value="<%= category.id %>">

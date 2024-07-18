@@ -1,4 +1,3 @@
-
 let neg = {
     formatter:new Intl.NumberFormat('es-ES', {
         minimumFractionDigits: 0,
@@ -12,7 +11,8 @@ let neg = {
     eventAvailableQuota:0,
     eventCourseName:'',
     eventCourseId:0,
-    editReservationType:''
+    editReservationType:'',
+    companyReservationsQty:0
 
 }
 
