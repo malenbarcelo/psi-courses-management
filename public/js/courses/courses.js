@@ -5,6 +5,8 @@ import { closePopupsEventListeners,showOkPopup,clearInputs,isValid} from "../gen
 
 window.addEventListener('load',async()=>{
 
+    coursesLoader.style.display = 'block'
+
     //get data and complete globals
     cg.companies = await (await fetch(dominio + 'apis/companies')).json()
     cg.courses = await (await fetch(dominio + 'apis/courses')).json()

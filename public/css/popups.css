@@ -195,8 +195,14 @@
     position: relative;
 }
 
+#dsppContent,#ssppContent{
+    top: 35%;
+    width: 400px;
+    left: calc(50vw - 200px);
+}
+
 /*ok contents*/
-#buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent,#ccoppOkContent,#ceppOkContent,#rqppOkContent,#creppOkContent{
+#buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent,#ccoppOkContent,#ceppOkContent,#rqppOkContent,#creppOkContent,#stppOkContent{
     top: 40%;
     left: calc(50vw - 150px);
 }

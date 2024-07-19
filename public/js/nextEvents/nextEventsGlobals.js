@@ -6,13 +6,16 @@ let neg = {
     companyEvents:[],
     companyEventsFiltered:[],
     companyReservations:[],
+    companyAssignedStudents:[],
     idCompany:0,
     eventId:0,
     eventAvailableQuota:0,
     eventCourseName:'',
     eventCourseId:0,
     editReservationType:'',
-    companyReservationsQty:0
+    companyReservationsQty:0,
+    eventCompanyAssignedStudents:[],
+    idStudentToDelete:0
 
 }
 

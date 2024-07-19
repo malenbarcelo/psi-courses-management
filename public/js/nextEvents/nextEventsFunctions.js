@@ -1,6 +1,6 @@
 import { dominio } from "../dominio.js"
 import neg from "./nextEventsGlobals.js"
-import {isInvalid,isValid,dateToString,clearInputs } from "../generalFunctions.js"
+import {isInvalid,isValid,dateToString,clearInputs, inputsValidation } from "../generalFunctions.js"
 
 async function printEvents(dataToPrint) {
     eventsLoader.style.display = 'block';
@@ -19,7 +19,9 @@ async function printEvents(dataToPrint) {
         const availableQuota = quota - reservedQuota
         let companyReservations = eventReservations.filter( er => er.id_companies == neg.idCompany)
         companyReservations = companyReservations.length == 0 ? 0 : companyReservations.reduce((sum, item) => sum + item.reserved_quota, 0)
-
+        const eventCompanyAssignedStudents = neg.companyAssignedStudents.filter(s => s.id_events == element.id_events)
+        const missingAssignations = companyReservations > eventCompanyAssignedStudents.length ? true : false
+        
         const divCourse = document.createElement('div');
         divCourse.id = 'divCourse';
 
@@ -29,11 +31,11 @@ async function printEvents(dataToPrint) {
 
         const courseNextEvent = document.createElement('div');
         courseNextEvent.id = 'courseNextEvent';
-        courseNextEvent.innerHTML = '<div><b>Próximo evento:</b></div><div>' + dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date) + '</div><div>' + startTime + ' a ' + endTime + ' hs.</div>';
+        courseNextEvent.innerHTML = '<div>' + dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date) + '</div><div>' + startTime + ' a ' + endTime + ' hs.</div>';
 
         const courseInfo = document.createElement('div');
         courseInfo.id = 'courseInfo';
-        courseInfo.innerHTML = '<div><b>Cupos disponibles: </b>' + availableQuota + '</div><div><b>Cupos reservados: </b>' + companyReservations + '</div>';
+        courseInfo.innerHTML = '<div><b>Cupos disponibles: </b>' + availableQuota + '</div><div><b>Cupos reservados: </b>' + companyReservations + '</div><div><b>Cupos asignados: </b>' + eventCompanyAssignedStudents.length + '</div>';
 
         const coursesActions = document.createElement('div');
         coursesActions.id = 'courseActions';
@@ -54,10 +56,15 @@ async function printEvents(dataToPrint) {
         reserveAction.className = companyReservations != 0 ? 'courseAction notVisible' : 'courseAction';
         reserveAction.innerHTML = '<i class="fa-solid fa-user-plus icon" id="reserve_' + element.id + '"></i><div class="courseActionInfo2">Reservar cupo</div>';
 
+        const alert = document.createElement('div');
+        alert.className = missingAssignations ? 'courseAlert' : 'notVisible';
+        alert.innerHTML = '<i class="fa-solid fa-triangle-exclamation icon" id="alert_' + element.id + '"></i><div class="courseActionInfo3">Tiene cupos pendientes de asignación</div>';
+
         coursesActions.appendChild(editAction);
         coursesActions.appendChild(cancelAction);
         coursesActions.appendChild(studentsAction);
         coursesActions.appendChild(reserveAction);
+        coursesActions.appendChild(alert);
         
         divCourse.appendChild(courseTitle);
         divCourse.appendChild(courseNextEvent);
@@ -120,6 +127,9 @@ async function addEventsEventListeners(dataToPrint) {
 
         //students
         students.addEventListener('click',async()=>{
+            const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+            isValid(inputs)
+            stppError.style.display = 'none'
             const eventData = await getEventData(element)
             stppMainTitle.innerText = element.events_companies_courses.course_name
             stppSubtitle.innerHTML = '<b>Fecha:</b> ' + eventData.startDate + ' - ' + eventData.endDate + ' || ' + eventData.startTime + 'hs. a ' +eventData.endTime + 'hs.'
@@ -133,7 +143,7 @@ async function addEventsEventListeners(dataToPrint) {
 
 async function getEventData(element) {
 
-    const assignedStudents = await (await fetch(dominio + 'apis/assigned-students/' + neg.idCompany + '/' + element.id_events)).json()
+    const eventAssignedStudents = await (await fetch(dominio + 'apis/assigned-students/' + neg.idCompany + '/' + element.id_events)).json()
 
     const startDate = dateToString(element.events_companies_events.start_date)
     const endDate = dateToString(element.events_companies_events.end_date)
@@ -153,7 +163,7 @@ async function getEventData(element) {
     neg.eventCourseName = element.events_companies_courses.course_name
     neg.eventCourseId = element.id_courses
     neg.companyReservationsQty = companyReservationsQty
-    neg.assignedStudents = assignedStudents
+    neg.eventAssignedStudents = eventAssignedStudents
     rqppQuotaError.style.display = 'none'
     rqppCourse.innerText = element.events_companies_courses.course_name
     rqppDate.innerText = dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date)
@@ -244,6 +254,32 @@ function editQuotaValidations() {
     return errors
 }
 
+function addStudentValidations() {
+
+    const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+    let errors = inputsValidation(inputs)
+
+    if (errors == 0) {
+        const findDNI  = neg.assignedStudents.filter(s => s.dni == stppDNI.value)
+        if (findDNI.length > 0 ) {
+            errors += 1
+            stppError.innerText = 'Ya existe en la lista un alumno con el dni ' + stppDNI.value
+            isInvalid([stppDNI])
+        }else{
+            isValid([stppDNI])
+            stppError.style.display = 'none'
+        }
+    }else{
+        stppError.innerText = 'Debe complear todos los datos'
+    }
+
+    if (errors > 0) {
+        stppError.style.display = 'block'
+    }
+
+    return errors
+}
+
 async function printStudents(dataToPrint) {
 
     studentsLoader.style.display = 'block'
@@ -272,11 +308,27 @@ async function printStudents(dataToPrint) {
 // Insertar todo el HTML en el DOM de una sola vez
 bodyStudents.innerHTML += html;
 
-    //addStudentsEventListeners(dataToPrint)
+    addStudentsEventListeners(dataToPrint)
 
     studentsLoader.style.display = 'none'
 }
 
+async function addStudentsEventListeners(dataToPrint) {
+
+    dataToPrint.forEach(element => {
+
+        const deleteStudent = document.getElementById('delete_' + element.id)
+
+        //delete students
+        deleteStudent.addEventListener('click',async()=>{
+            dsppQuestion.innerHTML = '¿Confirma que desea eliminar al alumno <b>' + element.last_name + ' ' + element.first_name + '</b>?'
+            neg.idStudentToDelete = element.id
+            dspp.style.display = 'block'
+        })
+        
+    })
+}
 
 
-export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations}
+
+export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations,addStudentValidations,printStudents}

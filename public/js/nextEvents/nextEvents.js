@@ -1,15 +1,18 @@
 import { dominio } from "../dominio.js"
-import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations} from "./nextEventsFunctions.js"
+import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations,addStudentValidations, printStudents} from "./nextEventsFunctions.js"
 import neg from "./nextEventsGlobals.js"
 import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,isValid} from "../generalFunctions.js"
 
 window.addEventListener('load',async()=>{
+
+    eventsLoader.style.display = 'block'
     
     //get data and complete globals
     neg.idCompany = document.getElementById('idCompany').innerText
     neg.companyEvents = await (await fetch(dominio + 'apis/courses/company-next-events/' + neg.idCompany)).json()
     neg.companyEventsFiltered = neg.companyEvents
     neg.companyReservations = await (await fetch(dominio + 'apis/company-reservations/' + neg.idCompany)).json()
+    neg.companyAssignedStudents = await (await fetch(dominio + 'apis/company-assigned-students/' + neg.idCompany)).json()
     
     //print events
     printEvents(neg.companyEventsFiltered)
@@ -24,7 +27,7 @@ window.addEventListener('load',async()=>{
     })
 
     //close popups
-    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel]
+    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel]
     closePopupsEventListeners(closePopups)
 
     //reserve quota
@@ -115,6 +118,73 @@ window.addEventListener('load',async()=>{
 
         showOkPopup(creppOk)
     })
+
+    //nextEventsStudentsPopup
+    stppAddStudent.addEventListener("click", async() => {
+        
+        const errors = addStudentValidations()
+
+        if (errors == 0) {
+
+            const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+            const maxId = neg.eventAssignedStudents.length == 0 ? 0 : neg.eventAssignedStudents.reduce((max, st) => (st.id > max ? st.id : max), neg.eventAssignedStudents[0].id);
+
+            neg.eventAssignedStudents.push({
+                id: maxId + 1,
+                dni:stppDNI.value,
+                email:stppEmail.value,
+                first_name:stppFirstName.value,
+                id_companies:neg.idCompany,
+                id_courses:neg.eventCourseId,
+                id_events:neg.eventId,
+                last_name:stppLastName.value
+            })
+
+            printStudents(neg.eventAssignedStudents)
+            clearInputs(inputs)
+            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + neg.companyReservationsQty + ' || <b>Cupos asignados: </b>' + neg.eventAssignedStudents.length
+            
+        }
+
+    })
+
+    dsppAccept.addEventListener("click", async() => {
+        neg.eventAssignedStudents = neg.eventAssignedStudents.filter(s => s.id != neg.idStudentToDelete)
+        printStudents(neg.eventAssignedStudents)
+        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + neg.companyReservationsQty + ' || <b>Cupos asignados: </b>' + neg.eventAssignedStudents.length
+        dspp.style.display = 'none'
+
+    })
+
+    stppAccept.addEventListener("click", async() => {
+        sspp.style.display = 'block'
+    })
+
+    ssppAccept.addEventListener("click", async() => {
+
+        const data = {
+            id_events: neg.eventId,
+            id_companies: neg.idCompany,
+            students:neg.eventAssignedStudents
+        }
+
+        await fetch(dominio + 'apis/update-assigned-students/',{
+            method:'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        })
+
+        printStudents(neg.eventAssignedStudents)
+        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + neg.companyReservationsQty + ' || <b>Cupos asignados: </b>' + neg.eventAssignedStudents.length
+        sspp.style.display = 'none'
+        stpp.style.display = 'none'
+        showOkPopup(stppOk)
+        
+
+
+
+    })
+
 
 
 })

@@ -62,7 +62,7 @@
 }
 
 #courseNextEvent{
-    height: 33%;
+    height: 23%;
     display: flex;
     flex-direction: column;
     row-gap: 5px;
@@ -75,7 +75,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 5px;
-    height: 25%;
+    height: 35%;
     align-items: center;
     justify-content: center;
     border-top: var(--color1) solid 2px;
@@ -85,6 +85,7 @@
 #courseActions{
     position: absolute;
     display: flex;
+    align-items: center;
     column-gap: 10px;
     font-size: 16px;
     bottom: 5px;
@@ -95,8 +96,9 @@
     position: relative;
 }
 
-.courseAction:hover{
-    color:var(--color2)
+.courseAction2{
+    position: relative;
+    font-size: 18px;
 }
 
 .courseActionInfo{
@@ -114,9 +116,23 @@
     background-color: white;
     border: var(--color1) solid 1px;
     padding: 5px;
-    bottom: 22px;
+    bottom: 25px;
     right: -20px;
     z-index: 1;
+}
+
+.courseActionInfo3{
+    font-size: 12px;
+    position: absolute;
+    display: none;
+    background-color: white;
+    border: var(--color1) solid 1px;
+    padding: 5px;
+    bottom: 25px;
+    left: -50px;
+    z-index: 1;
+    color: black;
+    width: 100px;
 }
 
 .courseAction:hover .courseActionInfo{
@@ -124,6 +140,20 @@
 }
 
 .courseAction:hover .courseActionInfo2{
+    display: block;
+}
+
+.courseAction2:hover .courseActionInfo2{
+    display: block;
+}
+
+.courseAlert{
+    color: var(--errorColor);
+    position: absolute;
+    left: -150px;
+}
+
+.courseAlert:hover .courseActionInfo3{
     display: block;
 }
 

@@ -41,29 +41,31 @@
             </div>                                
         </div>
         
-        <div class="divInputsRow mtm mbm">
+        <div class="divInputsRow mtm">
             <div class="divInput">
-                <label class="label1 fwb">Apellido</label>
-                <input type="text" class="input1 il ipm" id="createUserLastName">                    
+                <label class="label1 fwb" id="stppLastNameLabel">Apellido</label>
+                <input type="text" class="input1 il ipm" id="stppLastName">                    
             </div>
             <div class="divInput">
-                <label class="label1 fwb">Nombre</label>
-                <input type="text" class="input1 il ipm" id="createUserFirstName">                    
+                <label class="label1 fwb" id="stppFirstNameLabel">Nombre</label>
+                <input type="text" class="input1 il ipm" id="stppFirstName">                    
             </div>
             <div class="divInput">
-                <label class="label1 fwb">Email</label>
-                <input type="text" class="input1 il ipm" id="createUserEmail">                    
+                <label class="label1 fwb" id="stppEmailLabel">Email</label>
+                <input type="text" class="input1 il ipm" id="stppEmail">                    
             </div>
             <div class="divInput">
-                <label class="label1 fwb">DNI</label>
-                <input type="number" class="input1 im ipm" id="createUserDNI">                    
+                <label class="label1 fwb" id="stppDNILabel">DNI</label>
+                <input type="number" class="input1 im ipm" id="stppDNI">                    
             </div>
             <div id="stppAddStudent">
                 <i class="fa-solid fa-plus"></i>
             </div>
         </div>
 
-        <div class="divTable" id="studentsTable">
+        <div class="divError" id="stppError"></div>
+
+        <div class="divTable mtm" id="studentsTable">
             <table>
                 <thead>
                     <tr>
@@ -92,7 +94,45 @@
     <div class="okContent" id="stppOkContent">
         <div class="okDiv">
             <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
-            <div class="okText" id="stppOkText"></div>
+            <div class="okText" id="stppOkText">Alumnos asignados con éxito</div>
+        </div>
+    </div>
+</div>
+
+<!----------confirm delete student---------->
+<div class="popup" id="dspp">
+    
+    <div class="popupContent" id="dsppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-trash-can"></i></div>
+            <div class="popupClose1" id="dsppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupQuestion" id="dsppQuestion"></div>       
+        
+        <div class="divButtonsRow mbs">
+            <div id="dsppAccept" class="button1 bs">Aceptar</div>
+            <div id="dsppCancel" class="button1 bs">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<!----------confirm save data---------->
+<div class="popup" id="sspp">
+    
+    <div class="popupContent" id="ssppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-floppy-disk"></i></div>
+            <div class="popupClose1" id="ssppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupQuestion" id="ssppQuestion">¿Confirma que desea guardar los datos?</div>       
+        
+        <div class="divButtonsRow mbs">
+            <div id="ssppAccept" class="button1 bs">Aceptar</div>
+            <div id="ssppCancel" class="button1 bs">Cancelar</div>
         </div>
     </div>
 </div>

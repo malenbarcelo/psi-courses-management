@@ -36,7 +36,9 @@ router.post('/courses/next-events/edit-reservation',apisCoursesController.editRe
 router.get('/company-reservations/:idCompany',apisCoursesController.companyReservations)
 
 //courses-events-students
-router.get('/assigned-students/:companyId/:eventId',apisStudentsController.assignedStudents)
+router.get('/company-assigned-students/:companyId',apisStudentsController.companyAssignedStudents)
+router.get('/event-company-assigned-students/:companyId/:eventId',apisStudentsController.eventCompanyAssignedStudents)
+router.post('/update-assigned-students',apisStudentsController.updateAssignedStudents)
 
 
 
