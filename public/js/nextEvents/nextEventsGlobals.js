@@ -15,8 +15,8 @@ let neg = {
     editReservationType:'',
     companyReservationsQty:0,
     eventCompanyAssignedStudents:[],
+    eventAssignedStudents:[],
     idStudentToDelete:0
-
 }
 
 export default neg

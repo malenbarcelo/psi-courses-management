@@ -1,7 +1,7 @@
 const coursesQueries = require('./dbQueries/coursesQueries')
 const coursesEventsQueries = require('./dbQueries/coursesEventsQueries')
 const coursesEventsInvitedCompaniesQueries = require('./dbQueries/coursesEventsInvitedCompaniesQueries')
-const coursesQuotaReservationsQueries = require('./dbQueries/coursesQuotaReservationsQueries')
+const quotaReservationsQueries = require('./dbQueries/quotaReservationsQueries')
 const companiesQueries = require('./dbQueries/companiesQueries')
 const {sendEmail,getDateArg,eventDateToArg} = require('./functions/generalFunctions')
 
@@ -23,6 +23,19 @@ const coursesApisController = {
 
       const data = req.body
       await coursesQueries.createCourse(data)
+
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  editCourse: async(req,res) =>{
+    try{
+
+      const data = req.body
+      await coursesQueries.editCourse(data)
 
       res.status(200).json()
 
@@ -88,7 +101,7 @@ const coursesApisController = {
       const idUser = req.session.userLogged.id
 
       //reserve quota
-      await coursesQuotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,data.reserved_quota,idUser  )
+      await quotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,data.reserved_quota,idUser  )
 
       //send email
       const courseData = await coursesQueries.findCourse(data.id_courses)
@@ -115,7 +128,7 @@ const coursesApisController = {
     try{
       const data = req.body
 
-      await coursesQuotaReservationsQueries.cancelReservation(data)
+      await quotaReservationsQueries.cancelReservation(data)
 
       res.status(200).json()
 
@@ -130,11 +143,11 @@ const coursesApisController = {
       const idUser = req.session.userLogged.id
 
       //get reservations data
-      const eventReservedQuota = await coursesQuotaReservationsQueries.eventReservedQuota(data.id_companies,data.id_events)
+      const eventReservedQuota = await quotaReservationsQueries.eventReservedQuota(data.id_companies,data.id_events)
       const quotaDifference = data.reserved_quota - eventReservedQuota
 
       //edit reservation
-      await coursesQuotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,quotaDifference,idUser)
+      await quotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,quotaDifference,idUser)
 
       res.status(200).json()
 
@@ -148,7 +161,7 @@ const coursesApisController = {
 
       const idCompany = req.params.idCompany
 
-      const companyReservations = await coursesQuotaReservationsQueries.companyReservations(idCompany)
+      const companyReservations = await quotaReservationsQueries.companyReservations(idCompany)
 
       res.status(200).json(companyReservations)
 

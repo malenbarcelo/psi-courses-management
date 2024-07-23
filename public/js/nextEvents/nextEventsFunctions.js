@@ -4,7 +4,7 @@ import {isInvalid,isValid,dateToString,clearInputs, inputsValidation } from "../
 
 async function printEvents(dataToPrint) {
     eventsLoader.style.display = 'block';
-    divCourses.innerHTML = '';
+    divEvents.innerHTML = '';
 
     const fragment = document.createDocumentFragment();
 
@@ -22,23 +22,27 @@ async function printEvents(dataToPrint) {
         const eventCompanyAssignedStudents = neg.companyAssignedStudents.filter(s => s.id_events == element.id_events)
         const missingAssignations = companyReservations > eventCompanyAssignedStudents.length ? true : false
         
-        const divCourse = document.createElement('div');
-        divCourse.id = 'divCourse';
+        const divEvent = document.createElement('div');
+        divEvent.id = 'divEvent';
 
-        const courseTitle = document.createElement('div');
-        courseTitle.id = 'courseTitle';
-        courseTitle.textContent = element.events_companies_courses.course_name
+        const eventCourseTitle = document.createElement('div');
+        eventCourseTitle.id = 'eventCourseTitle';
+        eventCourseTitle.textContent = element.events_companies_courses.course_name
 
-        const courseNextEvent = document.createElement('div');
-        courseNextEvent.id = 'courseNextEvent';
-        courseNextEvent.innerHTML = '<div>' + dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date) + '</div><div>' + startTime + ' a ' + endTime + ' hs.</div>';
+        const eventId = document.createElement('div');
+        eventId.id = 'eventId';
+        eventId.textContent = '#' + String(element.id).padStart(8, '0')
 
-        const courseInfo = document.createElement('div');
-        courseInfo.id = 'courseInfo';
-        courseInfo.innerHTML = '<div><b>Cupos disponibles: </b>' + availableQuota + '</div><div><b>Cupos reservados: </b>' + companyReservations + '</div><div><b>Cupos asignados: </b>' + eventCompanyAssignedStudents.length + '</div>';
+        const eventData = document.createElement('div');
+        eventData.id = 'eventData';
+        eventData.innerHTML = '<div>' + dateToString(element.events_companies_events.start_date) + ' - ' + dateToString(element.events_companies_events.end_date) + '</div><div>' + startTime + ' a ' + endTime + ' hs.</div>';
 
-        const coursesActions = document.createElement('div');
-        coursesActions.id = 'courseActions';
+        const eventInfo = document.createElement('div');
+        eventInfo.id = 'eventInfo';
+        eventInfo.innerHTML = '<div>Disponible: ' + availableQuota + '</div><div>Reservado: ' + companyReservations + '</div><div>Asignado: ' + eventCompanyAssignedStudents.length + '</div>';
+
+        const eventActions = document.createElement('div');
+        eventActions.id = 'eventActions';
         
         const editAction = document.createElement('div');
         editAction.className = companyReservations == 0 ? 'courseAction notVisible' : 'courseAction';
@@ -57,24 +61,25 @@ async function printEvents(dataToPrint) {
         reserveAction.innerHTML = '<i class="fa-solid fa-user-plus icon" id="reserve_' + element.id + '"></i><div class="courseActionInfo2">Reservar cupo</div>';
 
         const alert = document.createElement('div');
-        alert.className = missingAssignations ? 'courseAlert' : 'notVisible';
+        alert.className = missingAssignations ? 'eventAlert' : 'notVisible';
         alert.innerHTML = '<i class="fa-solid fa-triangle-exclamation icon" id="alert_' + element.id + '"></i><div class="courseActionInfo3">Tiene cupos pendientes de asignación</div>';
 
-        coursesActions.appendChild(editAction);
-        coursesActions.appendChild(cancelAction);
-        coursesActions.appendChild(studentsAction);
-        coursesActions.appendChild(reserveAction);
-        coursesActions.appendChild(alert);
+        eventActions.appendChild(editAction);
+        eventActions.appendChild(cancelAction);
+        eventActions.appendChild(studentsAction);
+        eventActions.appendChild(reserveAction);
+        eventActions.appendChild(alert);
         
-        divCourse.appendChild(courseTitle);
-        divCourse.appendChild(courseNextEvent);
-        divCourse.appendChild(courseInfo);
-        divCourse.appendChild(coursesActions);
+        divEvent.appendChild(eventCourseTitle);
+        divEvent.appendChild(eventId);
+        divEvent.appendChild(eventData);
+        divEvent.appendChild(eventInfo);
+        divEvent.appendChild(eventActions);
 
-        fragment.appendChild(divCourse);
+        fragment.appendChild(divEvent);
     });
 
-    divCourses.appendChild(fragment);
+    divEvents.appendChild(fragment);
 
     await addEventsEventListeners(dataToPrint);
 
@@ -133,8 +138,8 @@ async function addEventsEventListeners(dataToPrint) {
             const eventData = await getEventData(element)
             stppMainTitle.innerText = element.events_companies_courses.course_name
             stppSubtitle.innerHTML = '<b>Fecha:</b> ' + eventData.startDate + ' - ' + eventData.endDate + ' || ' + eventData.startTime + 'hs. a ' +eventData.endTime + 'hs.'
-            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eventData.companyReservationsQty + ' || <b>Cupos asignados: </b>' + eventData.assignedStudents.length
-            printStudents(neg.assignedStudents)
+            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eventData.companyReservationsQty + ' || <b>Cupos asignados: </b>' + eventData.eventAssignedStudents.length
+            printStudents(neg.eventAssignedStudents)
             stpp.style.display = 'block'
         })
         
@@ -143,7 +148,7 @@ async function addEventsEventListeners(dataToPrint) {
 
 async function getEventData(element) {
 
-    const eventAssignedStudents = await (await fetch(dominio + 'apis/assigned-students/' + neg.idCompany + '/' + element.id_events)).json()
+    const eventAssignedStudents = await (await fetch(dominio + 'apis/event-company-assigned-students/' + neg.idCompany + '/' + element.id_events)).json()
 
     const startDate = dateToString(element.events_companies_events.start_date)
     const endDate = dateToString(element.events_companies_events.end_date)
@@ -176,7 +181,7 @@ async function getEventData(element) {
     rqppTime.innerText = startTime + ' a ' + endTime + ' hs.'
     rqppAvailableQuota.innerText = 'Cupos disponibles: ' + availableQuota
 
-    const eventData = {startDate,endDate,startTime,endTime,companyReservationsQty,availableQuota,assignedStudents}
+    const eventData = {startDate,endDate,startTime,endTime,companyReservationsQty,availableQuota,eventAssignedStudents}
 
     return eventData
 }
@@ -254,13 +259,90 @@ function editQuotaValidations() {
     return errors
 }
 
+async function uploadExcelValidations() {
+
+    let errors = 0
+
+    const file = ueppFile.files[0]
+
+    if (!file) {
+        errors += 1
+        isInvalid([ueppDivInput])
+        ueppFileError.innerText = 'Debe seleccionar un archivo'
+        ueppFileError.style.display = 'block'        
+    }else{
+
+        const fileName = file.name;
+        const fileExtension = fileName.split('.').pop()
+
+        if (fileExtension != 'xlsx' && fileExtension != 'xls') {
+            errors +=1
+            ueppFileError.innerText = 'Las extensiones permitidas son ".xlsx" y ".xls"'
+        }else{
+            const formData = new FormData()
+            formData.append('ueppFile', ueppFile.files[0])
+
+            const response = await fetch('/apis/events-students/read-excel-file', {
+                method: 'POST',
+                body: formData
+                })
+
+            let data = await response.json()
+            data.shift()
+
+            if (neg.companyReservationsQty < (neg.eventAssignedStudents.length + data.length)) {
+                errors += 1
+                ueppFileError.innerText = 'Supera la cantidad de cupos reservados'                
+            }
+
+            if (errors == 0) {
+                data.forEach(row => {
+                    if (row.includes(null) || row.includes('')) {
+                        errors +=1
+                        ueppFileError.innerText = 'Se detectaron campos vacíos en el archivo'
+                    }
+                })
+            }
+
+            if (errors == 0) {
+                const dnis = data.map(subArray => String(subArray[3]))
+                const uniqueDnis = [...new Set(dnis)]
+
+                if (dnis.length != uniqueDnis.length) {
+                    errors +=1
+                    ueppFileError.innerText = 'Se detectaron DNIs duplicados en el archivo'
+                }else{
+                    const assignedDnis = neg.eventAssignedStudents.map(students => students.dni)
+                    
+                    const set1 = new Set(dnis)
+                    const set2 = new Set(assignedDnis)                    
+
+                    const repeatedDnis = [...set1].filter(dni => set2.has(dni))
+
+                    if (repeatedDnis.length > 0) {
+                        errors +=1
+                        ueppFileError.innerText = 'Se detectaron DNIs ya asignados en el archivo'
+                    }
+                }
+            }
+        }
+    }
+
+    if (errors > 0) {
+        isInvalid([ueppDivInput])
+        ueppFileError.style.display = 'block'
+    }
+
+    return errors
+}
+
 function addStudentValidations() {
 
     const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
     let errors = inputsValidation(inputs)
 
     if (errors == 0) {
-        const findDNI  = neg.assignedStudents.filter(s => s.dni == stppDNI.value)
+        const findDNI  = neg.eventAssignedStudents.filter(s => s.dni == stppDNI.value)
         if (findDNI.length > 0 ) {
             errors += 1
             stppError.innerText = 'Ya existe en la lista un alumno con el dni ' + stppDNI.value
@@ -331,4 +413,6 @@ async function addStudentsEventListeners(dataToPrint) {
 
 
 
-export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations,addStudentValidations,printStudents}
+
+
+export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations,addStudentValidations,printStudents,uploadExcelValidations}

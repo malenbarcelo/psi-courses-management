@@ -184,7 +184,9 @@ function isInvalid(inputs) {
         const label = document.getElementById(input.id + 'Label')
         const error = document.getElementById(input.id + 'Error')
         input.classList.add('invalidInput')
-        label.classList.add('invalidLabel')
+        if (label) {
+            label.classList.add('invalidLabel')
+        }
         if (error) {
             error.style.display = 'block'
         }

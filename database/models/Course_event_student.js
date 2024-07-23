@@ -36,7 +36,11 @@ module.exports = (sequelize, DataTypes) => {
       id_courses:{
          type: DataTypes.INTEGER,
          allowNull: false,
-      }
+      },
+      enabled:{
+         type: DataTypes.INTEGER,
+         allowNull: false,
+      },
     }
 
    const config = {

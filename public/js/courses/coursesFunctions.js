@@ -3,6 +3,7 @@ import cg from "./coursesGlobals.js"
 import {isInvalid,isValid,dateToString,clearInputs } from "../generalFunctions.js"
 
 async function printCourses(dataToPrint) {
+
     coursesLoader.style.display = 'block';
     divCourses.innerHTML = '';
 
@@ -10,8 +11,12 @@ async function printCourses(dataToPrint) {
 
     dataToPrint.forEach(element => {
 
-        const today = new Date();
-        const todayNormalized = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const today = new Date()
+        const todayNormalized = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+        let courseCompanies = cg.companiesPerCourse.filter( cpc => cpc.id_courses == element.id)
+        courseCompanies = courseCompanies.length == 0 ? 0 : courseCompanies[0].course_companies
+        let courseStudents = cg.studentsPerCourse.filter( spc => spc.id_courses == element.id)
+        courseStudents = courseStudents.length == 0 ? 0 : courseStudents[0].course_students
 
 
         //get next events
@@ -40,18 +45,18 @@ async function printCourses(dataToPrint) {
 
         const courseInfo = document.createElement('div');
         courseInfo.id = 'courseInfo';
-        courseInfo.innerHTML = '<div><b>Empresas: </b> 150</div><div><b>Alumnos: </b> 1500</div>';
+        courseInfo.innerHTML = '<div><b>Empresas: </b> ' + courseCompanies + '</div><div><b>Alumnos: </b> ' + courseStudents + '</div>';
 
         const coursesActions = document.createElement('div');
         coursesActions.id = 'courseActions';
 
         const viewDetailsAction = document.createElement('div');
         viewDetailsAction.className = 'courseAction';
-        viewDetailsAction.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus icon" id="view_' + element.id + '"></i><div class="courseActionInfo">Ver detalles</div>';
+        viewDetailsAction.innerHTML = '<i class="fa-regular fa-pen-to-square icon" id="edit_' + element.id + '"></i><div class="courseActionInfo1">Editar curso</div>';
 
         const createEventAction = document.createElement('div');
         createEventAction.className = 'courseAction';
-        createEventAction.innerHTML = '<i class="fa-regular fa-calendar-plus icon" id="create_' + element.id + '"></i><div class="courseActionInfo">Crear evento</div>';
+        createEventAction.innerHTML = '<i class="fa-regular fa-calendar-plus icon" id="create_' + element.id + '"></i><div class="courseActionInfo1">Crear evento</div>';
 
         coursesActions.appendChild(viewDetailsAction);
         coursesActions.appendChild(createEventAction);
@@ -75,7 +80,7 @@ function addCoursesEventListeners(dataToPrint) {
 
     dataToPrint.forEach(element => {
 
-        const view = document.getElementById('view_' + element.id)
+        const edit = document.getElementById('edit_' + element.id)
         const create = document.getElementById('create_' + element.id)
 
         //create event        
@@ -94,6 +99,21 @@ function addCoursesEventListeners(dataToPrint) {
             clickAllCompanies()
             cg.newEventCourseId = element.id
             cepp.style.display = 'block'
+        })
+
+        //edit course        
+        edit.addEventListener('click',async()=>{
+            const inputs = [ccoppCourseName,ccoppCourseDescription,ccoppCourseQuota]
+            cg.action = 'edit'
+            cg.courseToEditId = element.id
+            cg.courseToEditName = element.course_name
+            ccoppTitle.innerText = 'EDITAR CURSO'
+            clearInputs(inputs)
+            isValid([ccoppCourseName])
+            ccoppCourseName.value = element.course_name
+            ccoppCourseDescription.value = element.course_description
+            ccoppCourseQuota.value = element.course_quota            
+            ccopp.style.display = 'block'
         })
     })
 }
@@ -131,13 +151,13 @@ function createCourseValidations() {
     
     //course name
     if (ccoppCourseName) {
-        if (ccoppCourseName.value == '') {
+        if (ccoppCourseName.value == '' || ccoppCourseName.value == 0) {
             ccoppCourseNameError.innerText = 'Debe completar el nombre del curso'
             isInvalid([ccoppCourseName])
             errors += 1            
         }else{
             const findCourse = cg.courses.filter(c => c.course_name == ccoppCourseName.value)
-            if (findCourse.length > 0) {
+            if (findCourse.length > 0 && (cg.action == 'create' || cg.courseToEditName != ccoppCourseName.value)) {
                 ccoppCourseNameError.innerText = 'Ya existe un curso con el nombre seleccionado'
                 isInvalid([ccoppCourseName])
                 errors += 1

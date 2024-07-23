@@ -11,6 +11,8 @@ window.addEventListener('load',async()=>{
     cg.companies = await (await fetch(dominio + 'apis/companies')).json()
     cg.courses = await (await fetch(dominio + 'apis/courses')).json()
     cg.coursesFiltered = cg.courses
+    cg.companiesPerCourse = await (await fetch(dominio + 'apis/quota-reservations/companies-per-course')).json()
+    cg.studentsPerCourse = await (await fetch(dominio + 'apis/events-students/students-per-course')).json()
 
     //complete select course
     updateSelectCourse()
@@ -36,6 +38,8 @@ window.addEventListener('load',async()=>{
         const inputs = [ccoppCourseName,ccoppCourseDescription,ccoppCourseQuota]
         clearInputs(inputs)
         isValid([ccoppCourseName])
+        cg.action = 'create'
+        ccoppTitle.innerText = 'CREAR CURSO'
         ccopp.style.display = 'block'
     })
 
@@ -48,13 +52,27 @@ window.addEventListener('load',async()=>{
                 course_name:ccoppCourseName.value,
                 course_description:ccoppCourseDescription.value,
                 course_quota:ccoppCourseQuota.value,
+                id:cg.courseToEditId
             }
 
-            await fetch(dominio + 'apis/courses/create-course',{
-                method:'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            })
+            if (cg.action == 'create') {
+                await fetch(dominio + 'apis/courses/create-course',{
+                    method:'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                })
+
+                ccoppOkText.innerText = 'Curso creado con éxito'
+
+            }else{
+                await fetch(dominio + 'apis/courses/edit-course',{
+                    method:'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                })
+
+                ccoppOkText.innerText = 'Curso editado con éxito'
+            }
 
             cg.courses = await (await fetch(dominio + 'apis/courses')).json()
             cg.coursesFiltered = cg.courses

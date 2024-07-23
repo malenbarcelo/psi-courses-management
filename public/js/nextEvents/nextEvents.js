@@ -1,5 +1,5 @@
 import { dominio } from "../dominio.js"
-import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations,addStudentValidations, printStudents} from "./nextEventsFunctions.js"
+import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations,addStudentValidations, printStudents, uploadExcelValidations} from "./nextEventsFunctions.js"
 import neg from "./nextEventsGlobals.js"
 import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,isValid} from "../generalFunctions.js"
 
@@ -27,7 +27,7 @@ window.addEventListener('load',async()=>{
     })
 
     //close popups
-    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel]
+    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel]
     closePopupsEventListeners(closePopups)
 
     //reserve quota
@@ -161,7 +161,6 @@ window.addEventListener('load',async()=>{
     })
 
     ssppAccept.addEventListener("click", async() => {
-
         const data = {
             id_events: neg.eventId,
             id_companies: neg.idCompany,
@@ -179,11 +178,45 @@ window.addEventListener('load',async()=>{
         sspp.style.display = 'none'
         stpp.style.display = 'none'
         showOkPopup(stppOk)
-        
+    })
 
+    uploadExcelIcon.addEventListener("click", async() => {
+        uepp.style.display = 'block'
+    })
 
+    ueppDownloadTemplate.addEventListener("click", async() => {
+        const fileUrl = '/files/studentsAssignation/uploadStudentsTemplate.xlsx'
+        const link = document.createElement('a')
+        link.href = fileUrl
+        link.download = 'uploadStudentsTemplate.xlsx'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    })
+
+    ueppAccept.addEventListener("click", async() => {
+
+        const errors = await uploadExcelValidations()
+        console.log(errors)
+
+        if (errors == 0) {
+            console.log(neg.eventAssignedStudents)
+            data.forEach(element => {
+                const id = neg.as
+                neg.eventAssignedStudents.push({
+
+                })
+            })
+            
+        }
 
     })
+
+
+
+    
+
+
 
 
 

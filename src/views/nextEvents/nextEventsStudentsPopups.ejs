@@ -19,28 +19,7 @@
                 Subir datos desde Excel
             </div>
         </div>
-        <div class="popup" id="uepp">                
-            <div id="ueppContent">
-                <div id="downloadTemplate">                
-                    <i class="fa-solid fa-download" id="downloadTemplateIcon"></i>
-                    <div id="showActionTemplate">
-                        Descargar template
-                    </div>
-                </div>
-                <div class="acceptCancelTitle">SUBIR ARCHIVO</div>
-                <div id="uploadInputContent" class="mts">
-                    <input type="file" id="uploadExcelInput" name="excelFile">                        
-                </div>
-                <div id="excelErrors" class="mbm">
-                    <div id="excelError" class="notVisible"></div>
-                </div>
-                <div class="divButtonsRow">
-                    <button id="uploadExcelPopupAccept" type="button" class="button1 bs">Subir</button>
-                    <button id="uploadExcelPopupCancel" type="button" class="button1 bs">Cancelar</button>
-                </div>
-            </div>                                
-        </div>
-        
+
         <div class="divInputsRow mtm">
             <div class="divInput">
                 <label class="label1 fwb" id="stppLastNameLabel">Apellido</label>
@@ -133,6 +112,38 @@
         <div class="divButtonsRow mbs">
             <div id="ssppAccept" class="button1 bs">Aceptar</div>
             <div id="ssppCancel" class="button1 bs">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<!----------upload excel popup---------->
+
+<div class="popup2" id="uepp">
+    
+    <div class="popupContent" id="ueppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-file-excel"></i></div>
+            <div class="popupClose1" id="ueppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div id="ueppDownloadTemplate">                
+            <i class="fa-solid fa-download" id="ueppDownloadTemplateIcon"></i>
+            <div id="showActionTemplate">
+                Descargar template
+            </div>
+        </div>
+
+        <div class="popupTitle1">SUBIR ARCHIVO</div>
+        
+        <div id="ueppDivInput" class="mtl">
+            <input type="file" id="ueppFile" name="ueppFile">                        
+        </div>
+        <div id="ueppFileError" class="divError"></div>
+        
+        <div class="divButtonsRow mtl mbs">
+            <div id="ueppAccept" class="button1 bs">Aceptar</div>
+            <div id="ueppCancel" class="button1 bs">Cancelar</div>
         </div>
     </div>
 </div>

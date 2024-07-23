@@ -26,43 +26,44 @@
     display: flex;
 }
 
-/*----------------------courses.ejs and nextEvents.ejs----------------------*/
+/*----------------------courses.ejs----------------------*/
 #divCourses{
     margin: auto;
     margin-top: 3vh;
     height: 63vh;
-    width: 1000px;
+    width: 1250px;
     display: flex;
     flex-wrap: wrap;
-    column-gap: 10px;
+    column-gap: 15px;
     justify-content: center;
+    align-items: flex-start;
     overflow: auto;
-
 }
 
 #divCourse{
     text-align: center;
-    border-radius: 8px;
+    border-radius: 0px;
     border: var(--color1) solid 2px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+    width: 280px;
+    height: 180px;
     padding-bottom: 10px;
-    width: 230px;
-    height: 200px;
-    margin-bottom: 10px;
     position: relative;
+    margin-bottom: 15px;
 }
 
 #courseTitle{
     display: flex;
     font-weight: bold;
-    height: 34%;
+    height: 35%;
     align-items: center;
     justify-content: center;
     background-color:var(--color1);
+    width: 100%;
 }
 
 #courseNextEvent{
-    height: 23%;
+    height: 30%;
     display: flex;
     flex-direction: column;
     row-gap: 5px;
@@ -94,6 +95,7 @@
 
 .courseAction{
     position: relative;
+    font-size: 15px;
 }
 
 .courseAction2{
@@ -101,19 +103,23 @@
     font-size: 18px;
 }
 
-.courseActionInfo{
+.courseActionInfo1{
     font-size: 12px;
     position: absolute;
     display: none;
-    bottom: 20px;
+    background-color: var(--color1);
+    border: var(--color1) solid 1px;
+    padding: 5px;
+    bottom: 24px;
     right: -10px;
+    z-index: 1;
 }
 
 .courseActionInfo2{
     font-size: 12px;
     position: absolute;
     display: none;
-    background-color: white;
+    background-color: var(--color1);
     border: var(--color1) solid 1px;
     padding: 5px;
     bottom: 25px;
@@ -125,17 +131,17 @@
     font-size: 12px;
     position: absolute;
     display: none;
-    background-color: white;
+    background-color: var(--color1);
     border: var(--color1) solid 1px;
     padding: 5px;
     bottom: 25px;
-    left: -50px;
+    left: -45px;
     z-index: 1;
     color: black;
     width: 100px;
 }
 
-.courseAction:hover .courseActionInfo{
+.courseAction:hover .courseActionInfo1{
     display: block;
 }
 
@@ -147,15 +153,95 @@
     display: block;
 }
 
-.courseAlert{
-    color: var(--errorColor);
-    position: absolute;
-    left: -150px;
+
+
+/*----------------------nextEvents.ejs----------------------*/
+#divEvents{
+    margin: auto;
+    margin-top: 3vh;
+    height: 60vh;
+    width: 1350px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 15px;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: auto;
 }
 
-.courseAlert:hover .courseActionInfo3{
+#divEvent{
+    text-align: center;
+    border-radius: 0px;
+    border: var(--color1) solid 2px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+    width: 270px;
+    height: 200px;
+    position: relative;
+    margin-bottom: 15px;    
+}
+
+#eventCourseTitle{
+    display: flex;
+    font-weight: bold;
+    height: 35%;
+    align-items: center;
+    justify-content: center;
+    background-color:var(--color1);
+}
+
+#eventId{
+    height: 11%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+}
+
+#eventData{
+    height: 23%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    border-top: var(--color1) solid 2px;
+}
+
+#eventInfo{
+    display: flex;
+    column-gap: 10px;
+    height: 13%;
+    align-items: center;
+    justify-content: center;
+    border-top: var(--color1) solid 2px;
+    font-size: 13px;
+}
+
+#eventActions{
+    display: flex;
+    column-gap: 15px;
+    height: 18%;
+    align-items: center;
+    justify-content: center;
+    border-top: var(--color1) solid 2px;
+    font-size: 13px;
+}
+
+.eventAlert{
+    color: var(--errorColor);
+    position: absolute;
+    right: 7px;
+    font-size: 15px;
+}
+
+.eventAlert:hover .courseActionInfo3{
     display: block;
 }
+
+
 
 /*----------------------coursesCreatePopup.ejs----------------------*/
 .divEventData{
@@ -188,7 +274,7 @@
 
 .inputTime{
     width: 110px;
-    padding: 7px 0px 5px 0px;
+    padding: 6px 0px 4px 0px;
 }
 
 /*----------------------nextEvents.ejs----------------------*/
@@ -202,20 +288,20 @@
 }
 
 
-/*----------------------nextEventsUsersPopups.ejs----------------------*/
+/*----------------------nextEventsStudentsPopups.ejs----------------------*/
 #uploadExcel{
     position: absolute;
     right: 10%;
-    top: 10%;
-    border: black solid 2px;
-    font-size: 18px;
-    height: 30px;
-    width: 30px;
+    top: 15%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 3px;
+    border-radius: 0px;
     cursor: pointer;
+}
+
+#uploadExcelIcon{
+    font-size: 30px !important;
 }
 
 #downloadTemplate{
@@ -231,20 +317,26 @@
     color:black
 }
 
-#uploadExcel:hover{
-    color:white;
-    background-color: black;
-}
-
 #uploadExcel:hover #uploadExcelIcon{
-    color: white;
+    color: var(--color2);
 }
 
 #uploadExcel:hover #showActionExcel{
     display: block;
 }
 
-#downloadTemplate:hover #showActionTemplate{
+#ueppDownloadTemplate{
+    position: absolute;
+    top:16%;
+    left: 70%;
+    cursor: pointer;
+}
+
+#ueppDownloadTemplate:hover{
+    color: var(--color2);
+}
+
+#ueppDownloadTemplate:hover #showActionTemplate{
     display: block;
 }
 
@@ -253,8 +345,8 @@
     padding: 2px 5px;
     position: absolute;
     font-size: 12px;
-    border-radius: 3px;
-    color: black;
+    border-radius: 0px;
+    color: var(--color2);
     top:105%;
     text-align: center;
     width: 80px;
@@ -265,10 +357,10 @@
     padding: 2px 5px;
     position: absolute;
     font-size: 12px;
-    border-radius: 3px;
-    color: var(--color1);
-    top:-4%;
-    right: 40%;
+    border-radius: 0px;
+    color: var(--color2);
+    top:-30%;
+    left: 50%;
     text-align: center;
     width: 80px;
 }
@@ -276,7 +368,7 @@
 #stppAddStudent{
     border: black solid 2px;
     padding:    1px 2px;
-    border-radius: 2px;
+    border-radius: 0px;
     cursor: pointer;
     margin-left: -5px;
 }
@@ -289,3 +381,10 @@
 #stppTable{
     max-height: 100px;
 }
+
+#ueppDivInput{
+    border: grey solid 1px;
+    padding: 10px 0px;
+    text-align: center;
+}
+

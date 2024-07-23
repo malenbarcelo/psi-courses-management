@@ -23,7 +23,7 @@
 
 .popupContent{    
     padding: 5px 7px;    
-    border-radius: 5px;
+    border-radius: 0px;
     background-color: white;
     position: relative;
     border: black solid 3px;
@@ -195,8 +195,8 @@
     position: relative;
 }
 
-#dsppContent,#ssppContent{
-    top: 35%;
+#dsppContent,#ssppContent,#ueppContent{
+    top: 30%;
     width: 400px;
     left: calc(50vw - 200px);
 }

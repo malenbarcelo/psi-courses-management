@@ -1,6 +1,6 @@
 const db = require('../../../database/models')
 const sequelize = require('sequelize')
-const { Op } = require('sequelize')
+const { Op, fn, col } = require('sequelize')
 const model = db.Courses_quota_reservations
 
 const coursesQuotaReservationsQueries = {
@@ -44,6 +44,20 @@ const coursesQuotaReservationsQueries = {
             }
         })
         return eventReservedQuota
+    },
+    companiesPerCourse: async() => {        
+        const companiesPerCourse = await model.findAll({
+            attributes: [
+                'id_courses',
+                [fn('COUNT', fn('DISTINCT', col('id_companies'))), 'course_companies']
+              ],
+              where: {
+                enabled: 1
+              },
+              group: ['id_courses']
+            })
+
+        return companiesPerCourse
     },
 }
 
