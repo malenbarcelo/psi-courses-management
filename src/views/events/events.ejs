@@ -1,0 +1,69 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<div id="idCompany" class="notVisible"><%= userLogged.id_companies %></div>
+<div id="idUserCategories" class="notVisible"><%= userLogged.id_users_categories %></div>
+
+<div class="mainTitle">
+    EVENTOS
+</div>
+
+<!------MAIN FILTERS------>
+<div class="mainFilters" id="eventsMainFilters">
+    <div class="divInputsRow">            
+        <div class="divInput">
+            <label class="label1">Curso</label>
+            <select class="input1 sxxxl spm" id="filterCourse">
+                <option value="">Todos los cursos</option>
+                <% courses.forEach(course => { %>
+                    <option value="<%= course.id %>"><%= course.course_name %></option>
+                <% }) %>                
+            </select>            
+        </div>
+        <div class="divInput">
+            <label class="label1">Inicio</label>
+            <input type="date" class="input1 is ipm" id="filterStartDate">                    
+        </div>
+        <div class="divInput">
+            <label class="label1">Fin</label>
+            <input type="date" class="input1 is ipm" id="filterEndDate">                    
+        </div>
+        <div class="divInput">
+            <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+        </div>
+    </div>    
+</div>
+
+<!------MAIN CONTENT------>
+<% if (userLogged.id_users_categories == 4) { %>
+    <div class="eventsCheckboxs">
+        <div class="eventsCheckbox">
+            <input type="checkbox" id="filterReserved">
+            <label>Mostrar sólo eventos reservados</label>
+        </div>
+    </div>
+    <% } else { %>
+        <div class="eventsCheckboxs">    
+            <div class="eventsCheckbox">
+                <input type="checkbox" id="filterFinished">
+                <label>Finalizados</label>
+            </div>
+            <div class="eventsCheckbox">
+                <input type="checkbox" id="filterOnCourse">
+                <label>En curso</label>
+            </div>
+            <div class="eventsCheckbox">
+                <input type="checkbox" id="filterPending">
+                <label>Por comenzar</label>
+            </div>
+        </div>
+<% } %>
+
+<div id="divEvents"></div>
+
+<!----------LOADER---------->
+<div class="loader" id="eventsLoader"></div>
+
+<%- include('./eventsPopups') %>
+<%- include('./eventsStudentsPopups') %>
+<script type="module" src="/js/events/events.js"></script>

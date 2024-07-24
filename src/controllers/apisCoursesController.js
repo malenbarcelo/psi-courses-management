@@ -88,7 +88,7 @@ const coursesApisController = {
 
       const companyNextEvents = await coursesEventsInvitedCompaniesQueries.getCompanyNextEvents(idCompany,dateArg)
 
-      res.status(200).json( companyNextEvents)
+      res.status(200).json(companyNextEvents)
 
     }catch(error){
       console.group(error)

@@ -107,6 +107,10 @@ accent-color: black
     width: 350px;
 }
 
+.sxxxl{
+    width: 400px;
+}
+
 .ixxxl{
     width: 300px;
 }
@@ -116,7 +120,7 @@ accent-color: black
 }
 
 .spm{
-    padding: 7px 0px 5px 0px;
+    padding: 7px 0px 7px 0px;
 }
 
 .ipl{

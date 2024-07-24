@@ -7,8 +7,8 @@ const bottomHeaderMenu = [
     },
     {
         id:2,
-        name:'PRÓXIMOS EVENTOS',
-        href:'/courses/next-events',
+        name:'EVENTOS',
+        href:'/courses/events',
         subitems:[]
     },
     {

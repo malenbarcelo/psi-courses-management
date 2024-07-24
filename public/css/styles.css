@@ -155,10 +155,28 @@
 
 
 
-/*----------------------nextEvents.ejs----------------------*/
+/*----------------------events.ejs----------------------*/
+.eventsCheckboxs{
+    position: absolute;
+    top: 20vh;
+    right: 120px;
+    padding: 8px;
+    border: var(--color1) solid 2px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.eventsCheckbox{
+    font-size: 12px;
+    font-weight: lighter;
+    display: flex;
+    align-items: center;
+}
+
 #divEvents{
     margin: auto;
-    margin-top: 3vh;
+    margin-top: 30px;
     height: 60vh;
     width: 1350px;
     display: flex;
@@ -241,6 +259,19 @@
     display: block;
 }
 
+#onCourse{
+    border: var(--color1) solid 1px;
+    background-color: var(--color1);
+    position: absolute;
+    top: 91%;
+    left: 0px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 5px;
+
+
+}
+
 
 
 /*----------------------coursesCreatePopup.ejs----------------------*/
@@ -277,18 +308,7 @@
     padding: 6px 0px 4px 0px;
 }
 
-/*----------------------nextEvents.ejs----------------------*/
-#nextEventsMainFilters{
-    margin-top: -3px;
-}
-
-#nextEventsCheckbox{
-    margin-top: 3px;
-    margin-bottom: -14px;
-}
-
-
-/*----------------------nextEventsStudentsPopups.ejs----------------------*/
+/*----------------------eventsStudentsPopups.ejs----------------------*/
 #uploadExcel{
     position: absolute;
     right: 10%;

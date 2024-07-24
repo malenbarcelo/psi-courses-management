@@ -167,6 +167,12 @@ function clearInputs(inputs) {
     })
 }
 
+function uncheckInputs(inputs) {
+    inputs.forEach(input => {
+        input.checked = false
+    })
+}
+
 function isValid(inputs) {
     inputs.forEach(input => {
         const label = document.getElementById(input.id + 'Label')
@@ -219,4 +225,4 @@ function emailValidation(email) {
 }
 
 
-export {dateToString,showOkPopup,predictElements,selectFocusedElement,closePopupsEventListeners,acceptWithEnter,showTableInfo,clearInputs, isValid, isInvalid,inputsValidation,emailValidation}
+export {dateToString,showOkPopup,predictElements,selectFocusedElement,closePopupsEventListeners,acceptWithEnter,showTableInfo,clearInputs, isValid, isInvalid,inputsValidation,emailValidation,uncheckInputs}

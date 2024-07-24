@@ -1,10 +1,53 @@
 const db = require('../../../database/models')
 const sequelize = require('sequelize')
-const Courses_events = db.Courses_events
+const { Op } = require('sequelize')
+const model = db.Courses_events
 
 const coursesEventsQueries = {
+    events: async() => {        
+        const events = await model.findAll({
+            where:{
+                enabled:1,
+            },
+            include: [
+                {association: 'events_courses'},
+                {association: 'events_invited_companies'},
+                {association: 'events_quota_reservations'},
+                {association: 'events_students'}
+            ],
+            order:['start_date'],
+            nest:true,
+        })
+        return events
+    },
+    companyEvents: async (idCompany) => {        
+        const companyEvents = await model.findAll({
+            where: {
+                enabled: 1,
+            },
+            include: [
+                {association: 'events_courses'},
+                {
+                    association: 'events_invited_companies',
+                    where: {
+                        id_companies: {
+                            [Op.eq]: idCompany
+                        }
+                    },
+                    required: true
+                },
+                {association: 'events_quota_reservations'},
+                {association: 'events_quota_reservations'},
+                {association: 'events_students'}
+            ],
+            order: ['start_date'],
+            nest: true,
+        });
+        return companyEvents;
+    },
+
     courseEvents: async(courseId) => {        
-        const courseEvents = await Courses_events.findAll({
+        const courseEvents = await model.findAll({
             where:{
                 enabled:1,
                 id_courses:courseId
@@ -18,14 +61,14 @@ const coursesEventsQueries = {
         return courseEvents
     },
     findEvent: async(idEvent) => {        
-        const findEvent = await Courses_events.findOne({
+        const findEvent = await model.findOne({
             where:{id:idEvent},
             raw:true,
         })
         return findEvent
     },
     lastEvent: async() => {        
-        const coursesEvents = await Courses_events.findAll({
+        const coursesEvents = await model.findAll({
             order:[['id','DESC']],
         })
 
@@ -34,7 +77,7 @@ const coursesEventsQueries = {
         return lastEvent
     },
     createEvent: async(data) => {        
-        await Courses_events.create({
+        await model.create({
             id_courses:data.id_courses,
             start_date:data.start_date,
             end_date:data.end_date,

@@ -17,13 +17,13 @@ const coursesController = {
             return res.send('Ha ocurrido un error')
         }
     },
-    nextEvents: async(req,res) => {
+    events: async(req,res) => {
         try{
             const idSelectedItem = 2
 
             const courses = await coursesQueries.courses()
 
-            return res.render('nextEvents/nextEvents',{title:'Próximos eventos',bottomHeaderMenu,idSelectedItem,courses})
+            return res.render('events/events',{title:'Eventos',bottomHeaderMenu,idSelectedItem,courses})
 
         }catch(error){
 

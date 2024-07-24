@@ -3,6 +3,7 @@ const multer = require('multer')
 const path = require('path')
 const usersApisController = require('../controllers/usersApisController.js')
 const apisCoursesController = require('../controllers/apisCoursesController.js')
+const apisCoursesEventsController = require('../controllers/apisCoursesEventsController.js')
 const apisEventsStudentsController = require('../controllers/apisEventsStudentsController.js')
 const apisQuotaReservationsController = require('../controllers/apisQuotaReservationsController.js')
 const router = express.Router()
@@ -44,6 +45,10 @@ router.get('/courses/courses-events/:courseId',apisCoursesController.coursesEven
 router.post('/courses/create-course',apisCoursesController.createCourse)
 router.post('/courses/edit-course',apisCoursesController.editCourse)
 router.post('/courses/create-event',apisCoursesController.createEvent)
+
+//courses-events
+router.get('/courses-events/events',apisCoursesEventsController.events)
+router.get('/courses-events/company-events/:idCompany',apisCoursesEventsController.companyEvents)
 
 //next-events
 router.get('/courses/company-next-events/:idCompany',apisCoursesController.companyNextEvents)

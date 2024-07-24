@@ -44,16 +44,16 @@ ul {
 }
 
 .mts{
-    margin-top: 5px;
+    margin-top: 5px !important;
 }
 .mbs{
-    margin-bottom: 5px;
+    margin-bottom: 5px !important;
 }
 .mtm{
     margin-top: 15px !important;
 }
 .mbm{
-    margin-bottom: 15px;
+    margin-bottom: 15px !important;
 }
 .mtl{
     margin-top: 30px;
