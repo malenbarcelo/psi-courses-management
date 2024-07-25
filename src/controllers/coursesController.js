@@ -22,8 +22,9 @@ const coursesController = {
             const idSelectedItem = 2
 
             const courses = await coursesQueries.courses()
+            const companies = await companiesQueries.companies()
 
-            return res.render('events/events',{title:'Eventos',bottomHeaderMenu,idSelectedItem,courses})
+            return res.render('events/events',{title:'Eventos',bottomHeaderMenu,idSelectedItem,courses,companies})
 
         }catch(error){
 

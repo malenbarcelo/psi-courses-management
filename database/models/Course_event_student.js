@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
          foreignKey: 'id_events'
       }),
       Course_event_student.belongsTo(models.Users_companies,{
-         as:'events_companies_companies',
+         as:'students_companies',
          foreignKey: 'id_companies'
       })
       Course_event_student.belongsTo(models.Courses,{

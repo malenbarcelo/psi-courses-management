@@ -17,7 +17,7 @@ async function printEvents(dataToPrint) {
         const endTime = element.end_time.substring(0, 5)
         const availableQuota = element.event_quota - element.eventReservations
         const reservations = eg.idUserCategories == 4 ? element.companyReservations : element.eventReservations
-        const assignations = eg.idUserCategories == 4 ? element.eventAssignations : element.companyAssignations
+        const assignations = eg.idUserCategories == 4 ? element.companyAssignations : element.eventAssignations
         const missingAssignations = reservations - assignations
         
         const divEvent = document.createElement('div');
@@ -45,17 +45,21 @@ async function printEvents(dataToPrint) {
         const onCourse = document.createElement('div');
         onCourse.id = 'onCourse';
         onCourse.innerHTML = element.status == 'onCourse' ? 'En curso' : element.status == 'finished' ? 'Finalizado' : 'Por comenzar';
+
+        const editEventAction = document.createElement('div');
+        editEventAction.className = element.status == 'finished' ? 'courseAction notVisible' : 'courseAction';
+        editEventAction.innerHTML = '<i class="fa-regular fa-pen-to-square icon" id="editE_' + element.id + '"></i><div class="courseActionInfo2">Editar evento</div>';
         
-        const editAction = document.createElement('div');
-        editAction.className = element.companyReservations == 0 ? 'courseAction notVisible' : 'courseAction';
-        editAction.innerHTML = '<i class="fa-regular fa-pen-to-square icon" id="edit_' + element.id + '"></i><div class="courseActionInfo2">Editar reserva</div>';
+        const editReservationAction = document.createElement('div');
+        editReservationAction.className = element.companyReservations == 0 ? 'courseAction notVisible' : 'courseAction';
+        editReservationAction.innerHTML = '<i class="fa-regular fa-pen-to-square icon" id="editR_' + element.id + '"></i><div class="courseActionInfo2">Editar reserva</div>';
 
         const cancelAction = document.createElement('div');
         cancelAction.className = element.companyReservations == 0 ? 'courseAction notVisible' : 'courseAction';
         cancelAction.innerHTML = '<i class="fa-regular fa-circle-xmark icon" id="cancel_' + element.id + '"></i><div class="courseActionInfo2">Cancelar reserva</div>';
 
         const studentsAction = document.createElement('div');
-        studentsAction.className = element.companyReservations == 0 ? 'courseAction notVisible' : 'courseAction';
+        studentsAction.className = ((eg.idUserCategories == 4 && element.companyReservations == 0) || (eg.idUserCategories != 4 && element.eventReservations == 0)) ? 'courseAction notVisible' : 'courseAction';
         studentsAction.innerHTML = '<i class="fa-solid fa-user icon" id="students_' + element.id + '"></i><div class="courseActionInfo2">Alumnos</div>';
 
         const reserveAction = document.createElement('div');
@@ -64,13 +68,19 @@ async function printEvents(dataToPrint) {
 
         const alert = document.createElement('div');
         alert.className = missingAssignations ? 'eventAlert' : 'notVisible';
-        alert.innerHTML = '<i class="fa-solid fa-triangle-exclamation icon" id="alert_' + element.id + '"></i><div class="courseActionInfo3">Tiene cupos pendientes de asignación</div>';
+        alert.innerHTML = '<i class="fa-solid fa-triangle-exclamation icon" id="alert_' + element.id + '"></i><div class="courseActionInfo3">Cupos reservados pendientes de asignación</div>';
 
-        eventActions.appendChild(editAction);
-        eventActions.appendChild(cancelAction);
-        eventActions.appendChild(studentsAction);
-        eventActions.appendChild(reserveAction);
-        eventActions.appendChild(alert);
+        if (eg.idUserCategories == 4) {
+            eventActions.appendChild(editReservationAction);
+            eventActions.appendChild(cancelAction);
+            eventActions.appendChild(studentsAction);
+            eventActions.appendChild(reserveAction);
+            eventActions.appendChild(alert);
+        }else{
+            eventActions.appendChild(editEventAction);
+            eventActions.appendChild(studentsAction);
+            eventActions.appendChild(alert);
+        }        
         
         divEvent.appendChild(eventCourseTitle);
         divEvent.appendChild(eventId);
@@ -96,59 +106,100 @@ async function addEventsEventListeners(dataToPrint) {
 
         const reserve = document.getElementById('reserve_' + element.id)
         const cancel = document.getElementById('cancel_' + element.id)
-        const edit = document.getElementById('edit_' + element.id)
+        const editR = document.getElementById('editR_' + element.id)
+        const editE = document.getElementById('editE_' + element.id)
         const students = document.getElementById('students_' + element.id)
 
         //reserve quota
-        const inputs = [reserve,edit]
+        const inputs = [reserve,editR]
         inputs.forEach(input => {
-            input.addEventListener('click',async()=>{
-                completeNextEventsGlobals(element)
-                if (input.id.split('_')[0] == 'reserve') {
-                    rqppMainTitle.innerText = 'RESERVAR CUPO'
-                    clearInputs([rqppQuota])
-                    isValid([rqppQuota])
-                    rqppAccept.innerText = 'Reservar'
-                    eg.editReservationType = 'reserve'                    
-                }else{
-                    rqppMainTitle.innerText = 'EDITAR RESERVA'
-                    rqppQuota.value = element.companyReservations
-                    rqppAccept.innerText = 'Editar'
-                    eg.editReservationType = 'edit'  
-                }
-
-                rqpp.style.display = 'block'
-            })
+            if(input){
+                input.addEventListener('click',async()=>{
+                    completeNextEventsGlobals(element)
+                    if (input.id.split('_')[0] == 'reserve') {
+                        rqppMainTitle.innerText = 'RESERVAR CUPO'
+                        clearInputs([rqppQuota])
+                        isValid([rqppQuota])
+                        rqppAccept.innerText = 'Reservar'
+                        eg.editReservationType = 'reserve'                    
+                    }else{
+                        rqppMainTitle.innerText = 'EDITAR RESERVA'
+                        rqppQuota.value = element.companyReservations
+                        rqppAccept.innerText = 'Editar'
+                        eg.editReservationType = 'edit'  
+                    }
+    
+                    rqpp.style.display = 'block'
+                })
+            }
+            
         })
         
         //cancel reservation
-        cancel.addEventListener('click',async()=>{
-            completeNextEventsGlobals(element)
-            creppQuestion.innerHTML = '¿Confirma que desea cancelar la reserva del curso <b>' + element.events_courses.course_name + '</b> que se dictará el <b>' + dateToString(element.start_date) + '</b>?'
-            crepp.style.display = 'block'
-        })
+        if (cancel) {
+            cancel.addEventListener('click',async()=>{
+                completeNextEventsGlobals(element)
+                creppQuestion.innerHTML = '¿Confirma que desea cancelar la reserva del curso <b>' + element.events_courses.course_name + '</b> que se dictará el <b>' + dateToString(element.start_date) + '</b>?'
+                crepp.style.display = 'block'
+            })
+        }
 
         //students
         students.addEventListener('click',async()=>{
             completeNextEventsGlobals(element)
+            const reservations = eg.studentsFrom == 'customer' ? element.companyReservations : element.eventReservations
+            const assignations = eg.studentsFrom == 'customer' ? element.companyAssignations : element.eventAssignations
+            
             const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
             isValid(inputs)
             stppError.style.display = 'none'
             stppMainTitle.innerText = element.events_courses.course_name
             stppSubtitle.innerHTML = '<b>Fecha:</b> ' + dateToString(element.start_date) + ' - ' + dateToString(element.end_date) + ' || ' + element.start_time.substring(0,5) + 'hs. a ' + element.end_time.substring(0,5) + 'hs.'
-            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + element.companyReservations + ' || <b>Cupos asignados: </b>' + element.companyAssignations
+            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + assignations
             printStudents(eg.eventStudents)
             stpp.style.display = 'block'
         })
+
+        //edit event
+        if (editE) {
+            editE.addEventListener('click',async()=>{
+                completeNextEventsGlobals(element)
+                ceppTitle.innerText = eg.eventCourseName
+                ceppSubtitle.innerText = 'EDITAR EVENTO'
+                ceppStartDate.value = element.start_date
+                ceppEndDate.value = element.end_date
+                ceppStartTime.value = element.start_time
+                ceppEndTime.value = element.end_time
+                ceppEventQuota.value = element.event_quota
+
+                if (eg.companies.length == eg.eventInvitedCompanies.length) {
+                    ceppAllCompanies.checked = true                    
+                }else{
+                    ceppAllCompanies.checked = false
+                }
+
+                clickCompanies()
+                
+                cepp.style.display = 'block'
+            })
+        }        
     })
 }
 
 function completeNextEventsGlobals(element) {
+    eg.studentsFrom = eg.idUserCategories == 4 ? 'customer' : 'administrator'
+    eg.eventData = element
     eg.idEvents = element.id
     eg.eventCourseName = element.events_courses.course_name
     eg.idCourses = element.id_courses
     eg.companyReservations = element.companyReservations
-    eg.eventStudents = eg.idUserCategories == 4 ? element.events_students.filter(es => es.id_companies == eg.idCompany && es.enabled == 1) : element.events_students.filter(es => es.enabled == 1)
+    eg.eventStudents = eg.studentsFrom == 'customer' ? element.events_students.filter(es => es.id_companies == eg.idCompanies && es.enabled == 1) : element.events_students.filter(es => es.enabled == 1)
+    eg.eventStudentsFiltered = eg.eventStudents
+    eg.eventInvitedCompanies = []
+    element.events_invited_companies.forEach(company => {
+        eg.eventInvitedCompanies.push(company.id_companies)
+    })
+    
     
 }
 
@@ -318,7 +369,12 @@ async function uploadExcelValidations() {
 
 function addStudentValidations() {
 
-    const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+    let inputs = [stppCompany,stppLastName,stppFirstName,stppEmail,stppDNI]
+
+    if (eg.studentsFrom == 'customerr') {
+        inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+    }
+    
     let errors = inputsValidation(inputs)
 
     if (errors == 0) {
@@ -354,7 +410,8 @@ async function printStudents(dataToPrint) {
         const rowClass = counter % 2 == 0 ? 'tBody1 tBodyEven' : 'tBody1 tBodyOdd';
         
         // Construir las filas de la tabla
-        html += `
+        if (eg.studentsFrom == 'customer') {
+            html += `
             <tr>
                 <th class="${rowClass}">${element.last_name}</th>
                 <th class="${rowClass}">${element.first_name}</th>
@@ -362,7 +419,20 @@ async function printStudents(dataToPrint) {
                 <th class="${rowClass}">${element.dni}</th>
                 <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
             </tr>
+        `;  
+        }else{
+            html += `
+            <tr>
+                <th class="${rowClass}">${element.last_name}</th>
+                <th class="${rowClass}">${element.first_name}</th>
+                <th class="${rowClass}">${element.email}</th>
+                <th class="${rowClass}">${element.dni}</th>
+                <th class="${rowClass}">${element.students_companies.company_name}</th>
+                <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
+            </tr>
         `;
+        }
+        
         
         counter += 1;
     });
@@ -391,8 +461,102 @@ async function addStudentsEventListeners(dataToPrint) {
     })
 }
 
+function clickCompanies() {
+    eg.companies.forEach(company => {
+        const check = document.getElementById('ceppCompany_' + company.id)
+        if (eg.eventInvitedCompanies.includes(company.id)) {
+            check.checked = true
+        }else{
+            check.checked = false
+        }                  
+    })
+}
+
+function clickAllCompanies() {
+    if (ceppAllCompanies.checked) {
+        eg.companies.forEach(company => {
+            const check = document.getElementById('ceppCompany_' + company.id)
+            check.checked = true
+            eg.eventInvitedCompanies.push(company.id)                       
+        })
+
+    }else{
+        eg.companies.forEach(company => {
+            const check = document.getElementById('ceppCompany_' + company.id)
+            check.checked = false
+        })
+        eg.eventInvitedCompanies = []         
+    }
+}
+
+function editEventValidations() {
+
+    let errors = 0
+
+    //date
+    if (ceppStartDate.value == '' || ceppEndDate.value == '') {
+        ceppDateError.innerText = 'Debe completar las fechas de inicio y fin'
+        isInvalid([ceppStartDate,ceppEndDate])
+        ceppDateError.style.display = 'block'
+        errors +=1
+    }else{
+        if (ceppStartDate.value > ceppEndDate.value) {
+            ceppDateError.innerText = 'La fecha de fin no puede ser inferior a la fecha de inicio'
+            isInvalid([ceppStartDate,ceppEndDate])
+            ceppDateError.style.display = 'block'
+            errors +=1
+        }else{
+            isValid([ceppStartDate,ceppEndDate])
+            ceppDateError.style.display = 'none'
+        }
+    }
+
+    //time    
+    if (ceppStartTime.value == '' || ceppEndTime.value == '') {
+        ceppTimeError.innerText = 'Debe completar los horarios de inicio y fin'
+        isInvalid([ceppStartTime,ceppEndTime])
+        ceppTimeError.style.display = 'block'
+        errors +=1
+    }else{
+        if (ceppStartTime.value > ceppEndTime.value) {
+            ceppTimeError.innerText = 'El horario de inicio no puede ser inferior al horario de fin'
+            isInvalid([ceppStartTime,ceppEndTime])
+            ceppTimeError.style.display = 'block'
+            errors +=1
+        }else{
+            isValid([ceppStartTime,ceppEndTime])
+            ceppTimeError.style.display = 'none'
+        }
+    }
+
+    //quota
+    if (ceppEventQuota.value == '') {
+        ceppEventQuotaError.innerText = 'Debe completar el cupo'
+        isInvalid([ceppEventQuota])
+        ceppEventQuotaError.style.display = 'block'
+        errors +=1
+    }else{
+        if (ceppEventQuota.value < eg.eventStudents.length) {
+            ceppEventQuotaError.innerText = 'El cupo es inferior a la cantidad de alumnos asignados al evento'
+            isInvalid([ceppEventQuota])
+            ceppEventQuotaError.style.display = 'block'
+            errors +=1
+        }else{
+            isValid([ceppEventQuota])
+            ceppEventQuotaError.style.display = 'none'
+        }
+    }
+
+    //companies
+    if (eg.eventInvitedCompanies.length == 0) {
+        ceppCompaniesError.style.display = 'block'
+        errors +=1
+    }else{
+        ceppCompaniesError.style.display = 'none'
+    }
+
+    return errors
+}
 
 
-
-
-export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations,addStudentValidations,printStudents,uploadExcelValidations}
+export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations,addStudentValidations,printStudents,uploadExcelValidations,clickAllCompanies,editEventValidations}

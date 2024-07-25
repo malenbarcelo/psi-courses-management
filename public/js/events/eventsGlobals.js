@@ -7,13 +7,19 @@ let eg = {
     idUserCategories:0,
     events:[],
     eventsFiltered:[],
+    companies:[],
     idEvents:0,
     idCourses:0,    
     eventCourseName:'',
+    eventData:{},
     eventStudents:[],
+    eventStudentsFiltered:[],
+    eventInvitedCompanies:[],
     editReservationType:'',
     companyReservations: 0,
-    idStudentToDelete:0
+    idStudentToDelete:0,
+    studentsFrom:''
+
 
 
 

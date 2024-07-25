@@ -1,7 +1,7 @@
 import { dominio } from "../dominio.js"
 import { printCourses, filterCourses,createCourseValidations,createEventValidations,updateSelectCourse,clickAllCompanies } from "./coursesFunctions.js"
 import cg from "./coursesGlobals.js"
-import { closePopupsEventListeners,showOkPopup,clearInputs,isValid} from "../generalFunctions.js"
+import { closePopupsEventListeners,showOkPopup,clearInputs,isValid } from "../generalFunctions.js"
 
 window.addEventListener('load',async()=>{
 
@@ -107,6 +107,7 @@ window.addEventListener('load',async()=>{
     ceppAccept.addEventListener("click", async() => {
 
         const errors = createEventValidations()
+
         if (errors == 0) {
             
             const data = {
@@ -119,7 +120,7 @@ window.addEventListener('load',async()=>{
                 event_quota:ceppEventQuota.value
             }
 
-            await fetch(dominio + 'apis/courses/create-event',{
+            await fetch(dominio + 'apis/courses-events/create-event',{
                 method:'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
@@ -132,6 +133,7 @@ window.addEventListener('load',async()=>{
             printCourses(cg.coursesFiltered)
 
             cepp.style.display = 'none'
+            ceppOkText.innerText = 'Evento creado con éxito'
             showOkPopup(ceppOk)
         
         }

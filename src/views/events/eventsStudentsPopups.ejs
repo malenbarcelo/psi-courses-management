@@ -11,8 +11,22 @@
         <div class="popupTitle1 mtm" id="stppMainTitle"></div>
         <div class="popupTitle2 mts" id="stppSubtitle"></div>
         <div class="popupTitle1 mtl">ALUMNOS</div>
+        
+        <% if (userLogged.id_users_categories != 4) { %>
+            <div class="divInputsRow mtm mbm">
+                <div class="divInput">
+                    <label class="label1" id="stppCompanyLabel">Institución</label>
+                    <select class="input1 sxxl spm" id="stppCompany">
+                        <option value="">Todas las instituciones</option>
+                        <% companies.forEach(company => { %>
+                            <option value="<%= company.id %>"><%= company.company_name %></option>
+                        <% }) %>
+                    </select>           
+                </div>
+            </div>
+        <% } %>
+        
         <div class="popupTitle2 mts" id="stppSubtitle2"></div>
-                
         <div id="uploadExcel">                
             <i class="fa-regular fa-file-excel" id="uploadExcelIcon"></i>
             <div id="showActionExcel">
@@ -52,6 +66,9 @@
                         <th class="thCss fsm thl">Nombre</th>
                         <th class="thCss fsm thl">Email</th>
                         <th class="thCss fsm ths">DNI</th>
+                        <% if (userLogged.id_users_categories != 4) { %>
+                            <th class="thCss fsm thl">Institución</th>
+                        <% } %>
                         <th class="thCss fsm thxs thRightBorder">
                             <i class="fa-regular fa-trash-can"></i>
                         </th>

@@ -94,6 +94,7 @@ function addCoursesEventListeners(dataToPrint) {
             })
             
             ceppTitle.innerText = element.course_name
+            ceppSubtitle.innerText = 'CREAR EVENTO'
             ceppEventQuota.value = element.course_quota
             ceppAllCompanies.checked = true
             clickAllCompanies()
@@ -117,24 +118,6 @@ function addCoursesEventListeners(dataToPrint) {
         })
     })
 }
-
-function clickAllCompanies() {
-    if (ceppAllCompanies.checked) {
-        cg.companies.forEach(company => {
-            const check = document.getElementById('ceppCompany_' + company.id)
-            check.checked = true
-            cg.newEventInvitedCompanies.push(company.id)                       
-        })
-
-    }else{
-        cg.companies.forEach(company => {
-            const check = document.getElementById('ceppCompany_' + company.id)
-            check.checked = false
-        })
-        cg.newEventInvitedCompanies = []         
-    }
-}
-
 
 function filterCourses() {
 
@@ -239,6 +222,23 @@ function updateSelectCourse() {
     cg.courses.forEach(course => {
         filterCourse.innerHTML += '<option value="' +  course.id + '">'+ course.course_name + '</option>'
     })
+}
+
+function clickAllCompanies() {
+    if (ceppAllCompanies.checked) {
+        cg.companies.forEach(company => {
+            const check = document.getElementById('ceppCompany_' + company.id)
+            check.checked = true
+            cg.newEventInvitedCompanies.push(company.id)                       
+        })
+
+    }else{
+        cg.companies.forEach(company => {
+            const check = document.getElementById('ceppCompany_' + company.id)
+            check.checked = false
+        })
+        cg.newEventInvitedCompanies = []         
+    }
 }
 
 export {printCourses,filterCourses,createCourseValidations,createEventValidations,updateSelectCourse,clickAllCompanies}

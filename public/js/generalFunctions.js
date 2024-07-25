@@ -224,5 +224,4 @@ function emailValidation(email) {
     
 }
 
-
 export {dateToString,showOkPopup,predictElements,selectFocusedElement,closePopupsEventListeners,acceptWithEnter,showTableInfo,clearInputs, isValid, isInvalid,inputsValidation,emailValidation,uncheckInputs}

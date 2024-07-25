@@ -44,21 +44,27 @@ router.get('/courses',apisCoursesController.courses)
 router.get('/courses/courses-events/:courseId',apisCoursesController.coursesEvents)
 router.post('/courses/create-course',apisCoursesController.createCourse)
 router.post('/courses/edit-course',apisCoursesController.editCourse)
-router.post('/courses/create-event',apisCoursesController.createEvent)
 
 //courses-events
 router.get('/courses-events/events',apisCoursesEventsController.events)
 router.get('/courses-events/company-events/:idCompany',apisCoursesEventsController.companyEvents)
+router.post('/courses-events/create-event',apisCoursesEventsController.createEvent)
+router.post('/courses-events/edit-event',apisCoursesEventsController.editEvent)
+
+//courses-quota-reservations
+router.get('/quota-reservations/companies-per-course',apisQuotaReservationsController.companiesPerCourse)
+router.post('/quota-reservations/reserve-quota',apisQuotaReservationsController.reserveQuota)
+router.post('/quota-reservations/edit-reservation',apisQuotaReservationsController.editReservation)
+router.post('/quota-reservations/cancel-reservation',apisQuotaReservationsController.cancelReservation)
+
+
+
 
 //next-events
 router.get('/courses/company-next-events/:idCompany',apisCoursesController.companyNextEvents)
-router.post('/courses/next-events/reserve-quota',apisCoursesController.reserveQuota)
-router.post('/courses/next-events/cancel-reservation',apisCoursesController.cancelReservation)
-router.post('/courses/next-events/edit-reservation',apisCoursesController.editReservation)
 
-//courses-quota-reservations
 router.get('/company-reservations/:idCompany',apisCoursesController.companyReservations)
-router.get('/quota-reservations/companies-per-course',apisQuotaReservationsController.companiesPerCourse)
+
 
 //courses-events-students
 router.get('/company-assigned-students/:companyId',apisEventsStudentsController.companyAssignedStudents)

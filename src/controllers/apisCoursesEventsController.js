@@ -1,4 +1,5 @@
 const coursesEventsQueries = require('./dbQueries/coursesEventsQueries')
+const coursesEventsInvitedCompaniesQueries = require('./dbQueries/coursesEventsInvitedCompaniesQueries')
 
 const apisCoursesEventsController = {
   events: async(req,res) =>{
@@ -12,6 +13,47 @@ const apisCoursesEventsController = {
       addEventInformation(events, idCompany)
 
       res.status(200).json(events)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  createEvent: async(req,res) =>{
+    try{
+
+      const data = req.body
+
+      await coursesEventsQueries.createEvent(data)
+
+      //get created event id
+      const eventData = await coursesEventsQueries.lastEvent()
+      const eventId = eventData.id
+
+      //create data courses_events_invited_companies
+      await coursesEventsInvitedCompaniesQueries.create(data.invited_companies,data.id_courses, eventId)
+
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  editEvent: async(req,res) =>{
+    try{
+
+      const data = req.body
+
+      await coursesEventsQueries.editEvent(data)
+
+      //delete courses_events_invited_companies
+      await coursesEventsInvitedCompaniesQueries.delete(data.id_events)
+
+      //create new courses_events_invited_companies
+      await coursesEventsInvitedCompaniesQueries.create(data.invited_companies,data.id_courses,data.id_events)
+
+      res.status(200).json()
 
     }catch(error){
       console.group(error)
@@ -34,7 +76,7 @@ const apisCoursesEventsController = {
       console.group(error)
       return res.send('Ha ocurrido un error')
     }
-  },
+  },  
 }
 
 function addEventInformation(events,idCompany) {
@@ -73,11 +115,11 @@ function addEventInformation(events,idCompany) {
 
     //event reservations
     const eventReservations = element.events_quota_reservations.filter(e => e.enabled == 1)
-    element.eventReservations = eventReservations.length
+    element.eventReservations = eventReservations.reduce((accum, e) => accum + e.reserved_quota, 0);
 
     //company reservations
     const companyReservations = element.events_quota_reservations.filter(e => e.enabled == 1 && e.id_companies == idCompany)
-    element.companyReservations = companyReservations.length
+    element.companyReservations = companyReservations.reduce((accum, e) => accum + e.reserved_quota, 0);
 
     //event assignations
     const eventAssignations = element.events_students.filter(e => e.enabled == 1)

@@ -13,12 +13,31 @@ const coursesEventsQueries = {
                 {association: 'events_courses'},
                 {association: 'events_invited_companies'},
                 {association: 'events_quota_reservations'},
-                {association: 'events_students'}
+                { 
+                    association: 'events_students',
+                    include: [{association: 'students_companies'}] 
+                }
             ],
             order:['start_date'],
             nest:true,
         })
         return events
+    },
+    editEvent: async(data) => {        
+        await model.update({
+            id_courses:data.id_courses,
+            start_date:data.start_date,
+            end_date:data.end_date,
+            start_time:data.start_time,
+            end_time:data.end_time,
+            event_quota:data.event_quota,
+            enabled: 1
+        },
+        {
+            where:{
+                id:data.id_events
+            }
+        })
     },
     companyEvents: async (idCompany) => {        
         const companyEvents = await model.findAll({
@@ -38,7 +57,10 @@ const coursesEventsQueries = {
                 },
                 {association: 'events_quota_reservations'},
                 {association: 'events_quota_reservations'},
-                {association: 'events_students'}
+                { 
+                    association: 'events_students',
+                    include: [{association: 'students_companies'}] 
+                }
             ],
             order: ['start_date'],
             nest: true,
