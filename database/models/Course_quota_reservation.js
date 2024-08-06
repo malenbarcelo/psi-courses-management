@@ -51,11 +51,11 @@ module.exports = (sequelize, DataTypes) => {
       Course_quota_reservations.belongsTo(models.Users_companies,{
          as:'events_companies_companies',
          foreignKey: 'id_companies'
-      })
+      }),
       Course_quota_reservations.belongsTo(models.Courses,{
          as:'events_companies_courses',
          foreignKey: 'id_courses'
-      })
+      }),
       Course_quota_reservations.belongsTo(models.Users,{
          as:'reservations_users',
          foreignKey: 'id_users'

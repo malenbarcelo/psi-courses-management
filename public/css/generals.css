@@ -106,6 +106,18 @@ ul {
     z-index: 1;
 }
 
+#companiesLoader{
+    top: 40%;
+    left: calc(50vw - 20px);
+    z-index: 1;
+}
+
+#quotationsLoader{
+    top: 40%;
+    left: calc(50vw - 20px);
+    z-index: 1;
+}
+
 
 
 

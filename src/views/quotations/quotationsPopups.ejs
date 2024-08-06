@@ -1,0 +1,148 @@
+<!---------no quotation popup---------->
+<div class="popup2" id="nqpp">
+    
+    <div class="popupContent" id="nqppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-circle-question"></i></div>
+            <div class="popupClose1" id="nqppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupQuestion" id="nqppQuestion"></div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="nqppAccept" class="button1 bs">Aceptar</div>
+            <div id="nqppCancel" class="button1 bs">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<div class="okPopup" id="nqppOk">    
+    <div class="okContent" id="nqppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Modificaciones realizadas con éxito</div>
+        </div>
+    </div>
+</div>
+
+<!---Create quote popup--->
+<div class="popup" id="cqpp">
+    
+    <div class="popupContent" id="cqppContent">
+
+        <!------GENERAL BUTTONS------>
+        <div class="divDGBs" id="DGBsQuotations">
+            <div class="divDGB divDGBm" id="cqppAddEvent">
+                AGREGAR EVENTO
+            </div>
+            <div class="divDGB divDGBm" id="cqppNewLine">
+                LÍNEA ADICIONAL
+            </div>
+        </div>
+
+        <div class="popupIcons">
+            <div class="popupIcon3"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <div class="popupClose3" id="cqppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1 mtm" id="cqppMainTitle"></div>
+        <div class="popupTitle1 mts" id="cqppSubtitle"></div>
+        
+        <div class="divTable mtm" id="cqppTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="thCss fsm thxxl">Curso</th>
+                        <th class="thCss fsm thm">Evento</th>
+                        <th class="thCss fsm ths">Cantidad</th>
+                        <th class="thCss fsm ths">Precio Unitario</th>
+                        <th class="thCss fsm ths">Descuento %</th>
+                        <th class="thCss fsm ths">Total</th>
+                        <th class="thCss fsm thxs">
+                            <i class="fa-regular fa-pen-to-square"></i>
+                        </th>
+                        <th class="thCss fsm thxs">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="bodyQuotations"></tbody>
+            </table>
+        </div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="cqppAccept" class="button1 bm">Guardar</div>
+            <div id="cqppCancel" class="button1 bm">Enviar</div>
+        </div>
+
+    </div>
+</div>
+
+<div class="okPopup" id="cqppOk">    
+    <div class="okContent" id="cqppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText" id="cqppOkText">Cotización creada con éxito</div>
+        </div>
+    </div>
+</div>
+
+<div class="errorPopup" id="cqppError">    
+    <div class="errorContent" id="cqppErrorContent">
+        <div class="errorDiv">
+            <div class="errorIcon1"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="errorText" id="cqppErrorText">Debe seleccionar reservas de una misma compañía</div>
+        </div>
+    </div>
+</div>
+
+<!---Add event popup--->
+<div class="popup2" id="aepp">
+    
+    <div class="popupContent" id="aeppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon3"><i class="fa-regular fa-square-plus"></i></div>
+            <div class="popupClose3" id="aeppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="divInputsRow mtm">
+            <div class="divInput">
+                <label class="label1">Evento</label>
+                <select class="input1 sxxxxl spm" id="selectEvent"></select>            
+            </div>
+        </div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="aeppAccept" class="button1 bm">Agregar</div>
+            <div id="aeppCancel" class="button1 bm">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<!---Add line popup--->
+<div class="popup2" id="alpp">
+    
+    <div class="popupContent" id="alppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon3"><i class="fa-regular fa-square-plus"></i></div>
+            <div class="popupClose3" id="alppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="divInputsRow mtm">
+            <div class="divInput">
+                <label class="label1">Descripción</label>
+                <input type="text" class="input1 ixxxxl spm" id="alppDescription">    
+            </div>
+        </div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="alppAccept" class="button1 bm">Agregar</div>
+            <div id="alppCancel" class="button1 bm">Cancelar</div>
+        </div>
+
+    </div>
+</div>

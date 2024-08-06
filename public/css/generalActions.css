@@ -1,14 +1,11 @@
 /*-----------------------------general actions-----------------------------*/
 .divDGAs{
     display: flex;
-    column-gap: 10px;
+    column-gap: 8px;
     position: absolute;    
 }
 
-.divDGA{
-    border: black solid 2px;    
-    height: 40px;
-    width: 40px;
+.divDGA{    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,16 +14,15 @@
 }
 
 .divDGAm{
-    font-size: 20px;
+    height: 30px;
+    width: 30px;
+    font-size: 30px;
 }
 
 .divDGAl{
+    height: 40px;
+    width: 40px;
     font-size: 35px;
-}
-
-.divDGA:hover{
-    color:var(--color2);
-    border: var(--color2) solid 3px;
 }
 
 .DGAinfo{
@@ -42,12 +38,47 @@
     font-weight: bold;
 }
 
+.divDGA:hover{
+    color:var(--color2);
+}
+
 .divDGA:hover .DGAinfo{
     display: block;
 }
 
-/*specific*/
+/*-----------------------------general actions buttons-----------------------------*/
+.divDGBs{
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    position: absolute;    
+}
 
+.divDGB{    
+    display: flex;
+    column-gap: 3px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px;
+    cursor: pointer;
+    border: black solid 1px;
+    background-color: var(--color1);
+    padding: 0px 5px;
+    font-weight: bold;
+}
+
+.divDGBm{
+    font-size: 11px;
+    height: 25px;
+
+}
+
+
+
+
+
+
+/*SPECIFIC*/
 #DGAsUsers{
     top: 23%;
     right: 8%;
@@ -56,4 +87,9 @@
 #DGAsCourses{
     top: 23%;
     right: 8%;
+}
+
+#DGBsQuotations{
+    top: 6%;
+    right: 9%;
 }

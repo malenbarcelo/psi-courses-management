@@ -37,10 +37,11 @@ const apisEventsStudentsController = {
       const companyId = req.body.id_companies
       const eventId = req.body.id_events
       const students = req.body.students
+      const studentsFrom = req.body.studentsFrom
 
       //delete assigned students
-      await eventsStudentsQueries.deleteStudents(companyId,eventId)
-
+      await eventsStudentsQueries.deleteStudents(companyId,eventId,studentsFrom)
+      
       //save new data
       await eventsStudentsQueries.assignStudents(students)
 

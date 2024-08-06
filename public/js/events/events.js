@@ -1,5 +1,5 @@
 import { dominio } from "../dominio.js"
-import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations,addStudentValidations, printStudents, uploadExcelValidations,clickAllCompanies, editEventValidations} from "./eventsFunctions.js"
+import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations,addStudentValidations, printStudents, uploadExcelValidations,clickAllCompanies, editEventValidations,filterStudents} from "./eventsFunctions.js"
 import eg from "./eventsGlobals.js"
 import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,isValid,uncheckInputs} from "../generalFunctions.js"
 
@@ -20,7 +20,8 @@ window.addEventListener('load',async()=>{
     eg.eventsFiltered = eg.events
 
     eg.companies = await (await fetch(dominio + 'apis/companies')).json()
-
+    eg.reservationsPerEventCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
+    
     //print events
     printEvents(eg.eventsFiltered)
 
@@ -53,7 +54,7 @@ window.addEventListener('load',async()=>{
 
 
     //close popups
-    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel]
+    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel]
     closePopupsEventListeners(closePopups)
 
     //reserve quota
@@ -156,20 +157,10 @@ window.addEventListener('load',async()=>{
     })
 
     //nextEventsStudentsPopup
+    const stppCompany = document.getElementById('stppCompany')
     if (stppCompany) {
         stppCompany.addEventListener("change", async() => {
-
-            const companyEvents = await (await fetch(dominio + 'apis/courses-events/company-events/' + stppCompany.value)).json()
-
-            const filterEvent = companyEvents.filter( e => e.id == eg.idEvents)[0]
-
-            const reservations = stppCompany.value == '' ? filterEvent.eventReservations : filterEvent.companyReservations
-            const assignations = stppCompany.value == '' ? filterEvent.eventAssignations : filterEvent.companyAssignations
-
-            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + assignations
-
-            eg.eventStudentsFiltered = stppCompany.value == '' ? eg.eventStudents : eg.eventStudents.filter( es => es.id_companies == stppCompany.value)
-            
+            await filterStudents()
             printStudents(eg.eventStudentsFiltered)
         })
     }
@@ -181,6 +172,10 @@ window.addEventListener('load',async()=>{
         if (errors == 0) {
 
             const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+            if (eg.studentsFrom == 'Administrator') {
+                inputs.push('stppCompany')
+            }
+
             const maxId = eg.eventStudents.length == 0 ? 0 : eg.eventStudents.reduce((max, st) => (st.id > max ? st.id : max), eg.eventStudents[0].id);
 
             eg.eventStudents.push({
@@ -188,15 +183,24 @@ window.addEventListener('load',async()=>{
                 dni:stppDNI.value,
                 email:stppEmail.value,
                 first_name:stppFirstName.value,
-                id_companies:eg.idCompanies,
+                id_companies:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
                 id_courses:eg.idCourses,
                 id_events:eg.idEvents,
-                last_name:stppLastName.value
+                last_name:stppLastName.value,
+                students_companies:{
+                    id:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
+                    company_name: eg.companies.filter(c => c.id == (eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value))[0].company_name,
+                }
             })
 
-            printStudents(eg.eventStudents)
+            if (eg.studentsFrom == 'administrator') {
+                await filterStudents()
+            }else{
+                stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length 
+            }
+
             clearInputs(inputs)
-            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length            
+            printStudents(eg.eventStudentsFiltered)
         }
 
     })
@@ -206,7 +210,8 @@ window.addEventListener('load',async()=>{
     dsppAccept.addEventListener("click", async() => {
         eg.eventStudents = eg.eventStudents.filter(s => s.id != eg.idStudentToDelete)
         printStudents(eg.eventStudents)
-        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length
+        const reservations = eg.studentsFrom == 'customer' ? eg.companyReservations : eg.eventData.eventReservations
+        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length
         dspp.style.display = 'none'
 
     })
@@ -219,7 +224,8 @@ window.addEventListener('load',async()=>{
         const data = {
             id_events: eg.idEvents,
             id_companies: eg.idCompanies,
-            students:eg.eventStudents
+            students:eg.eventStudents,
+            studentsFrom:eg.studentsFrom
         }
 
         await fetch(dominio + 'apis/update-assigned-students/',{

@@ -14,7 +14,7 @@ const bottomHeaderMenu = [
     {
         id:3,
         name:'COTIZACIONES',
-        href:'',
+        href:'/quotations',
         subitems:[]
     },
     {

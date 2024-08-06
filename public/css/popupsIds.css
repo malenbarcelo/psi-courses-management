@@ -1,0 +1,119 @@
+/*------------POPUPS------------*/
+#ccpp{
+    background-color: rgba(0,0,0,0.4);
+}
+
+/*Contents*/
+#buppContent,#rpppContent{
+    top: 35%;
+    width: 400px;
+    left: calc(50vw - 200px);
+}
+
+#euppContent{
+    top: 28%;
+    width: 400px;
+    left: calc(50vw - 200px);
+}
+
+#cuppContent{
+    top: 28%;
+    width: 450px;
+    left: calc(50vw - 225px);
+}
+
+#ccppContent{
+    top: 42%;
+    width: 350px;
+    left: calc(50vw - 175px);
+}
+
+#ccoppContent{
+    top: 20%;
+    width: 450px;
+    left: calc(50vw - 225px);
+}
+
+#ceppContent{
+    top: 8%;
+    width: 750px;
+    left: calc(50vw - 375px);
+}
+
+#ceppTitle{
+    width: 80%;
+    margin: auto;
+    color: var(--color2);
+}
+
+#rqppContent{
+    top: 30%;
+    width: 450px;
+    left: calc(50vw - 238px);
+}
+
+#crppContent,#creppContent{
+    top: 37%;
+    width: 300px;
+    left: calc(50vw - 157px);
+}
+
+#stppContent{
+    top: 7%;
+    width: 1100px;
+    left: calc(50vw - 550px);
+    position: relative;
+}
+
+#coppContent{
+    top: 20%;
+    width: 900px;
+    left: calc(50vw - 450px);
+    position: relative;
+}
+
+#dsppContent,#ssppContent,#ueppContent{
+    top: 30%;
+    width: 400px;
+    left: calc(50vw - 200px);
+}
+
+/*---quotationsPopups.ejs---*/
+#nqppContent{
+    top: 30%;
+    width: 400px;
+    left: calc(50vw - 200px);
+}
+
+#cqppContent{
+    top: 18%;
+    width: 1100px;
+    left: calc(50vw - 550px);
+}
+
+#aeppContent,#alppContent{
+    top: 30%;
+    width: 600px;
+    left: calc(50vw - 300px);
+}
+
+
+/*-----------------------------------*/
+/*------------OK CONTENTS------------*/
+#buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent,#ccoppOkContent,#ceppOkContent,#rqppOkContent,#creppOkContent,#stppOkContent{
+    top: 40%;
+    left: calc(50vw - 150px);
+}
+
+/*---quotationsPopups.ejs---*/
+#nqppOkContent,#cqppOkContent{
+    top: 40%;
+    left: calc(50vw - 150px);
+}
+
+/*-----------------------------------*/
+/*------------ERRORS CONTENTS------------*/
+#cqppErrorContent{
+    top: 40%;
+    left: calc(50vw - 150px);
+}

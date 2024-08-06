@@ -27,15 +27,25 @@ const eventsStudentsQueries = {
         })
         return assignedStudents
     },
-    deleteStudents: async(companyId,eventId) => {        
-        await model.destroy(
-            {
-                where:{
-                    id_companies:companyId,
-                    id_events:eventId
+    deleteStudents: async(companyId,eventId,studentFrom) => {
+        if (studentFrom == 'customer') {
+            await model.destroy(
+                {
+                    where:{
+                        id_companies:companyId,
+                        id_events:eventId
+                    }
                 }
-            }
-        )
+            )
+        }else{
+            await model.destroy(
+                {
+                    where:{
+                        id_events:eventId
+                    }
+                }
+            )
+        }
     },
     assignStudents: async(students) => {
         for (let i = 0; i < students.length; i++) {

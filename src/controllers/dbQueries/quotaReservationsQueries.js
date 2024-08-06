@@ -59,6 +59,21 @@ const coursesQuotaReservationsQueries = {
 
         return companiesPerCourse
     },
+    reservationsPerEventCompany: async() => {        
+        const reservationsPerEventCompany = await model.findAll({
+            attributes: [
+                'id_events',
+                'id_companies',
+                [sequelize.fn('SUM', sequelize.col('reserved_quota')), 'total_quota_reservations']
+            ],
+            where: {
+                enabled: 1
+            },
+            group: ['id_events', 'id_companies']
+        })
+
+        return reservationsPerEventCompany
+    },
 }
 
 module.exports = coursesQuotaReservationsQueries

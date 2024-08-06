@@ -53,16 +53,13 @@ router.post('/courses-events/edit-event',apisCoursesEventsController.editEvent)
 
 //courses-quota-reservations
 router.get('/quota-reservations/companies-per-course',apisQuotaReservationsController.companiesPerCourse)
+router.get('/quota-reservations/reservations-per-event-company',apisQuotaReservationsController.reservationsPerEventCompany)
 router.post('/quota-reservations/reserve-quota',apisQuotaReservationsController.reserveQuota)
 router.post('/quota-reservations/edit-reservation',apisQuotaReservationsController.editReservation)
 router.post('/quota-reservations/cancel-reservation',apisQuotaReservationsController.cancelReservation)
 
-
-
-
 //next-events
 router.get('/courses/company-next-events/:idCompany',apisCoursesController.companyNextEvents)
-
 router.get('/company-reservations/:idCompany',apisCoursesController.companyReservations)
 
 

@@ -1,0 +1,63 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<div id="idCompany" class="notVisible"><%= userLogged.id_companies %></div>
+<div id="idUserCategories" class="notVisible"><%= userLogged.id_users_categories %></div>
+
+<div class="mainTitle">
+    COTIZACIONES EN CURSO
+</div>
+
+<!------MAIN FILTERS------>
+<div class="mainFilters" id="">
+    <div class="divInputsRow">            
+        <div class="divInput">
+            <label class="label1">Curso</label>
+            <select class="input1 sxxxl spm" id="filterCourse">
+                <option value="">Todos los cursos</option>
+                <% courses.forEach(course => { %>
+                    <option value="<%= course.id %>"><%= course.course_name %></option>
+                <% }) %>                
+            </select>            
+        </div>
+        <div class="divInput">
+            <label class="label1">Empresa</label>
+            <select class="input1 sxl spm" id="filterCompany">
+                <option value="">Todas las empresas</option>
+                <% companies.forEach(company => { %>
+                    <option value="<%= company.id %>"><%= company.company_name %></option>
+                <% }) %>                
+            </select>            
+        </div>
+        
+        <div class="divInput">
+            <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+        </div>
+    </div>    
+</div>
+
+<!------MAIN CONTENT------>
+<div class="quotationsCheckboxs">    
+    <div class="quotationCheckbox">
+        <input type="checkbox" id="filterPending">
+        <label>Pendiente</label>
+    </div>
+    <div class="quotationCheckbox">
+        <input type="checkbox" id="filterInProcess">
+        <label>En proceso</label>
+    </div>
+    <div class="quotationCheckbox">
+        <input type="checkbox" id="filterQuoted">
+        <label>Cotizado</label>
+    </div>
+</div>
+
+<div id="divQuotations"></div>
+
+<div class="qQuoteUnabled" id="qQuote">COTIZAR</div>
+
+<!----------LOADER---------->
+<div class="loader" id="quotationsLoader"></div>
+
+<%- include('./quotationsPopups') %>
+<script type="module" src="/js/quotations/quotations.js"></script>

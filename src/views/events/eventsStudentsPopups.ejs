@@ -1,4 +1,4 @@
-<!---Users popup--->
+<!---Students popup--->
 <div class="popup" id="stpp">
     
     <div class="popupContent" id="stppContent">
@@ -16,12 +16,7 @@
             <div class="divInputsRow mtm mbm">
                 <div class="divInput">
                     <label class="label1" id="stppCompanyLabel">Institución</label>
-                    <select class="input1 sxxl spm" id="stppCompany">
-                        <option value="">Todas las instituciones</option>
-                        <% companies.forEach(company => { %>
-                            <option value="<%= company.id %>"><%= company.company_name %></option>
-                        <% }) %>
-                    </select>           
+                    <select class="input1 sxxl spm" id="stppCompany"></select>           
                 </div>
             </div>
         <% } %>

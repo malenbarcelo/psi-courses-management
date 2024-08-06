@@ -62,6 +62,10 @@ async function printEvents(dataToPrint) {
         studentsAction.className = ((eg.idUserCategories == 4 && element.companyReservations == 0) || (eg.idUserCategories != 4 && element.eventReservations == 0)) ? 'courseAction notVisible' : 'courseAction';
         studentsAction.innerHTML = '<i class="fa-solid fa-user icon" id="students_' + element.id + '"></i><div class="courseActionInfo2">Alumnos</div>';
 
+        const companiesAction = document.createElement('div');
+        companiesAction.className = 'courseAction';
+        companiesAction.innerHTML = '<i class="fa-solid fa-industry icon" id="companies_' + element.id + '"></i><div class="courseActionInfo2">Empresas</div>';
+
         const reserveAction = document.createElement('div');
         reserveAction.className = element.companyReservations != 0 ? 'courseAction notVisible' : 'courseAction';
         reserveAction.innerHTML = '<i class="fa-solid fa-user-plus icon" id="reserve_' + element.id + '"></i><div class="courseActionInfo2">Reservar cupo</div>';
@@ -79,6 +83,7 @@ async function printEvents(dataToPrint) {
         }else{
             eventActions.appendChild(editEventAction);
             eventActions.appendChild(studentsAction);
+            eventActions.appendChild(companiesAction);
             eventActions.appendChild(alert);
         }        
         
@@ -109,6 +114,7 @@ async function addEventsEventListeners(dataToPrint) {
         const editR = document.getElementById('editR_' + element.id)
         const editE = document.getElementById('editE_' + element.id)
         const students = document.getElementById('students_' + element.id)
+        const companies = document.getElementById('companies_' + element.id)
 
         //reserve quota
         const inputs = [reserve,editR]
@@ -149,16 +155,38 @@ async function addEventsEventListeners(dataToPrint) {
             completeNextEventsGlobals(element)
             const reservations = eg.studentsFrom == 'customer' ? element.companyReservations : element.eventReservations
             const assignations = eg.studentsFrom == 'customer' ? element.companyAssignations : element.eventAssignations
-            
             const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
             isValid(inputs)
             stppError.style.display = 'none'
             stppMainTitle.innerText = element.events_courses.course_name
             stppSubtitle.innerHTML = '<b>Fecha:</b> ' + dateToString(element.start_date) + ' - ' + dateToString(element.end_date) + ' || ' + element.start_time.substring(0,5) + 'hs. a ' + element.end_time.substring(0,5) + 'hs.'
             stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + assignations
+
+            if (eg.studentsFrom == 'administrator') {
+                isValid([stppCompany])
+                stppCompany.innerHTML = '<option value="">Todas las instituciones</option>'
+                eg.eventCompanies.forEach(company => {
+                    const companyName = eg.companies.filter(c => c.id == company)[0].company_name                    
+                    stppCompany.innerHTML += '<option value="' + company + '">' + companyName + '</option>'                
+                })
+            }
+
             printStudents(eg.eventStudents)
             stpp.style.display = 'block'
         })
+
+        //companies
+        if (companies) {
+            companies.addEventListener('click',async()=>{
+                completeNextEventsGlobals(element)
+                coppMainTitle.innerText = element.events_courses.course_name
+                coppSubtitle.innerHTML = '<b>Fecha:</b> ' + dateToString(element.start_date) + ' - ' + dateToString(element.end_date) + ' || ' + element.start_time.substring(0,5) + 'hs. a ' + element.end_time.substring(0,5) + 'hs.'
+
+                printCompanies(eg.eventCompanies)
+                
+                copp.style.display = 'block'
+            })
+        }
 
         //edit event
         if (editE) {
@@ -199,8 +227,7 @@ function completeNextEventsGlobals(element) {
     element.events_invited_companies.forEach(company => {
         eg.eventInvitedCompanies.push(company.id_companies)
     })
-    
-    
+    eg.eventCompanies = [...new Set(element.events_quota_reservations.map(er => er.id_companies))]
 }
 
 function filterEvents() {
@@ -369,10 +396,10 @@ async function uploadExcelValidations() {
 
 function addStudentValidations() {
 
-    let inputs = [stppCompany,stppLastName,stppFirstName,stppEmail,stppDNI]
+    let inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
 
-    if (eg.studentsFrom == 'customerr') {
-        inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+    if (eg.studentsFrom == 'administrator') {
+        inputs.push(stppCompany)
     }
     
     let errors = inputsValidation(inputs)
@@ -558,5 +585,55 @@ function editEventValidations() {
     return errors
 }
 
+async function filterStudents() {
 
-export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations,addStudentValidations,printStudents,uploadExcelValidations,clickAllCompanies,editEventValidations}
+    if (stppCompany.value == '') {
+        eg.eventStudentsFiltered = eg.eventStudents
+        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.eventData.eventReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length        
+    }else{
+        const companyEvents = await (await fetch(dominio + 'apis/courses-events/company-events/' + stppCompany.value)).json()
+        const filterEvent = companyEvents.filter( e => e.id == eg.idEvents)[0]
+
+        eg.eventStudentsFiltered = eg.eventStudents.filter( es => es.id_companies == stppCompany.value)
+
+        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + filterEvent.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudentsFiltered.length
+        
+    }
+}
+
+async function printCompanies(dataToPrint) {
+    console.log(eg.eventStudents)
+
+    companiesLoader.style.display = 'block'
+    
+    bodyCompanies.innerHTML = ''
+    let counter = 0
+    let html = '';
+    dataToPrint.forEach(element => {
+        const rowClass = counter % 2 == 0 ? 'tBody1 tBodyEven' : 'tBody1 tBodyOdd';
+        const companyName = eg.companies.filter(c => c.id == element)[0].company_name
+        const reservations = eg.reservationsPerEventCompany.filter(r => r.id_events == eg.idEvents && r.id_companies == element)[0].total_quota_reservations
+        const assignations = eg.eventStudents.filter( es => es.id_events == eg.idEvents && es.id_companies == element).length
+        const toAssign = reservations - assignations
+
+        html += `
+            <tr>
+                <th class="${rowClass}">${companyName}</th>
+                <th class="${rowClass}">${reservations}</th>
+                <th class="${rowClass}">${assignations}</th>
+                <th class="${rowClass}">${toAssign}</th>
+                <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="edit_${element.id}"></i></th>
+            </tr>
+        `;
+        counter += 1;
+    });
+
+    // Insertar todo el HTML en el DOM de una sola vez
+    bodyCompanies.innerHTML += html;
+
+    //addStudentsEventListeners(dataToPrint)
+
+    companiesLoader.style.display = 'none'
+}
+
+export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations,addStudentValidations,printStudents,uploadExcelValidations,clickAllCompanies,editEventValidations,filterStudents}

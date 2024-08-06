@@ -36,11 +36,11 @@ const coursesQueries = {
             course_description: data.course_description == '' ? null : data.course_description,
             course_quota: data.course_quota == '' ? null : data.course_quota
         },
-    {
-        where:{
-            id:data.id
-        }
-    })
+        {
+            where:{
+                id:data.id
+            }
+        })
     },
 }
 

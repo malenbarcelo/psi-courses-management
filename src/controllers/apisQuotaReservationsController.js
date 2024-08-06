@@ -1,4 +1,5 @@
 const quotaReservationsQueries = require('./dbQueries/quotaReservationsQueries')
+const quotationsEventsCompaniesQueries = require('./dbQueries/quotationsEventsCompaniesQueries')
 
 const apisQuotaReservations = {
   companiesPerCourse: async(req,res) =>{
@@ -15,13 +16,14 @@ const apisQuotaReservations = {
   },
   reserveQuota: async(req,res) =>{
     try{
-
-      console.log('hola')
       const data = req.body
       const idUser = req.session.userLogged.id
 
       //reserve quota
-      await quotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,data.reserved_quota,idUser  )
+      await quotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,data.reserved_quota,idUser)
+
+      //create quotations_events_companies
+      await quotationsEventsCompaniesQueries.create(data.id_events,data.id_companies)
 
       //send email
       const courseData = await coursesQueries.findCourse(data.id_courses)
@@ -70,6 +72,18 @@ const apisQuotaReservations = {
       await quotaReservationsQueries.cancelReservation(data)
 
       res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  reservationsPerEventCompany: async(req,res) =>{
+    try{
+
+      const data = await quotaReservationsQueries.reservationsPerEventCompany()
+
+      res.status(200).json(data)
 
     }catch(error){
       console.group(error)

@@ -11,6 +11,7 @@ const bodyParser = require("body-parser")
 const mainRoutes = require('./src/routes/mainRoutes.js')
 const usersRoutes = require('./src/routes/usersRoutes.js')
 const coursesRoutes = require('./src/routes/coursesRoutes.js')
+const quotationsRoutes = require('./src/routes/quotationsRoutes.js')
 const apisRoutes = require('./src/routes/apisRoutes.js')
 
 const app = express()
@@ -49,6 +50,8 @@ app.listen(APP_PORT,() => console.log("Servidor corriendo en puerto " + APP_PORT
 app.use('/',mainRoutes)
 app.use('/users',usersRoutes)
 app.use('/courses',coursesRoutes)
+app.use('/quotations',quotationsRoutes)
+app.use('/apis/quotations',quotationsRoutes)
 app.use('/apis',apisRoutes)
 
 
