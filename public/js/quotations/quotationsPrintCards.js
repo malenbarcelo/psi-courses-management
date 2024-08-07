@@ -136,12 +136,26 @@ async function quotationsEventListeners(dataToPrint) {
         //select
         select.addEventListener('click',async()=>{
             if (select.checked) {
+
                 qg.selectedElements.push(element)
+
+                const maxId = qg.elementsToQuote.length == 0 ? 0 : qg.elementsToQuote.reduce((max, obj) => (obj.id > max ? obj.id : max), qg.elementsToQuote[0].id)
+
+                qg.elementsToQuote.push({
+                    id:maxId + 1,
+                    description: element.event.events_courses.course_name + ' - Evento #' + String(element.id_events).padStart(8,'0'),
+                    price:'',
+                    quantity:parseInt(qg.reservationsPerCompany.filter(r => r.id_events == element.id_events && r.id_companies == element.id_companies)[0].total_quota_reservations),
+                    extended_price:'',
+                    discount:'',
+                    net_extended_price:'',
+                    data:element
+                })
+
             }else{
                 qg.selectedElements = qg.selectedElements.filter(se => se.id != element.id)
+                qg.elementsToQuote = qg.elementsToQuote.filter(eq => eq.data.id != element.id)
             }
-
-            qg.eventsToQuote = [...qg.selectedElements]
 
             if (qg.selectedElements.length > 0) {   
                 qQuote.classList.remove('qQuoteUnabled')

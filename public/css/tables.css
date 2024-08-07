@@ -13,6 +13,7 @@ thead{
     overflow-y: auto;
     width: fit-content;
     margin: auto;
+    border-bottom: black solid 1px;
 }
 
 .thCss{
@@ -48,6 +49,10 @@ thead{
     width: 300px;
 }
 
+.thxxxxl{
+    width: 400px;
+}
+
 
 .thLeftBorder{
     border-top-left-radius: 15px;
@@ -62,6 +67,37 @@ border-top-right-radius: 15px;
     position: absolute;
     display: none;
     text-align: center;
+}
+
+.tableData{
+    position: absolute;
+    right: 10%;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    margin-top: 10px;
+}
+.tableDataLine{
+    display: flex;
+    position: relative;
+}
+
+.lineTitle{
+    font-weight: bold;
+    width: 100px;
+}
+
+.lineData{
+    width: 70px;
+    text-align: right;
+}
+
+.lineEdit{
+    position: absolute;
+    text-align: right;
+    left: 105%;
+    cursor: pointer;
 }
 
 /*------Tbody------*/
@@ -105,4 +141,6 @@ border-top-right-radius: 15px;
 #cqppTable{
     height: 280px; /*to avoid overflow, it depends on the website landscape*/
 }
+
+
 

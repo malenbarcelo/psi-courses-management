@@ -47,13 +47,14 @@ async function cqppEventListeners() {
     //cqppAddEvent
     cqppAddEvent.addEventListener("click", async() => {
 
-        const eventsToAdd = qg.quotations.filter(q => q.id_companies == qg.companyData.id_companies && !qg.eventsToQuote.includes(q))
+        const elementsToQuoteIds = qg.elementsToQuote.map(eq => eq.data.id)
+        const eventsToAdd = qg.quotations.filter(q => q.id_companies == qg.companyData.id_companies && !elementsToQuoteIds.includes(q.id))
 
-        selectEvent.innerHTML = '<option value=""></option>'
+        aeppEvent.innerHTML = '<option value=""></option>'
 
         eventsToAdd.forEach(element => {
             const eventToAdd = element.event.events_courses.course_name + ' - Evento #' + String(element.id_events).padStart(8,'0')
-            selectEvent.innerHTML += '<option value="' + element.id + '">' + eventToAdd + '</option>'
+            aeppEvent.innerHTML += '<option value="' + element.id + '">' + eventToAdd + '</option>'
             
         })       
         aepp.style.display = 'block'
@@ -63,10 +64,24 @@ async function cqppEventListeners() {
     //aeppAccept
     aeppAccept.addEventListener("click", async() => {        
 
-        if (selectEvent.value != '') {                        
-            const eventToAdd = qg.quotations.filter(q => q.id == selectEvent.value)[0]
-            qg.eventsToQuote.push(eventToAdd)
-            printTableQuotation(qg.eventsToQuote)
+        if (aeppEvent.value != '') {                        
+            
+            const eventToAdd = qg.quotations.filter(q => q.id == aeppEvent.value)[0]
+
+            const maxId = qg.elementsToQuote.length == 0 ? 0 : qg.elementsToQuote.reduce((max, obj) => (obj.id > max ? obj.id : max), qg.elementsToQuote[0].id)
+            
+            qg.elementsToQuote.push({
+                id:maxId + 1,
+                    description: eventToAdd.event.events_courses.course_name + ' - Evento #' + String(eventToAdd.id_events).padStart(8,'0'),
+                    price:'',
+                    quantity:parseInt(qg.reservationsPerCompany.filter(r => r.id_events == eventToAdd.id_events && r.id_companies == eventToAdd.id_companies)[0].total_quota_reservations),
+                    extended_price:'',
+                    discount:'',
+                    net_extended_price:'',
+                    data:eventToAdd
+            })
+
+            printTableQuotation(qg.elementsToQuote)
             aepp.style.display = 'none'
             
         }
@@ -85,15 +100,20 @@ async function cqppEventListeners() {
 
         if (alppDescription.value != '') {
 
-            const id = qg.linesToQuote.length == 0 ? 0 : (qg.linesToQuote.reduce((max, line) => (line.id > max ? line.id : max), qg.linesToQuote)[0].id + 1)
+            const maxId = qg.elementsToQuote.length == 0 ? 0 : qg.elementsToQuote.reduce((max, obj) => (obj.id > max ? obj.id : max), qg.elementsToQuote[0].id)
             
-            qg.linesToQuote.push({
-                id:id,
-                dscription:alppDescription.value,
-                
+            qg.elementsToQuote.push({
+                id:maxId + 1,
+                description: alppDescription.value,
+                price:'',
+                quantity:'',
+                extended_price:'',
+                discount:'',
+                net_extended_price:'',
+                data:[]
             })
 
-            console.log(qg.linesToQuote)
+            printTableQuotation(qg.elementsToQuote)
             
             alpp.style.display = 'none'
             
@@ -101,7 +121,22 @@ async function cqppEventListeners() {
         
 
     })
+
+    //change discount
+    cqppEditDiscount.addEventListener("click", async() => {
+        edppDiscount.value = qg.quotationData.discount * 100
+        edpp.style.display = 'block'
+    })
     
+    //accept change discount
+    edppAccept.addEventListener("click", async() => {
+
+        if (edppDiscount.value != 0) {
+            qg.quotationData.discount = parseFloat(edppDiscount.value) / 100
+            printTableQuotation(qg.elementsToQuote)
+            edpp.style.display = 'none'
+        }
+    })
 
     
 }

@@ -10,13 +10,11 @@ async function printTableQuotation(dataToPrint) {
     dataToPrint.forEach(element => {
 
         const rowClass = counter % 2 == 0 ? 'tBody1 tBodyEven' : 'tBody1 tBodyOdd'
-        const reservations = qg.reservationsPerCompany.filter(r => r.id_events == element.id_events && r.id_companies == element.id_companies)[0].total_quota_reservations
         
         html += `
             <tr>
-                <th class="${rowClass}">${element.event.events_courses.course_name}</th>
-                <th class="${rowClass}">${'#' + String(element.id_events).padStart(8,'0')}</th>
-                <th class="${rowClass}">${reservations}</th>
+                <th class="${rowClass}">${element.description}</th>
+                <th class="${rowClass}">${element.quantity}</th>
                 <th class="${rowClass}"></th>
                 <th class="${rowClass}"></th>
                 <th class="${rowClass}"></th>
@@ -31,6 +29,7 @@ async function printTableQuotation(dataToPrint) {
     bodyQuotations.innerHTML += html
 
     tableQuotationEventListeners(dataToPrint)
+    updateQuotationData(dataToPrint)
     
 }
 
@@ -43,29 +42,43 @@ async function tableQuotationEventListeners(dataToPrint) {
 
         //delete line
         deleteLine.addEventListener('click',async()=>{
-            qg.eventsToQuote = qg.eventsToQuote.filter(se => se.id != element.id)
-            printTableQuotation(qg.eventsToQuote)
+            qg.elementsToQuote = qg.elementsToQuote.filter(eq => eq.id != element.id)
+            printTableQuotation(qg.elementsToQuote)
             
         })
 
         //edit
-        // edit.addEventListener('click',async()=>{
-        //     if (select.checked) {
-        //         qg.selectedElements.push(element)
-        //     }else{
-        //         qg.selectedElements = qg.selectedElements.filter(se => se.id != element.id)
-        //     }
+        edit.addEventListener('click',async()=>{
+            elppTitle.innerText = element.description
+            elppQuantity.innerText = element.quantity
+            elppPrice.innerText = element.unit_price
+            elppDiscount.innerText = element.discount
+            elppTotal.innerText = element.unit_price
 
-        //     if (qg.selectedElements.length > 0) {   
-        //         qQuote.classList.remove('qQuoteUnabled')
-        //         qQuote.classList.add('qQuoteEnabled')                
-        //     }else{
-        //         qQuote.classList.add('qQuoteUnabled')
-        //         qQuote.classList.remove('qQuoteEnabled') 
-        //     }
-        // })
+            elpp.style.display = 'block'
+            
+        })
     })
 }
+
+function updateQuotationData(dataToPrint) {
+
+    let subtotal = 0    
+
+    dataToPrint.forEach(element => {
+        subtotal += element.extended_price
+    })
+
+    qg.quotationData.subtotal = subtotal
+    qg.quotationData.total = subtotal * (1 - qg.quotationData.discount)
+
+    cqppSubtotal.innerText = qg.formatter.format(subtotal)
+    cqppTotal.innerText = qg.formatter.format(subtotal * (1 - qg.quotationData.discount))
+    cqppDiscount.innerText = qg.quotationData.discount * 100
+    
+}
+
+
 
 
 

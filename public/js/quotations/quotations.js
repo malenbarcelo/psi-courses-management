@@ -3,7 +3,7 @@ import { printQuotations } from "./quotationsPrintCards.js"
 import { printTableQuotation } from "./quotationsPrintTables.js"
 import { nqppEventListeners,cqppEventListeners } from "./quotationsPopups.js"
 import {filterQuotations } from "./quotationsFunctions.js"
-import { closePopupsEventListeners, showOkPopup, uncheckInputs, clearInputs} from "../generalFunctions.js"
+import { closePopupsEventListeners, showOkPopup, uncheckInputs, clearInputs, acceptWithEnter} from "../generalFunctions.js"
 import qg from "./quotationsGlobals.js"
 
 window.addEventListener('load',async()=>{
@@ -20,8 +20,14 @@ window.addEventListener('load',async()=>{
     printQuotations(qg.quotationsFiltered)
 
     //close popups
-    const closePopups = [nqppClose,nqppCancel,cqppClose,aeppClose,aeppCancel,alppClose,alppCancel]
+    const closePopups = [nqppClose,nqppCancel,cqppClose,aeppClose,aeppCancel,alppClose,alppCancel,edppCancel,edppClose,elppClose,elppCancel]
     closePopupsEventListeners(closePopups)
+
+    //accept with enter
+    const inputToEnter = [[aeppEvent,aeppAccept],[alppDescription,alppAccept],[edppDiscount,edppAccept]]
+    inputToEnter.forEach(element => {
+        acceptWithEnter(element[0],element[1])
+    })
 
     //filters
     const filters = [filterCourse,filterCompany,filterPending,filterInProcess,filterQuoted]
@@ -63,7 +69,7 @@ window.addEventListener('load',async()=>{
                 cqppMainTitle.innerText = companyData[0].company.company_name
                 cqppSubtitle.innerText = 'Cotización ' + quotationNumber
 
-                printTableQuotation(qg.selectedElements)
+                printTableQuotation(qg.elementsToQuote)
 
                 cqpp.style.display = 'block'
             }

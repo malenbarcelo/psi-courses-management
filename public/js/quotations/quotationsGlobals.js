@@ -9,8 +9,12 @@ let qg = {
     reservationsPerCompany:[],
     elementToEdit:{},
     selectedElements:[],
-    eventsToQuote:[],
-    linesToQuote:[],
+    elementsToQuote:[],
+    quotationData:{
+        subtotal:0,
+        discount:0,
+        total:0
+    },
     companyData:{}
 }
 

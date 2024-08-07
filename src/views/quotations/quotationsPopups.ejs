@@ -48,13 +48,12 @@
 
         <div class="popupTitle1 mtm" id="cqppMainTitle"></div>
         <div class="popupTitle1 mts" id="cqppSubtitle"></div>
-        
+
         <div class="divTable mtm" id="cqppTable">
             <table>
                 <thead>
                     <tr>
-                        <th class="thCss fsm thxxl">Curso</th>
-                        <th class="thCss fsm thm">Evento</th>
+                        <th class="thCss fsm thxxxxl">Descripción</th>
                         <th class="thCss fsm ths">Cantidad</th>
                         <th class="thCss fsm ths">Precio Unitario</th>
                         <th class="thCss fsm ths">Descuento %</th>
@@ -68,10 +67,26 @@
                     </tr>
                 </thead>
                 <tbody id="bodyQuotations"></tbody>
-            </table>
+            </table>            
         </div>
 
-        <div class="divButtonsRow mtl mbs">
+        <div class="tableData">
+            <div class="tableDataLine">
+                <div class="lineTitle">Subtotal $:</div>
+                <div class="lineData" id="cqppSubtotal"></div>
+            </div>
+            <div class="tableDataLine">
+                <div class="lineTitle">Descuento %:</div>
+                <div class="lineData" id="cqppDiscount"></div>
+                <div class="lineEdit" id="cqppEditDiscount"><i class="fa-solid fa-pencil"></i></div>
+            </div>
+            <div class="tableDataLine">
+                <div class="lineTitle">Total $:</div>
+                <div class="lineData" id="cqppTotal"></div>
+            </div>
+        </div>
+
+        <div class="divButtonsRow mtxxl mbs">
             <div id="cqppAccept" class="button1 bm">Guardar</div>
             <div id="cqppCancel" class="button1 bm">Enviar</div>
         </div>
@@ -110,7 +125,7 @@
         <div class="divInputsRow mtm">
             <div class="divInput">
                 <label class="label1">Evento</label>
-                <select class="input1 sxxxxl spm" id="selectEvent"></select>            
+                <select class="input1 sxxxxl spm" id="aeppEvent"></select>            
             </div>
         </div>
 
@@ -142,6 +157,70 @@
         <div class="divButtonsRow mtl mbs">
             <div id="alppAccept" class="button1 bm">Agregar</div>
             <div id="alppCancel" class="button1 bm">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<!---Edit discount popup--->
+<div class="popup2" id="edpp">
+    
+    <div class="popupContent" id="edppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-pen-to-square"></i></div>
+            <div class="popupClose1" id="edppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="divInputsRow mtm">
+            <div class="divInput">
+                <label class="label1">Descuento %</label>
+                <input type="text" class="input1 im spm" id="edppDiscount">    
+            </div>
+        </div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="edppAccept" class="button1 bs">Aceptar</div>
+            <div id="edppCancel" class="button1 bs">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<!---Edit line popup--->
+<div class="popup2" id="elpp">
+    
+    <div class="popupContent" id="elppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-pen-to-square"></i></div>
+            <div class="popupClose1" id="elppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupSubtitle1 mtm" id="elppTitle"></div>
+
+        <div class="divInputsColumn mtm">
+            <div class="divInput mtm">
+                <label class="label2">Cantidad</label>
+                <input type="number" class="input1 im spm" id="elppQuantity">    
+            </div>
+            <div class="divInput mtm">
+                <label class="label2">Precio unitario</label>
+                <input type="number" step="any" class="input1 im spm" id="elppPrice">    
+            </div>
+            <div class="divInput mtm">
+                <label class="label2">Descuento %</label>
+                <input type="number" step="any" class="input1 im spm" id="elppDiscount">    
+            </div>
+            <div class="divInput mtm">
+                <label class="label2">Total</label>
+                <input type="number" step="any" class="input1 im spm" id="elppTotal">    
+            </div>
+        </div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="elppAccept" class="button1 bs">Agregar</div>
+            <div id="elppCancel" class="button1 bs">Cancelar</div>
         </div>
 
     </div>
