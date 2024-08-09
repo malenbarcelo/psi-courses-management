@@ -15,6 +15,7 @@ let qg = {
         discount:0,
         total:0
     },
+    quotationNumber:'',
     companyData:{}
 }
 

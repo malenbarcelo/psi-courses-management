@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
          autoIncrement : true,
          allowNull: false
       },
-      quotation_status:{
+      status:{
          type: DataTypes.STRING,
          allowNull: false,
       },
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     const config = {
-      tableName : 'quotations',
+      tableName : 'quotations_status',
       timestamps : false
     }
 

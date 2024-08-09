@@ -10,6 +10,17 @@ const quotationsQueries = {
         })
         return allData
     },
+    findQuotation: async (data) => {        
+        const findQuotation = await model.findAll({
+            where: {
+                ...data
+            }
+        })
+        return findQuotation
+    },
+    saveQuotation: async(data) => {        
+        await model.create(data)
+    },
 }
 
 module.exports = quotationsQueries

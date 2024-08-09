@@ -153,4 +153,27 @@
     border: rgb(198, 196, 196) solid 2px;
 }
 
+.qAction{
+    position: relative;
+    font-size: 15px;
+}
+
+.qActionInfo{
+    font-size: 12px;
+    position: absolute;
+    display: none;
+    background-color: var(--color1);
+    border: var(--color1) solid 1px;
+    padding: 5px;
+    bottom: 25px;
+    right: -50px;
+    z-index: 1;
+    width: 100px;
+}
+
+.qAction:hover .qActionInfo{
+    display: block;
+}
+
+
 

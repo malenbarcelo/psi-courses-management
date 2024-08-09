@@ -56,6 +56,7 @@
                         <th class="thCss fsm thxxxxl">Descripción</th>
                         <th class="thCss fsm ths">Cantidad</th>
                         <th class="thCss fsm ths">Precio Unitario</th>
+                        <th class="thCss fsm ths">Subtotal</th>
                         <th class="thCss fsm ths">Descuento %</th>
                         <th class="thCss fsm ths">Total</th>
                         <th class="thCss fsm thxs">
@@ -87,8 +88,8 @@
         </div>
 
         <div class="divButtonsRow mtxxl mbs">
-            <div id="cqppAccept" class="button1 bm">Guardar</div>
-            <div id="cqppCancel" class="button1 bm">Enviar</div>
+            <div id="cqppSave" class="button1 bm">Guardar</div>
+            <div id="cqppSend" class="button1 bm">Enviar</div>
         </div>
 
     </div>
@@ -175,7 +176,7 @@
         <div class="divInputsRow mtm">
             <div class="divInput">
                 <label class="label1">Descuento %</label>
-                <input type="text" class="input1 im spm" id="edppDiscount">    
+                <input type="number" class="input1 im spm" id="edppDiscount">    
             </div>
         </div>
 
@@ -209,17 +210,21 @@
                 <input type="number" step="any" class="input1 im spm" id="elppPrice">    
             </div>
             <div class="divInput mtm">
+                <label class="label2 unabledLabel">Subtotal</label>
+                <input type="number" step="any" class="input1 im spm unabledInput" id="elppSubtotal" readonly>    
+            </div>
+            <div class="divInput mtm">
                 <label class="label2">Descuento %</label>
                 <input type="number" step="any" class="input1 im spm" id="elppDiscount">    
             </div>
             <div class="divInput mtm">
-                <label class="label2">Total</label>
-                <input type="number" step="any" class="input1 im spm" id="elppTotal">    
+                <label class="label2 unabledLabel">Total</label>
+                <input type="number" step="any" class="input1 im spm unabledInput" id="elppTotal" readoonly>    
             </div>
         </div>
 
         <div class="divButtonsRow mtl mbs">
-            <div id="elppAccept" class="button1 bs">Agregar</div>
+            <div id="elppAccept" class="button1 bs">Aceptar</div>
             <div id="elppCancel" class="button1 bs">Cancelar</div>
         </div>
 

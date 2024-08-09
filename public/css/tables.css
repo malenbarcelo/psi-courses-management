@@ -71,7 +71,7 @@ border-top-right-radius: 15px;
 
 .tableData{
     position: absolute;
-    right: 10%;
+    right: 6%;
     font-size: 13px;
     display: flex;
     flex-direction: column;

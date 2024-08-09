@@ -10,6 +10,8 @@ router.get('/',quotationsController.quotations)
 //quotations
 router.get('/in-progress-quotations',quotationsApisController.inProgressQuotations)
 router.get('/quotations-data',quotationsApisController.quotationsData)
+router.get('/quotations-status',quotationsApisController.quotationsStatus)
 router.post('/no-quotation-required',quotationsApisController.noQuotationRequired)
+router.post('/save-quotation',quotationsApisController.saveQuotation)
 
 module.exports = router

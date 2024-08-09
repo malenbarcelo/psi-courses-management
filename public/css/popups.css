@@ -146,7 +146,6 @@
     border: var(--errorColor) solid 3px;
     background-color:rgb(228, 156, 156);
     font-size: 16px;
-    width: fit-content;
     padding: 15px 30px;
     color: var(--errorColor);
 }

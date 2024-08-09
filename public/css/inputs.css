@@ -45,8 +45,9 @@ accent-color: black
     border:black solid 1px;
 }
 
-.enabledInput{
-    color:grey
+.unabledInput{
+    color:grey;
+    border: grey solid 1px;
 }
 
 .label1{
@@ -75,6 +76,10 @@ accent-color: black
     font-size: 13px;
     background-color: white;
     font-weight: bold;
+}
+
+.unabledLabel{
+    color: grey;
 }
 
 /*----------INPUTS AND SELECTS SIZES----------*/

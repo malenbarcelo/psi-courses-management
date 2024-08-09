@@ -10,6 +10,18 @@ const quotationsEventsCompaniesQueries = {
             enabled:1
         })
     },
+    update: async(idEvents,idCompanies,idQuotations) => {        
+        await model.update({
+            id_quotations: idQuotations
+        },
+        {
+            where:{
+                id_events:idEvents,
+                id_companies:idCompanies,
+                enabled:1
+            }
+        })
+    },
     inProgress: async() => {        
         const inProgress = await model.findAll({
             where:{
@@ -17,7 +29,10 @@ const quotationsEventsCompaniesQueries = {
                 requires_quotation:1
             },
             include: [
-                {association: 'quotation'},
+                {
+                    association: 'quotation',
+                    include: [{association: 'quotations_status'}]                    
+                },
                 { 
                     association: 'event',
                     include: [{association: 'events_courses'}] 

@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.INTEGER,
          allowNull: false,
       },
-      price:{
+      subtotal:{
          type: DataTypes.DECIMAL,
          allowNull: true,
       },
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.DECIMAL,
          allowNull: true,
       },
-      net_price:{
+      total:{
          type: DataTypes.DECIMAL,
          allowNull: true,
       },
