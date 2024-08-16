@@ -27,30 +27,29 @@
 
         <% if (locals.bottomHeaderMenu) { %>            
             <% bottomHeaderMenu.forEach(itemMenu => { %>
-                <div class="itemsMenu" id="<%= 'itemsMenu_' + itemMenu.id %>">
-                    <div class="itemHeaderMenu">
-                        <a href="<%= itemMenu.href %>" class="<%= idSelectedItem == itemMenu.id ? 'refItemHeaderMenu selectedItem' : 'refItemHeaderMenu' %>"><%= itemMenu.name %></a>
-                        
+                <% if (itemMenu.idsUsersCategories.includes(userLogged.id_users_categories)) { %>
+                    <div class="itemsMenu" id="<%= 'itemsMenu_' + itemMenu.id %>">
+                        <div class="itemHeaderMenu">
+                            <a href="<%= itemMenu.href %>" class="<%= idSelectedItem == itemMenu.id ? 'refItemHeaderMenu selectedItem' : 'refItemHeaderMenu' %>"><%= itemMenu.name %></a>
+                            
+                        </div>
+                        <% if (itemMenu.subitems.length > 0) { %>
+                            <div class="subItems" id="<%= 'subItems_' + itemMenu.id %>">
+                                <% itemMenu.subitems.forEach(subitem => { %>
+                                    <a href="<%= subitem.href %>" class="subitemHeaderMenu"><%= subitem.subitem %></a>
+                                <% }) %>
+                            </div>                        
+                        <% } %>
                     </div>
-                    <% if (itemMenu.subitems.length > 0) { %>
-                        <div class="subItems" id="<%= 'subItems_' + itemMenu.id %>">
-                            <% itemMenu.subitems.forEach(subitem => { %>
-                                <a href="<%= subitem.href %>" class="subitemHeaderMenu"><%= subitem.subitem %></a>
-                            <% }) %>
-                        </div>                        
-                    <% } %>
-                </div>
+                <% } %>
             <% }) %>
-              
         <% } %>
 
     </div>
 
 </div>
 
-
-
-<!---<script type="module" src="/js/header.js"></script>--->
+<script type="module" src="/js/header.js"></script>
 
 
 

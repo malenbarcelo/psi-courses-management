@@ -2,8 +2,27 @@ const db = require('../../../database/models')
 const model = db.Quotations_details
 
 const quotationsQueries = {
-    saveQuotationDetails: async(data) => {        
+    save: async(data) => {        
         await model.bulkCreate(data)
+    },
+    delete: async(idQuotation) => {        
+        await model.destroy({
+            where:{
+                id_quotations:idQuotation
+            }
+        })
+    },
+    cancel: async(idQuotation) => {        
+        await model.update(
+            {
+                enabled:0
+            },
+            {
+                where:{
+                    id:idQuotation
+                }
+            }
+        )
     },
 }
 

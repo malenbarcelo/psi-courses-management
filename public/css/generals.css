@@ -115,9 +115,9 @@ ul {
     z-index: 1;
 }
 
-#quotationsLoader{
+#quotationsLoader,#quotesHistoryLoader{
     top: 40%;
-    left: calc(50vw - 20px);
+    left: calc(50vw - 55px);
     z-index: 10;
 }
 
@@ -156,12 +156,13 @@ ul {
     display: none;
 }
 
-.divError2{
+.divErrorFlex{
+    display: flex;
+    column-gap: 5px;
+    justify-content: center;
     color: var(--errorColor);
-    font-size: 12px;
     font-weight: bold;
-    text-align: center;
-    margin-top: 2px;
+    display: none;
 }
 
 .invalidInput{

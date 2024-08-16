@@ -1,5 +1,6 @@
 import qg from "./qGlobals.js"
 import {dateToString } from "../generalFunctions.js"
+import {printTableQuotation } from "./printTables.js"
 
 async function printQuotations(dataToPrint) {
 
@@ -14,7 +15,8 @@ async function printQuotations(dataToPrint) {
         const endTime = element.event.end_time.substring(0, 5)
         const eventNumber = 'Evento: #' + String(element.id_events).padStart(8, '0')
         const eventDate = dateToString(element.event.start_date) + ' - ' + dateToString(element.event.end_date) + ' || ' + startTime + ' a ' + endTime + ' hs.'
-        const reservations = 'Cupos reservados: ' + qg.reservationsPerCompany.filter( r => r.id_events == element.id_events && r.id_companies == element.id_companies)[0].total_quota_reservations        
+        const reservations = qg.reservationsPerCompany.filter( r => r.id_events == element.id_events && r.id_companies == element.id_companies)
+        const reservationsText = 'Cupos reservados: ' + (reservations.length == 0 ? 0 : reservations[0].total_quota_reservations)
 
         //create quotation div                
         const divQuotation = document.createElement('div')
@@ -39,11 +41,23 @@ async function printQuotations(dataToPrint) {
 
         const qReservations = document.createElement('div')
         qReservations.id = 'qReservations'
-        qReservations.textContent = reservations
+        qReservations.textContent = reservationsText
 
         const qStatus = document.createElement('div')
         qStatus.id = 'qStatus'
-        qStatus.innerHTML = element.quotation == null ? 'Pendiente' : element.quotation.quotations_status.status
+        
+        //add error color if company has to aprove quotation
+        if (qg.idUsersCategories == 4 && element.quotation != null) {
+            if (element.quotation.id_status == 2) {
+                qStatus.classList.add('errorColor')                
+            }
+        }
+        
+        if (qg.idUsersCategories != 4) {
+            qStatus.innerHTML = element.quotation_status.status
+        }else{
+            qStatus.innerHTML = (element.id_quotations_status == 4 || element.id_quotations_status == 3) ? 'Pendiente' : 'En aprobación'
+        }
         
         const qRequiresQuotation = document.createElement('div')
         qRequiresQuotation.id = 'qRequiresQuotation'
@@ -59,7 +73,11 @@ async function printQuotations(dataToPrint) {
 
         const qDetails = document.createElement('div')
         qDetails.className = 'qAction'
-        qDetails.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus icon" id="details_' + element.id + '"></i><div class="qActionInfo">Ver cotización</div>'
+        qDetails.innerHTML = '<i class="fa-solid fa-magnifying-glass-plus icon" id="view_' + element.id + '"></i><div class="qActionInfo">Ver cotización</div>'
+
+        const qDelete = document.createElement('div')
+        qDelete.className = 'qAction'
+        qDelete.innerHTML = '<i class="fa-regular fa-trash-can icon" id="delete_' + element.id + '"></i><div class="qActionInfo">Cancelar cotización</div>'
         
         divQuotation.appendChild(qCompanyName)
         divQuotation.appendChild(qCourseName)
@@ -69,11 +87,17 @@ async function printQuotations(dataToPrint) {
         divQuotation.appendChild(qStatus)
         divQuotation.appendChild(qActions)
         
-        if (element.quotation == null) {
+        if (qg.idUsersCategories != 4 && element.quotation == null) {
             divQuotation.appendChild(qRequiresQuotation)
             divQuotation.appendChild(qSelect)
-        }else{
+        }
+
+        if (element.quotation != null && (qg.idUsersCategories != 4 || element.quotation.id_status == 2)) {
             qActions.appendChild(qDetails)
+        }
+
+        if (element.quotation != null && qg.idUsersCategories != 4) {
+            qActions.appendChild(qDelete)
         }
 
         fragment.appendChild(divQuotation)
@@ -81,6 +105,8 @@ async function printQuotations(dataToPrint) {
     })
 
     divQuotations.appendChild(fragment)
+
+    quotationsTableData.style.right = qg.idUsersCategories != 4 ? '6%' : '12%'
 
     await quotationsEventListeners(dataToPrint);
 
@@ -93,6 +119,8 @@ async function quotationsEventListeners(dataToPrint) {
 
         const noQuotation = document.getElementById('noQuotation_' + element.id)
         const select = document.getElementById('select_' + element.id)
+        const view = document.getElementById('view_' + element.id)
+        const deleteQ = document.getElementById('delete_' + element.id)
 
         //notQuotation
         if (noQuotation) {
@@ -106,26 +134,10 @@ async function quotationsEventListeners(dataToPrint) {
         //select
         if (select) {
             select.addEventListener('click',async()=>{
-                if (select.checked) {
-    
-                    qg.selectedElements.push(element)
-    
-                    const maxId = qg.elementsToQuote.length == 0 ? 0 : qg.elementsToQuote.reduce((max, obj) => (obj.id > max ? obj.id : max), qg.elementsToQuote[0].id)
-    
-                    qg.elementsToQuote.push({
-                        id:maxId + 1,
-                        description: element.event.events_courses.course_name + ' - Evento #' + String(element.id_events).padStart(8,'0'),
-                        price:'',
-                        quantity:parseInt(qg.reservationsPerCompany.filter(r => r.id_events == element.id_events && r.id_companies == element.id_companies)[0].total_quota_reservations),
-                        extended_price:'',
-                        discount:'',
-                        net_extended_price:'',
-                        data:element
-                    })
-    
+                if (select.checked) {    
+                    qg.selectedElements.push(element)    
                 }else{
                     qg.selectedElements = qg.selectedElements.filter(se => se.id != element.id)
-                    qg.elementsToQuote = qg.elementsToQuote.filter(eq => eq.data.id != element.id)
                 }
     
                 if (qg.selectedElements.length > 0) {   
@@ -135,6 +147,68 @@ async function quotationsEventListeners(dataToPrint) {
                     qQuote.classList.add('qQuoteUnabled')
                     qQuote.classList.remove('qQuoteEnabled') 
                 }
+            })
+        }
+
+        //view
+        if (view) {
+            view.addEventListener('click',async()=>{
+
+                qg.editFrom = 'edit'
+                qg.companyData = element.company
+                qg.idQuotationToEdit = element.id_quotations
+                qg.quotationNumber = element.quotation.quotation_number
+                qg.quotationData.discount = element.quotation.discount
+
+                cqppMainTitle.innerText = element.company.company_name
+                cqppSubtitle.innerText = 'Cotización #' + String(element.quotation.quotation_number).padStart(6,'0')
+                cqppError2.style.display = 'none'
+
+                qg.elementsToQuote = []
+
+                element.quotation.quotations_details.forEach(detail => {
+                    qg.elementsToQuote.push({
+                        id:detail.id,
+                        id_events:detail.id_events,
+                        description: detail.description,
+                        unit_price:detail.unit_price,
+                        quantity:detail.quantity,
+                        subtotal:detail.subtotal,
+                        id_companies:qg.companyData.id,
+                        discount:detail.discount,
+                        total:detail.total,
+                        companyData:qg.companyData,
+                        eventData:detail.event,
+                        type:detail.id_events == null ? 2 : 1
+                    })                    
+                })
+
+                qg.elementsToQuote.sort((a, b) => a.type - b.type)
+                printTableQuotation(qg.elementsToQuote)
+
+                cqpp.style.display = 'block'
+                
+            })
+        }
+
+        //delete
+        if (deleteQ) {
+            deleteQ.addEventListener('click',async()=>{
+                
+                qg.idQuotationToEdit = element.id_quotations
+
+                dqppQuestion.innerHTML = '¿Confirma que desea eliminar la cotización <b>#' + String(element.quotation.quotation_number).padStart(6,'0') + '</b> del cliente <b>' + element.company.company_name + '</b> ?'
+
+                qg.elementsToCancel = []
+
+                element.quotation.quotations_details.forEach(detail => {
+                    qg.elementsToCancel.push({
+                        id:detail.id,
+                    })                    
+                })
+
+                dqpp.style.display = 'block'
+                
             })
         }
         

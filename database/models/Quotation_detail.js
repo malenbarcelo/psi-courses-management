@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.INTEGER,
          allowNull: false,
       },
+      id_events:{
+         type: DataTypes.INTEGER,
+         allowNull: true,
+      },
       description:{
          type: DataTypes.STRING,
          allowNull: false,
@@ -53,7 +57,12 @@ module.exports = (sequelize, DataTypes) => {
       Quotation_detail.belongsTo(models.Quotations,{
          as:'quotations',
          foreignKey: 'id_quotations'
+      }),
+      Quotation_detail.belongsTo(models.Courses_events,{
+         as:'events',
+         foreignKey: 'id_events'
       })
+      
    }
  
    return Quotation_detail

@@ -12,12 +12,18 @@ import { cqppEventListeners} from "./quotationsCQPP.js"
 import { edppEventListeners} from "./quotationsEDPP.js"
 import { elppEventListeners} from "./quotationsELPP.js"
 import { nqppEventListeners} from "./quotationsNQPP.js"
+import { sqppEventListeners} from "./quotationsSQPP.js"
+import { dqppEventListeners} from "./quotationsDQPP.js"
+import { uoppEventListeners} from "./quotationsUOPP.js"
+import { aqppEventListeners} from "./quotationsAQPP.js"
 
 window.addEventListener('load',async()=>{
 
+    quotationsLoader.style.display = 'block'
+
     //get data and complete globals
-    qg.idCompanies = document.getElementById('idCompany').innerText
-    qg.idUserCategories = document.getElementById('idUserCategories').innerText
+    qg.idUsersCategories = idUsersCategories.innerText
+    qg.idCompanies = idCompanies.innerText
     qg.reservationsPerCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
     qg.quotations = await (await fetch(dominio + 'apis/quotations/in-progress-quotations')).json()
     qg.quotationsFiltered = qg.quotations
@@ -27,7 +33,7 @@ window.addEventListener('load',async()=>{
     printQuotations(qg.quotationsFiltered)
 
     //close popups
-    const closePopups = [nqppClose,nqppCancel,cqppClose,aeppClose,aeppCancel,alppClose,alppCancel,edppCancel,edppClose,elppClose,elppCancel]
+    const closePopups = [nqppClose,nqppCancel,cqppClose,aeppClose,aeppCancel,alppClose,alppCancel,edppCancel,edppClose,elppClose,elppCancel,sqppClose,sqppCancel,dqppClose,dqppCancel,uoppClose,uoppCancel,aqppClose,aqppCancel]
     closePopupsEventListeners(closePopups)
 
     //accept with enter
@@ -37,12 +43,16 @@ window.addEventListener('load',async()=>{
     })
 
     //filters
-    const filters = [filterCourse,filterCompany,filterPending,filterInProcess,filterQuoted]
-    filters.forEach(filter => {        
-        filter.addEventListener("change", async() => {
-            filterQuotations()
-            printQuotations(qg.quotationsFiltered)
-        })
+    const filterInProcess_3 = document.getElementById('filterInProcess_3')
+    const filterCompany = document.getElementById('filterCompany')
+    const filters = [filterCourse,filterCompany,filterPending_4,filterQuoted_2,filterInProcess_3]
+    filters.forEach(filter => {
+        if(filter){
+            filter.addEventListener("change", async() => {
+                filterQuotations()
+                printQuotations(qg.quotationsFiltered)
+            })
+        }
     })
 
     //unFilter
@@ -54,53 +64,67 @@ window.addEventListener('load',async()=>{
     })
 
     //create quote button
-    qQuote.addEventListener("click", async() => {
+    const qQuote = document.getElementById('qQuote')
+    if (qQuote) {
+        qQuote.addEventListener("click", async() => {
 
-        if (qg.selectedElements.length > 0) {            
-            //validations
-            const companies = []
-            const companyData = []
-
-            qg.selectedElements.forEach(element => {
-                if (!companies.includes(element.id_companies)) {
-                    companies.push(element.id_companies)
-                    companyData.push(element)
-                }
-            })
-            
-            if (companies.length > 1) {
-                showOkPopup(cqppError)
-            }else{
-                qg.companyData = companyData[0]
-                qg.quotationNumber = qg.quotationsData.length == 0 ? 1 : qg.quotationsData.reduce((max, obj) => (obj.quotation_number > max ? obj.quotation_number : max), 0) + 1
-                cqppMainTitle.innerText = companyData[0].company.company_name
-                cqppSubtitle.innerText = 'Cotización #' + String(qg.quotationNumber).padStart(6,'0')
-
-                qg.elementsToQuote = []
-                
-                const maxId = qg.elementsToQuote.length == 0 ? 0 : qg.elementsToQuote.reduce((max, obj) => (obj.id > max ? obj.id : max), qg.elementsToQuote[0].id)
-
+            qg.editFrom = 'create'
+            cqppError2.style.display = 'none'
+    
+            if (qg.selectedElements.length > 0) {            
+                //validations
+                const companies = []
+    
                 qg.selectedElements.forEach(element => {
-                    qg.elementsToQuote.push({
-                        id:maxId + 1,
-                        description: element.event.events_courses.course_name + ' - Evento #' + String(element.id_events).padStart(8,'0'),
-                        unit_price:null,
-                        quantity:parseInt(qg.reservationsPerCompany.filter(r => r.id_events == element.id_events && r.id_companies == element.id_companies)[0].total_quota_reservations),
-                        subtotal:null,
-                        discount:0,
-                        total:null,
-                        data:element
-                    })
+                    if (!companies.includes(element.id_companies)) {
+                        companies.push(element.id_companies)
+                    }
                 })
-
-                printTableQuotation(qg.elementsToQuote)
-
-                cqpp.style.display = 'block'
+    
+                if (companies.length > 1) {
+                    showOkPopup(cqppError)
+                }else{
+    
+                    //get quotation number
+                    qg.quotationData.discount = 0
+    
+                    //get quotation number
+                    qg.companyData = qg.selectedElements[0].company
+    
+                    //get quotation number
+                    qg.quotationNumber = qg.quotationsData.length == 0 ? 1 : qg.quotationsData.reduce((max, obj) => (obj.quotation_number > max ? obj.quotation_number : max), 0) + 1
+    
+                    //complete popup titles                
+                    cqppMainTitle.innerText = qg.companyData.company_name
+                    cqppSubtitle.innerText = 'Cotización #' + String(qg.quotationNumber).padStart(6,'0')
+                    
+                    qg.elementsToQuote = []
+    
+                    qg.selectedElements.forEach(element => {
+                        qg.elementsToQuote.push({
+                            id:element.id,
+                            id_events:element.id_events,
+                            description: element.event.events_courses.course_name + ' - Evento #' + String(element.id_events).padStart(8,'0'),
+                            unit_price:null,
+                            quantity:parseInt(qg.reservationsPerCompany.filter(r => r.id_events == element.id_events && r.id_companies == element.id_companies)[0].total_quota_reservations),
+                            subtotal:null,
+                            id_companies:element.id_companies,
+                            discount:0,
+                            total:null,
+                            companyData:element.company,
+                            eventData:element.event,
+                            type:1
+                        })
+                    })
+    
+                    printTableQuotation(qg.elementsToQuote)
+    
+                    cqpp.style.display = 'block'
+                }
             }
-        }
-
-        
-    })
+        })
+    }
+    
 
     //ADD EVENT POPUP EVENT LISTENERS (aepp)
     aeppEventListeners()
@@ -119,5 +143,18 @@ window.addEventListener('load',async()=>{
 
     //NO QUOTATION POPUP EVENT LISTENERS (nqpp)
     nqppEventListeners()
+
+    //SEND QUOTATION POPUP EVENT LISTENERS (sqpp)
+    sqppEventListeners()
+
+    //DELETE QUOTATION POPUP EVENT LISTENERS (dqpp)
+    dqppEventListeners()
+
+    //UPLOAD ORDER POPUP EVENT LISTENERS (uopp)
+    uoppEventListeners()
+
+    //ACCEPT QUOTATION POPUP EVENT LISTENERS (aqpp)
+    aqppEventListeners()
+
 
 })

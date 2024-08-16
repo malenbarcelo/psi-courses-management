@@ -9,17 +9,21 @@ async function alppEventListeners() {
 
         if (alppDescription.value != '') {
 
-            const maxId = qg.elementsToQuote.length == 0 ? 0 : qg.elementsToQuote.reduce((max, obj) => (obj.id > max ? obj.id : max), qg.elementsToQuote[0].id)
-            
             qg.elementsToQuote.push({
-                id:maxId + 1,
+                id:-1,
+                id_events:null,
                 description: alppDescription.value,
                 unit_price:null,
                 quantity:null,
                 subtotal:null,
                 discount:0,
+                total:null,                
+                discount:0,
                 total:null,
-                data:[]
+                id_companies:qg.companyData.id,
+                companyData:qg.companyData,
+                eventData:{},
+                type:2
             })
 
             printTableQuotation(qg.elementsToQuote)

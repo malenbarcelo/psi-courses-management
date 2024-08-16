@@ -52,7 +52,7 @@ window.addEventListener('load',async()=>{
 
     //table info events listeners
     const tableIcons = [euppIcon,rpppIcon,duppIcon]
-    showTableInfo(tableIcons,40,25,40)
+    showTableInfo(tableIcons,41,25,40)
 
     //close popups
     const closePopups = [cuppClose,cuppCancel,ccppClose,ccppCancel,euppClose,euppCancel,rpppClose,rpppCancel,buppClose,buppCancel]

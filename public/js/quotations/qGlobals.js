@@ -3,6 +3,8 @@ let qg = {
         minimumFractionDigits: 0,
         useGrouping: true
     }),
+    idCompanies:0,
+    idUsersCategories:0,
     quotations:[],
     quotationsFiltered:[],
     quotationsData:[],
@@ -16,7 +18,10 @@ let qg = {
         total:0
     },
     quotationNumber:'',
-    companyData:{}
+    companyData:{},
+    editFrom:'create',
+    idQuotationToEdit:0,
+    elementsToCancel:[]
 }
 
 export default qg

@@ -79,7 +79,7 @@
 }
 
 /*---quotationsPopups.ejs---*/
-#nqppContent{
+#nqppContent,#sqppContent,#dqppContent,#aqppContent{
     top: 30%;
     width: 400px;
     left: calc(50vw - 200px);
@@ -98,7 +98,7 @@
 }
 
 #elppContent{
-    top: 23%;
+    top: 15%;
     width: 300px;
     left: calc(50vw - 150px);
 }
@@ -107,6 +107,12 @@
     top: 30%;
     width: 200px;
     left: calc(50vw - 100px);
+}
+
+#uoppContent{
+    top: 30%;
+    width: 400px;
+    left: calc(50vw - 200px);
 }
 
 
@@ -118,7 +124,7 @@
 }
 
 /*---quotationsPopups.ejs---*/
-#nqppOkContent,#cqppOkContent{
+#nqppOkContent,#cqppOkContent,#dqppOkContent,#aqppOkContent{
     top: 40%;
     left: calc(50vw - 150px);
 }

@@ -1,0 +1,111 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<div id="idCompanies" class="notVisible"><%= userLogged.id_companies %></div>
+<div id="idUsersCategories" class="notVisible"><%= userLogged.id_users_categories %></div>
+
+<div class="mainTitle">
+    HISTORIAL DE COTIZACIONES
+</div>
+
+<!------MAIN FILTERS------>
+<div class="mainFilters mbl">    
+    <div class="divInputsRow">
+        <% if (userLogged.id_users_categories != 4) { %>
+            <div class="divInput">
+                <label class="label1">Empresa</label>
+                <select class="input1 sxl spm" id="filterCompany">
+                    <option value="">Todas las empresas</option>
+                    <% companies.forEach(company => { %>
+                        <option value="<%= company.id %>"><%= company.company_name %></option>
+                    <% }) %>                
+                </select>            
+            </div>
+        <% } %>
+        <div class="divInput">
+            <label class="label1">Año</label>
+            <input type="number" class="input1 is ipm" id="filterYear">                      
+        </div>
+        <div class="divInput">
+            <label class="label1">Mes</label>
+            <select class="input1 ss spm" id="filterMonth">
+                <option value=""></option>
+                <% months.forEach(month => { %>
+                    <option value="<%= month.number %>"><%= month.text %></option>
+                <% }) %>                
+            </select>                      
+        </div>
+        
+        <div class="divInput">
+            <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+        </div>
+    </div>    
+</div>
+
+<!------MAIN CONTENT------>
+<div class="quotationsCheckboxs">    
+    <% if (userLogged.id_users_categories != 4) { %>
+        <div class="quotationCheckbox">
+            <input type="checkbox" id="filterInProcess_3">
+            <label>Borrador</label>
+        </div>
+    <% } %>
+    
+    <div class="quotationCheckbox">
+        <input type="checkbox" id="filterQuoted_2">
+        <label>En aprobación</label>
+    </div>
+
+    <div class="quotationCheckbox">
+        <input type="checkbox" id="filterAproved_1">
+        <label>Aprobada</label>
+    </div>
+
+    <div class="quotationCheckbox">
+        <input type="checkbox" id="filterRefused_6">
+        <label>Rechazada</label>
+    </div>
+</div>
+
+<div class="divTable" id="quotesHistoryTable">
+
+    <div class="thInfo" id="vdppInfo">Ver / Editar</div>
+    <div class="thInfo" id="dfppInfo">Descargar OC</div>
+    <div class="thInfo" id="dqppInfo">Cancelar</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="thCss thm">#Cotización</th>
+                <th class="thCss ths">Fecha</th>
+                <th class="thCss thl">Empresa</th>
+                <th class="thCss thm">Importe</th>
+                <th class="thCss thm">Estado</th>
+                <th class="thCss thxs">
+                    <i class="fa-solid fa-magnifying-glass-plus icon" id="vdppIcon"></i>
+                </th>
+                <th class="thCss thxs">
+                    <i class="fa-regular fa-file-pdf icon" id="dfppIcon"></i>
+                </th>
+                <th class="thCss thxs">
+                    <i class="fa-regular fa-trash-can icon" id="dqppIcon"></i>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="bodyQuotesHistory"></tbody>
+    </table>
+</div>
+
+
+
+<div id="divQuotesHistory"></div>
+
+
+
+
+
+<!----------LOADER---------->
+<div class="loader" id="quotesHistoryLoader"></div>
+
+<%- include('./quotesHistoryPopups') %>
+<script type="module" src="/js/quotesHistory/quotesHistory.js"></script>

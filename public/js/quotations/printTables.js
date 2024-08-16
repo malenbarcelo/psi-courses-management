@@ -21,13 +21,23 @@ async function printTableQuotation(dataToPrint) {
             <tr>
                 <th class="${rowClass}">${element.description}</th>
                 <th class="${rowClass}">${quantity}</th>
-                <th class="${rowClass}">${unit_price}</th>
-                <th class="${rowClass}">${subtotal}</th>
-                <th class="${rowClass}">${discount}</th>
-                <th class="${rowClass}">${total}</th>
-                <th class="${rowClass}"><i class="fa-regular fa-pen-to-square allowedIcon" id="edit_${element.id}"></i></th>
-                <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
-            </tr>        `
+                <th class="${rowClass}">${qg.formatter.format(unit_price)}</th>
+                <th class="${rowClass}">${qg.formatter.format(subtotal)}</th>
+                <th class="${rowClass}">${discount * 100}</th>
+                <th class="${rowClass}">${qg.formatter.format(total)}</th>
+        `
+        
+        if (qg.idUsersCategories != 4) {
+            html += `
+                    <th class="${rowClass}"><i class="fa-regular fa-pen-to-square allowedIcon" id="edit_${element.id}"></i></th>
+                    <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
+                </tr>
+            `   
+        }else{
+            html += `
+                </tr>
+            `
+        }
         
         counter += 1
     })
@@ -47,26 +57,29 @@ async function tableQuotationEventListeners(dataToPrint) {
         const edit = document.getElementById('edit_' + element.id)
 
         //delete line
-        deleteLine.addEventListener('click',async()=>{
-            qg.elementsToQuote = qg.elementsToQuote.filter(eq => eq.id != element.id)
-            printTableQuotation(qg.elementsToQuote)
-            
-        })
+        if (deleteLine) {
+            deleteLine.addEventListener('click',async()=>{
+                qg.elementsToQuote = qg.elementsToQuote.filter(eq => eq.id != element.id)
+                printTableQuotation(qg.elementsToQuote)            
+            })
+        }        
 
         //edit
-        edit.addEventListener('click',async()=>{
+        if (edit) {
+            edit.addEventListener('click',async()=>{
 
-            qg.elementToEdit = element
-            elppTitle.innerText = element.description
-            elppQuantity.value = element.quantity
-            elppPrice.value = element.unit_price
-            elppSubtotal.value = element.subtotal
-            elppDiscount.value = element.discount
-            elppTotal.value = element.total
-
-            elpp.style.display = 'block'
-            
-        })
+                qg.elementToEdit = element
+                elppTitle.innerText = element.description
+                elppQuantity.value = element.quantity
+                elppPrice.value = element.unit_price
+                elppSubtotal.value = element.subtotal
+                elppDiscount.value = element.discount * 100
+                elppTotal.value = element.total    
+                elpp.style.display = 'block'
+                
+            })
+        }
+        
     })
 }
 
@@ -75,12 +88,12 @@ function updateQuotationData(dataToPrint) {
     let subtotal = 0    
 
     dataToPrint.forEach(element => {
-        subtotal += element.subtotal
+        subtotal += element.total == null ? 0 : parseFloat(element.total,2)
     })
-
 
     qg.quotationData.subtotal = subtotal
     qg.quotationData.total = subtotal * (1 - qg.quotationData.discount)
+    qg.quotationData.quotation_number = qg.quotationNumber
 
     cqppSubtotal.innerText = qg.formatter.format(subtotal)
     cqppTotal.innerText = qg.formatter.format(subtotal * (1 - qg.quotationData.discount))

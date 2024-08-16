@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.INTEGER,
          allowNull: true,
       },
+      id_quotations_status:{
+         type: DataTypes.INTEGER,
+         allowNull: false,
+      },
       requires_quotation:{
          type: DataTypes.INTEGER,
          allowNull: false,
@@ -49,6 +53,10 @@ module.exports = (sequelize, DataTypes) => {
       Quotation_event_company.belongsTo(models.Quotations,{
          as:'quotation',
          foreignKey: 'id_quotations'
+      }),
+      Quotation_event_company.belongsTo(models.Quotations_status,{
+         as:'quotation_status',
+         foreignKey: 'id_quotations_status'
       })
    }
  

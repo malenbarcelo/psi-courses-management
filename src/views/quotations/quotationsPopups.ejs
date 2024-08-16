@@ -1,5 +1,5 @@
 <!---------no quotation popup---------->
-<div class="popup2" id="nqpp">
+<div class="popup" id="nqpp">
     
     <div class="popupContent" id="nqppContent">
 
@@ -31,14 +31,25 @@
     
     <div class="popupContent" id="cqppContent">
 
-        <!------GENERAL BUTTONS------>
+        <!------GENERAL BUTTONS------>        
         <div class="divDGBs" id="DGBsQuotations">
-            <div class="divDGB divDGBm" id="cqppAddEvent">
-                AGREGAR EVENTO
-            </div>
-            <div class="divDGB divDGBm" id="cqppNewLine">
-                LÍNEA ADICIONAL
-            </div>
+            <% if (userLogged.id_users_categories != 4) { %>
+                <div class="divDGB divDGBm" id="cqppAddEvent">
+                    AGREGAR EVENTO
+                </div>
+                <div class="divDGB divDGBm" id="cqppNewLine">
+                    LÍNEA ADICIONAL
+                </div>
+                <% } else { %>
+                    <div class="divDGB divDGBm" id="cqppUploadOrder">
+                        CARGAR ORDEN DE COMPRA
+                        <div id="cqppFileCheck">
+                            <i class="fa-regular fa-circle-check"></i>
+                        </div>
+                        <div id="cqppFileName"></div>
+                    </div>
+                    
+            <% } %> 
         </div>
 
         <div class="popupIcons">
@@ -49,7 +60,7 @@
         <div class="popupTitle1 mtm" id="cqppMainTitle"></div>
         <div class="popupTitle1 mts" id="cqppSubtitle"></div>
 
-        <div class="divTable mtm" id="cqppTable">
+        <div class="divTable borderBottom mtm" id="cqppTable">
             <table>
                 <thead>
                     <tr>
@@ -59,19 +70,21 @@
                         <th class="thCss fsm ths">Subtotal</th>
                         <th class="thCss fsm ths">Descuento %</th>
                         <th class="thCss fsm ths">Total</th>
-                        <th class="thCss fsm thxs">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </th>
-                        <th class="thCss fsm thxs">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </th>
+                        <% if (userLogged.id_users_categories != 4) { %>
+                            <th class="thCss fsm thxs">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </th>
+                            <th class="thCss fsm thxs">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </th>
+                        <% } %>
                     </tr>
                 </thead>
                 <tbody id="bodyQuotations"></tbody>
             </table>            
         </div>
 
-        <div class="tableData">
+        <div class="tableData" id="quotationsTableData">
             <div class="tableDataLine">
                 <div class="lineTitle">Subtotal $:</div>
                 <div class="lineData" id="cqppSubtotal"></div>
@@ -79,7 +92,10 @@
             <div class="tableDataLine">
                 <div class="lineTitle">Descuento %:</div>
                 <div class="lineData" id="cqppDiscount"></div>
-                <div class="lineEdit" id="cqppEditDiscount"><i class="fa-solid fa-pencil"></i></div>
+                <% if (userLogged.id_users_categories != 4) { %>
+                    <div class="lineEdit" id="cqppEditDiscount"><i class="fa-solid fa-pencil"></i></div>
+                <% } %>
+                
             </div>
             <div class="tableDataLine">
                 <div class="lineTitle">Total $:</div>
@@ -87,9 +103,18 @@
             </div>
         </div>
 
+        <div class="divErrorFlex mtm" id="cqppError2">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div id="cqppError2Text"></div>
+        </div>
+
         <div class="divButtonsRow mtxxl mbs">
-            <div id="cqppSave" class="button1 bm">Guardar</div>
-            <div id="cqppSend" class="button1 bm">Enviar</div>
+            <% if (userLogged.id_users_categories != 4) { %>
+                <div id="cqppSave" class="button1 bm">Guardar</div>
+                <div id="cqppSend" class="button1 bm">Enviar</div>
+                <% } else { %>
+                    <div id="cqppAccept" class="button1 bm">Aprobar OC</div>
+            <% } %>            
         </div>
 
     </div>
@@ -99,7 +124,7 @@
     <div class="okContent" id="cqppOkContent">
         <div class="okDiv">
             <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
-            <div class="okText" id="cqppOkText">Cotización creada con éxito</div>
+            <div class="okText" id="cqppOkText"></div>
         </div>
     </div>
 </div>
@@ -228,5 +253,108 @@
             <div id="elppCancel" class="button1 bs">Cancelar</div>
         </div>
 
+    </div>
+</div>
+
+<!---------send quotation question---------->
+<div class="popup2" id="sqpp">
+    
+    <div class="popupContent" id="sqppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-circle-question"></i></div>
+            <div class="popupClose1" id="sqppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupQuestion" id="sqppQuestion"></div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="sqppAccept" class="button1 bs">Aceptar</div>
+            <div id="sqppCancel" class="button1 bs">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<!---------delete quotation question---------->
+<div class="popup2" id="dqpp">
+    
+    <div class="popupContent" id="dqppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-circle-question"></i></div>
+            <div class="popupClose1" id="dqppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupQuestion" id="dqppQuestion"></div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="dqppAccept" class="button1 bs">Aceptar</div>
+            <div id="dqppCancel" class="button1 bs">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<div class="okPopup" id="dqppOk">    
+    <div class="okContent" id="dqppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText" id="dqppOkText"></div>
+        </div>
+    </div>
+</div>
+
+<!---Upload order popup--->
+<div class="popup2" id="uopp">
+    
+    <div class="popupContent" id="uoppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-solid fa-arrow-up-from-bracket"></i></div>
+            <div class="popupClose1" id="uoppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupSubtitle1 mtm" id="uoppTitle">SUBIR ORDEN DE COMPRA</div>
+
+        <form action="/apis/quotations/save-purchase-order" method="POST" enctype="multipart/form-data">
+            <div class="divInputsRow mtm">
+                <div class="divInput">
+                    <input type="file" class="input1 ixxl ipm" id="uoppFile" name="uoppFile">
+                    <div class="divError" id="uoppError"></div>    
+                </div>
+            </div>
+            <div class="divButtonsRow mtl mbs">
+                <button type="submit" class="button1 bs" id="uoppAccept">Aceptar</button>
+                <div id="uoppCancel" class="button1 bs">Cancelar</div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!---------accept order popup---------->
+<div class="popup2" id="aqpp">
+    
+    <div class="popupContent" id="aqppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-regular fa-circle-question"></i></div>
+            <div class="popupClose1" id="aqppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupQuestion" id="aqppQuestion"></div>
+
+        <div class="divButtonsRow mtl mbs">
+            <div id="aqppAccept" class="button1 bs">Aceptar</div>
+            <div id="aqppCancel" class="button1 bs">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<div class="okPopup" id="aqppOk">    
+    <div class="okContent" id="aqppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Cotización aprobada con éxito</div>
+        </div>
     </div>
 </div>

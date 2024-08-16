@@ -26,29 +26,11 @@ async function elppEventListeners() {
         const quantity = elppQuantity.value == '' ? null : parseInt(elppQuantity.value)
         const price = elppPrice.value == '' ? '' : parseFloat(elppPrice.value,2)
         const extended_price = (elppQuantity.value == '' || elppPrice.value == '') ? null : quantity * price
-        const discount = elppDiscount.value == '' ? 0 : parseFloat(elppDiscount.value,2)
-        const total = (elppQuantity.value == '' || elppPrice.value == '') ? null : quantity * price * ( 1 - discount/100)
+        const discount = elppDiscount.value == '' ? 0 : parseFloat(elppDiscount.value,2) / 100
+        const total = (elppQuantity.value == '' || elppPrice.value == '') ? null : quantity * price * ( 1 - discount)
         
         qg.elementsToQuote = qg.elementsToQuote.map(item => 
             item.id == qg.elementToEdit.id ? {...item, quantity: quantity, unit_price: price, subtotal:extended_price,discount: discount, total: total} : item
-        )
-
-        printTableQuotation(qg.elementsToQuote)
-
-        elpp.style.display = 'none'
-    })
-
-    elppAccept.addEventListener("click", async() => {
-        
-        //edit element
-        const quantity = elppQuantity.value == '' ? null : parseInt(elppQuantity.value)
-        const unit_price = elppPrice.value == '' ? null : parseFloat(elppPrice.value,2)
-        const subtotal = (elppQuantity.value == '' || elppPrice.value == '') ? null : quantity * unit_price
-        const discount = elppDiscount.value == '' ? 0 : parseFloat(elppDiscount.value,2)
-        const total = (elppQuantity.value == '' || elppPrice.value == '') ? null : quantity * unit_price * ( 1 - discount/100)
-        
-        qg.elementsToQuote = qg.elementsToQuote.map(item => 
-            item.id == qg.elementToEdit.id ? {...item, quantity: quantity, unit_price: unit_price, subtotal:subtotal,discount: discount, total: total} : item
         )
 
         printTableQuotation(qg.elementsToQuote)

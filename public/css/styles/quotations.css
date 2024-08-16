@@ -1,4 +1,10 @@
 /*----------------------quotations.ejs----------------------*/
+
+.borderBottom{
+    border-bottom: black solid 1px;
+
+}
+
 .quotationsCheckboxs{
     position: absolute;
     top: 21vh;
@@ -174,6 +180,28 @@
 .qAction:hover .qActionInfo{
     display: block;
 }
+
+#cqppUploadOrder{
+    position: relative;
+}
+
+#cqppFileCheck{
+    position: absolute;
+    color: green;
+    font-size: 15px;
+    right: -20px;
+    top: 28%;
+    display: none;
+}
+
+#cqppFileName{
+    position: absolute;
+    top: 30px;
+    font-weight: lighter;
+    display: none;
+}
+
+
 
 
 

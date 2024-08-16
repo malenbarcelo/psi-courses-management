@@ -4,7 +4,8 @@ import g from "./globals.js"
 
 function dateToString(date) {
 
-    const dateAsArray = date.split('-')
+    const dateWithoutTime = date.split('T')[0]
+    const dateAsArray = dateWithoutTime.split('-')
 
     const year = dateAsArray[0]
     const month = dateAsArray[1]
@@ -144,17 +145,17 @@ function acceptWithEnter(input,button) {
     })
 }
 
-function showTableInfo(tableIcons,top,left,width) {
+function showTableInfo(tableIcons,top,width) {
     tableIcons.forEach(element => {
-        const info = document.getElementById(element.id.replace('Icon','Info'))
-        element.addEventListener("mouseover", async(e) => {
-            const mouseX = e.clientX
-            info.style.top = top + '%'
-            info.style.left = (mouseX - left) + 'px'
+        const info = document.getElementById(element.icon.id.replace('Icon','Info'))
+        element.icon.addEventListener("mouseover", async(e) => {
+            info.style.top = top + 'px'
+            info.style.right = element.right
+            
             info.style.width = width + 'px'
             info.style.display = 'block'
         })
-        element.addEventListener("mouseout", async(e) => {
+        element.icon.addEventListener("mouseout", async(e) => {
             info.style.display = 'none'
         })
     })
@@ -163,13 +164,18 @@ function showTableInfo(tableIcons,top,left,width) {
 
 function clearInputs(inputs) {
     inputs.forEach(input => {
-        input.value = ''
+        if (input) {
+            input.value = ''
+        }
+        
     })
 }
 
 function uncheckInputs(inputs) {
     inputs.forEach(input => {
-        input.checked = false
+        if (input) {
+            input.checked = false
+        }
     })
 }
 

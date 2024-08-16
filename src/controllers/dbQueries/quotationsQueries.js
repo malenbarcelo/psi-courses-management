@@ -1,12 +1,37 @@
 const db = require('../../../database/models')
+const { Op } = require('sequelize')
 const model = db.Quotations
 
 const quotationsQueries = {
-    allData: async() => {        
+    quotations: async() => {
         const allData = await model.findAll({
             where:{
                 enabled:1,
-            }
+            },
+            include: [
+                {association: 'quotations_companies'},
+                {association: 'quotations_status'},
+                {association: 'quotations_purchase_orders'}
+            ],
+            order:[['quotation_number','DESC']]
+        })
+        return allData
+    },
+    companyQuotations: async(idCompany) => {
+        const allData = await model.findAll({
+            where:{
+                enabled:1,
+                id_companies:idCompany,
+                id_status: {
+                    [Op.notIn]: [3]
+                }
+            },
+            include: [
+                {association: 'quotations_companies'},
+                {association: 'quotations_status'},
+                {association: 'quotations_purchase_orders'}
+            ],
+            order:[['quotation_number','DESC']]
         })
         return allData
     },
@@ -18,8 +43,28 @@ const quotationsQueries = {
         })
         return findQuotation
     },
-    saveQuotation: async(data) => {        
-        await model.create(data)
+    save: async(data) => {        
+        const newQuotation = await model.create(data)
+        return newQuotation
+    },
+    update: async(data,idQuotation) => {
+        await model.update(data, {
+            where: {
+                id: idQuotation
+            }
+        })
+    },
+    cancel: async(idQuotation) => {        
+        await model.update(
+            {
+                enabled:0
+            },
+            {
+                where:{
+                    id:idQuotation
+                }
+            }
+        )
     },
 }
 

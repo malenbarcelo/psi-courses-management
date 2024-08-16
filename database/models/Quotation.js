@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
          type: DataTypes.INTEGER,
          allowNull: false,
       },
+      id_companies:{
+         type: DataTypes.INTEGER,
+         allowNull: false,
+      },
       created_at:{
          type: DataTypes.DATE,
          allowNull: true,
@@ -71,6 +75,18 @@ module.exports = (sequelize, DataTypes) => {
       Quotation.belongsTo(models.Quotations_status,{
          as:'quotations_status',
          foreignKey: 'id_status'
+      }),
+      Quotation.belongsTo(models.Users_companies,{
+         as:'quotations_companies',
+         foreignKey: 'id_companies'
+      }),
+      Quotation.hasMany(models.Quotations_details,{
+         as:'quotations_details',
+         foreignKey: 'id_quotations'
+      }),
+      Quotation.hasOne(models.Quotations_purchase_orders,{
+         as:'quotations_purchase_orders',
+         foreignKey: 'id_quotations'
       })
    }
  

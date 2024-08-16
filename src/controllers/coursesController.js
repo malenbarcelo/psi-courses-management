@@ -5,7 +5,7 @@ const bottomHeaderMenu = require('../data/bottomHeaderMenu')
 const coursesController = {
     courses: async(req,res) => {
         try{
-            const idSelectedItem = 1
+            const idSelectedItem = 2
             const courses = await coursesQueries.courses()
             const companies = await companiesQueries.companies()
             
@@ -19,7 +19,7 @@ const coursesController = {
     },
     events: async(req,res) => {
         try{
-            const idSelectedItem = 2
+            const idSelectedItem = 1
 
             const courses = await coursesQueries.courses()
             const companies = await companiesQueries.companies()
