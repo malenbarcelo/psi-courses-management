@@ -65,13 +65,19 @@
         <input type="checkbox" id="filterRefused_6">
         <label>Rechazada</label>
     </div>
+
+    <% if (userLogged.id_users_categories != 4) { %>
+        <div class="quotationCheckbox">
+            <input type="checkbox" id="filterCanceled_7">
+            <label>Cancelada</label>
+        </div>
+    <% } %>
 </div>
 
 <div class="divTable" id="quotesHistoryTable">
 
     <div class="thInfo" id="vdppInfo">Ver / Editar</div>
     <div class="thInfo" id="dfppInfo">Descargar OC</div>
-    <div class="thInfo" id="dqppInfo">Cancelar</div>
 
     <table>
         <thead>
@@ -86,9 +92,6 @@
                 </th>
                 <th class="thCss thxs">
                     <i class="fa-regular fa-file-pdf icon" id="dfppIcon"></i>
-                </th>
-                <th class="thCss thxs">
-                    <i class="fa-regular fa-trash-can icon" id="dqppIcon"></i>
                 </th>
             </tr>
         </thead>
@@ -108,4 +111,5 @@
 <div class="loader" id="quotesHistoryLoader"></div>
 
 <%- include('./quotesHistoryPopups') %>
+<%- include('../quotations/quotationsPopups') %>
 <script type="module" src="/js/quotesHistory/quotesHistory.js"></script>

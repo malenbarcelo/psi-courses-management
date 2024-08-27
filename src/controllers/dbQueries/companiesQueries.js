@@ -5,9 +5,10 @@ const model = db.Users_companies
 const companiesQueries = {
     companies: async() => {        
         const companies = await model.findAll({
+            include: [{association: 'companies_users'}],
             where:{enabled:1},
             order:['company_name'],
-            raw:true,
+            nest:true
         })
         return companies
     },

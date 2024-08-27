@@ -114,6 +114,8 @@
     width: fit-content;
     padding: 15px 30px;
     color: green;
+    top: 40%;
+    left: calc(50vw - 150px);
 }
 
 .okDiv{

@@ -26,8 +26,7 @@ async function printTableQuotation(dataToPrint) {
                 <th class="${rowClass}">${discount * 100}</th>
                 <th class="${rowClass}">${qg.formatter.format(total)}</th>
         `
-        
-        if (qg.idUsersCategories != 4) {
+        if (qg.idUsersCategories != 4 && qg.editFrom != 'history') {
             html += `
                     <th class="${rowClass}"><i class="fa-regular fa-pen-to-square allowedIcon" id="edit_${element.id}"></i></th>
                     <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>

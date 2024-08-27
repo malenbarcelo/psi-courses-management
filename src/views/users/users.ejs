@@ -17,15 +17,19 @@
 <div class="mainFilters">
     <div class="divInputsRow">            
         <div class="divInput">
-            <label class="label1">Institución</label>
+            <label class="label1">Empresa</label>
             <select class="input1 sxxl spl" id="filterCompany">
-                <option value="">Todas las instituciones</option>
+                <option value="">Todas las empresas</option>
                 <% companies.forEach(company => { %>
                     <option value="<%= company.id %>">
                         <%= company.company_name %>
                     </option>
                 <% }) %>
             </select>            
+        </div>
+        <div id="createCompany">
+            <i class="fa-solid fa-magnifying-glass-plus icon"></i>
+            <div id="createCompanyInfo">Ver / Editar empresas</div>
         </div>
     </div>    
 </div>
@@ -34,17 +38,17 @@
     <div class="divInputsRow">
         <div class="divInput">
             <label class="label2">Apellido</label>
-            <input type="text" class="input1 il ipm" id="filterLastName">
+            <input type="text" class="input1 il ipm" id="filterLastName" autocomplete="off">
             <ul class="predictedElements" id="filterLastNameUl"></ul>            
         </div>            
         <div class="divInput">
             <label class="label2">Nombre</label>
-            <input type="text" class="input1 il ipm" id="filterFirstName">
+            <input type="text" class="input1 il ipm" id="filterFirstName" autocomplete="off">
             <ul class="predictedElements" id="filterFirstNameUl"></ul>            
         </div>
         <div class="divInput">
             <label class="label2">Email</label>
-            <input type="text" class="input1 il ipm" id="filterEmail">
+            <input type="text" class="input1 il ipm" id="filterEmail" autocomplete="off">
             <ul class="predictedElements" id="filterEmailUl"></ul>                   
         </div>
         <div class="divInput">
@@ -98,7 +102,13 @@
 <!----------LOADER---------->
 <div class="loader" id="usersLoader"></div>
 
+<!----------POPUPS---------->
 <%- include('./usersConfirmPopups') %>
 <%- include('./usersEditPopup') %>
-<%- include('./usersCreatePopup') %>
+<%- include('./popupsVCPP') %>
+<%- include('./popupsCUPP') %>
+<%- include('./popupsCCPP') %>
+
+
+<!----------SCRIPTS---------->
 <script type="module" src="/js/users/users.js"></script>

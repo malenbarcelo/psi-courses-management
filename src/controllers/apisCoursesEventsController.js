@@ -24,14 +24,11 @@ const apisCoursesEventsController = {
 
       const data = req.body
 
-      await coursesEventsQueries.createEvent(data)
-
-      //get created event id
-      const eventData = await coursesEventsQueries.lastEvent()
-      const eventId = eventData.id
+      //create event
+      const newEvent = await coursesEventsQueries.createEvent(data)
 
       //create data courses_events_invited_companies
-      await coursesEventsInvitedCompaniesQueries.create(data.invited_companies,data.id_courses, eventId)
+      await coursesEventsInvitedCompaniesQueries.create(data.invited_companies,data.id_courses, newEvent.id)
 
       res.status(200).json()
 

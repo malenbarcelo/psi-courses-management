@@ -1,7 +1,5 @@
 /*------------POPUPS------------*/
-#ccpp{
-    background-color: rgba(0,0,0,0.4);
-}
+
 
 /*Contents*/
 #buppContent,#rpppContent{
@@ -16,17 +14,7 @@
     left: calc(50vw - 200px);
 }
 
-#cuppContent{
-    top: 28%;
-    width: 450px;
-    left: calc(50vw - 225px);
-}
 
-#ccppContent{
-    top: 42%;
-    width: 350px;
-    left: calc(50vw - 175px);
-}
 
 #ccoppContent{
     top: 20%;
@@ -65,12 +53,7 @@
     position: relative;
 }
 
-#coppContent{
-    top: 20%;
-    width: 900px;
-    left: calc(50vw - 450px);
-    position: relative;
-}
+
 
 #dsppContent,#ssppContent,#ueppContent{
     top: 30%;
@@ -89,6 +72,7 @@
     top: 13%;
     width: 1200px;
     left: calc(50vw - 600px);
+    position: relative;
 }
 
 #aeppContent,#alppContent{
@@ -135,4 +119,51 @@
     width: 450px;
     top: 40%;
     left: calc(50vw - 250px);
+}
+
+
+
+
+/*POPUPS*/
+/* users.ejs --> cupp, ccpp, vcpp */
+/* events.ejs --> copp */
+/* quotations.ejs --> reqpp */
+
+/*-----------------------users.ejs-----------------------*/
+/*create user popup (cupp)*/
+#cuppContent{
+    top: 28%;
+    width: 450px;
+    left: calc(50vw - 235px);
+}
+
+/*create company popup (ccpp)*/
+#ccppContent{
+    top: 37%;
+    width: 350px;
+    left: calc(50vw - 185px);
+}
+
+/*view companies popup (vcpp)*/
+#vcppContent{
+    top: 20%;
+    width: 650px;
+    left: calc(50vw - 335px);
+}
+
+
+/*-----------------------events.ejs-----------------------*/
+/*companies popup (copp)*/
+#coppContent{
+    top: 16%;
+    width: 900px;
+    left: calc(50vw - 450px)
+}
+
+/*-----------------------quotations.ejs-----------------------*/
+/*refuse quotation popup (reqpp)*/
+#reqppContent{
+    top: 30%;
+    width: 450px;
+    left: calc(50vw - 238px);
 }

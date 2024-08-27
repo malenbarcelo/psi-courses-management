@@ -2,8 +2,11 @@ const bottomHeaderMenu = [
     {
         id:1,
         name:'EVENTOS',
-        href:'/courses/events',
-        subitems:[],
+        href:'/events',
+        subitems:[
+            {'subitem':'EN CURSO', 'href':'/events'},
+            {'subitem':'HISTORIAL', 'href':'/events/events-history'}
+        ],
         idsUsersCategories:[1,2,3,4]
     },
     {

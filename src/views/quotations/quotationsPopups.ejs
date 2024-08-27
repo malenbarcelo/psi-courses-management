@@ -31,25 +31,31 @@
     
     <div class="popupContent" id="cqppContent">
 
+        <!------QUOTATION STATUS------>
+        <div id="cqppQuotationStatus"></div>
+
         <!------GENERAL BUTTONS------>        
         <div class="divDGBs" id="DGBsQuotations">
-            <% if (userLogged.id_users_categories != 4) { %>
-                <div class="divDGB divDGBm" id="cqppAddEvent">
-                    AGREGAR EVENTO
-                </div>
-                <div class="divDGB divDGBm" id="cqppNewLine">
-                    LÍNEA ADICIONAL
-                </div>
-                <% } else { %>
-                    <div class="divDGB divDGBm" id="cqppUploadOrder">
-                        CARGAR ORDEN DE COMPRA
-                        <div id="cqppFileCheck">
-                            <i class="fa-regular fa-circle-check"></i>
-                        </div>
-                        <div id="cqppFileName"></div>
+
+            <% if (route == 'quotations') { %>
+                <% if (userLogged.id_users_categories != 4) { %>
+                    <div class="divDGB divDGBm" id="cqppAddEvent">
+                        AGREGAR EVENTO
                     </div>
-                    
-            <% } %> 
+                    <div class="divDGB divDGBm" id="cqppNewLine">
+                        LÍNEA ADICIONAL
+                    </div>
+                    <% } else { %>
+                        <div class="divDGB divDGBm" id="cqppUploadOrder">
+                            CARGAR ORDEN DE COMPRA
+                            <div id="cqppFileCheck">
+                                <i class="fa-regular fa-circle-check"></i>
+                            </div>
+                            <div id="cqppFileName"></div>
+                        </div>                        
+                <% } %>
+            <% } %>
+             
         </div>
 
         <div class="popupIcons">
@@ -70,7 +76,7 @@
                         <th class="thCss fsm ths">Subtotal</th>
                         <th class="thCss fsm ths">Descuento %</th>
                         <th class="thCss fsm ths">Total</th>
-                        <% if (userLogged.id_users_categories != 4) { %>
+                        <% if (userLogged.id_users_categories != 4 && route == 'quotations') { %>
                             <th class="thCss fsm thxs">
                                 <i class="fa-regular fa-pen-to-square"></i>
                             </th>
@@ -92,7 +98,7 @@
             <div class="tableDataLine">
                 <div class="lineTitle">Descuento %:</div>
                 <div class="lineData" id="cqppDiscount"></div>
-                <% if (userLogged.id_users_categories != 4) { %>
+                <% if (userLogged.id_users_categories != 4 && route == 'quotations') { %>
                     <div class="lineEdit" id="cqppEditDiscount"><i class="fa-solid fa-pencil"></i></div>
                 <% } %>
                 
@@ -109,14 +115,19 @@
         </div>
 
         <div class="divButtonsRow mtxxl mbs">
-            <% if (userLogged.id_users_categories != 4) { %>
-                <div id="cqppSave" class="button1 bm">Guardar</div>
-                <div id="cqppSend" class="button1 bm">Enviar</div>
+            <% if (route == 'quotations') { %>
+                <% if (userLogged.id_users_categories != 4) { %>
+                    <div id="cqppSave" class="button1 bm">Guardar</div>
+                    <div id="cqppSend" class="button1 bm">Enviar</div>
+                    <% } else { %>
+                        <div id="cqppAccept" class="button1 bm">Aprobar</div>
+                        <div id="cqppRefuse" class="button1 bm">Rechazar</div>
+                <% } %>
                 <% } else { %>
-                    <div id="cqppAccept" class="button1 bm">Aprobar OC</div>
-            <% } %>            
+                    <div id="cqppCancel" class="button1 bm">Cerrar</div>
+            <% } %>
+                        
         </div>
-
     </div>
 </div>
 
@@ -331,7 +342,7 @@
     </div>
 </div>
 
-<!---------accept order popup---------->
+<!---------accept quotation popup---------->
 <div class="popup2" id="aqpp">
     
     <div class="popupContent" id="aqppContent">

@@ -1,7 +1,6 @@
 import { dominio } from "./dominio.js"
 import g from "./globals.js"
 
-
 function dateToString(date) {
 
     const dateWithoutTime = date.split('T')[0]
@@ -66,7 +65,9 @@ async function predictElements(input,list,apiUrl,dataToPrint,elementName) {
                 
                 element.addEventListener("click", async() => {
                     input.value = element.innerText
-                    list.style.display = 'none'                      
+                    const event = new Event('change')
+                    input.dispatchEvent(event)
+                    list.style.display = 'none'
                 })
             }
         }
@@ -75,6 +76,22 @@ async function predictElements(input,list,apiUrl,dataToPrint,elementName) {
         list.style.display = 'none'
         list.innerHTML = ''
     }
+}
+
+function selectWithClick(e,dataToSelect) {
+    let clickPredictedElement = false
+    let inputToClick
+    dataToSelect.forEach(element => {
+        const input = element.input
+        const name = element.name        
+        const findeElement = g.predictedElements.filter(p => p[name] == e.target.innerText)
+        if (findeElement.length > 0) {
+            input.value = e.target.innerText
+            clickPredictedElement = true
+            inputToClick = input
+        }
+    })
+    return {clickPredictedElement,inputToClick}
 }
 
 function selectFocusedElement(e,input,list,elementName) {
@@ -112,18 +129,20 @@ function selectFocusedElement(e,input,list,elementName) {
         
     }else if(e.key === 'Enter'){
 
-        if (g.productFocused == -1) {
-            input.value = ''
-        }else{
-            input.value = g.elementToFocus.innerText
+        if (list.style.display == 'block') {
+            if (g.productFocused == -1) {
+                input.value = ''
+            }else{
+                input.value = g.elementToFocus.innerText
+            }
+            
+            list.style.display = 'none'
         }
-        
-        list.style.display = 'none'
+
     }else if(e.key === 'Escape'){
         g.focusedElement = -1
         input.value = ''
         list.style.display = 'none'
-
     }
 }
 

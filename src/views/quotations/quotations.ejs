@@ -58,6 +58,12 @@
     </div>
 </div>
 
+<!------NO QUOTATIONS TO SHOW------>
+<div id="noQuotationsToShow">
+    <i class="fa-solid fa-circle-info nqtsIcon"></i>
+    <div class="nqtsText">No hay cotizaciones para mostrar</div>
+</div>
+
 <div id="divQuotations"></div>
 
 <% if (userLogged.id_users_categories != 4) { %>
@@ -69,5 +75,9 @@
 <!----------LOADER---------->
 <div class="loader" id="quotationsLoader"></div>
 
+<!----------POPUPS---------->
 <%- include('./quotationsPopups') %>
+<%- include('./popupsREQPP') %>
+
+<!----------SCRIPTS---------->
 <script type="module" src="/js/quotations/quotations.js"></script>

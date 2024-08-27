@@ -3,6 +3,11 @@ import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations
 import eg from "./eventsGlobals.js"
 import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,isValid,uncheckInputs} from "../generalFunctions.js"
 
+//popups event listeners
+import { stppEventListeners} from "./eventsSTPP.js"
+import { ueppEventListeners} from "./eventsUEPP.js"
+import { ssppEventListeners} from "./eventsSSPP.js"
+
 window.addEventListener('load',async()=>{
 
     eventsLoader.style.display = 'block'
@@ -10,17 +15,19 @@ window.addEventListener('load',async()=>{
     //get data and complete globals
     eg.idCompanies = document.getElementById('idCompany').innerText
     eg.idUserCategories = document.getElementById('idUserCategories').innerText
-
     if (eg.idUserCategories == 4 ) {
         eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
     }else{
         eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
-    }
-    
+    }    
     eg.eventsFiltered = eg.events
-
     eg.companies = await (await fetch(dominio + 'apis/companies')).json()
     eg.reservationsPerEventCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
+    
+    //popups event listeners
+    stppEventListeners()
+    ueppEventListeners()
+    ssppEventListeners()
     
     //print events
     printEvents(eg.eventsFiltered)
@@ -156,146 +163,12 @@ window.addEventListener('load',async()=>{
         showOkPopup(creppOk)
     })
 
-    //nextEventsStudentsPopup
-    const stppCompany = document.getElementById('stppCompany')
-    if (stppCompany) {
-        stppCompany.addEventListener("change", async() => {
-            await filterStudents()
-            printStudents(eg.eventStudentsFiltered)
-        })
-    }
-
-    stppAddStudent.addEventListener("click", async() => {
-        
-        const errors = addStudentValidations()
-
-        if (errors == 0) {
-
-            const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
-            if (eg.studentsFrom == 'Administrator') {
-                inputs.push('stppCompany')
-            }
-
-            const maxId = eg.eventStudents.length == 0 ? 0 : eg.eventStudents.reduce((max, st) => (st.id > max ? st.id : max), eg.eventStudents[0].id);
-
-            eg.eventStudents.push({
-                id: maxId + 1,
-                dni:stppDNI.value,
-                email:stppEmail.value,
-                first_name:stppFirstName.value,
-                id_companies:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
-                id_courses:eg.idCourses,
-                id_events:eg.idEvents,
-                last_name:stppLastName.value,
-                students_companies:{
-                    id:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
-                    company_name: eg.companies.filter(c => c.id == (eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value))[0].company_name,
-                }
-            })
-
-            if (eg.studentsFrom == 'administrator') {
-                await filterStudents()
-            }else{
-                stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length 
-            }
-
-            clearInputs(inputs)
-            printStudents(eg.eventStudentsFiltered)
-        }
-
-    })
-
-    acceptWithEnter(stppDNI,stppAddStudent)
-
     dsppAccept.addEventListener("click", async() => {
         eg.eventStudents = eg.eventStudents.filter(s => s.id != eg.idStudentToDelete)
         printStudents(eg.eventStudents)
         const reservations = eg.studentsFrom == 'customer' ? eg.companyReservations : eg.eventData.eventReservations
         stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length
         dspp.style.display = 'none'
-
-    })
-
-    stppAccept.addEventListener("click", async() => {
-        sspp.style.display = 'block'
-    })
-
-    ssppAccept.addEventListener("click", async() => {
-        const data = {
-            id_events: eg.idEvents,
-            id_companies: eg.idCompanies,
-            students:eg.eventStudents,
-            studentsFrom:eg.studentsFrom
-        }
-
-        await fetch(dominio + 'apis/update-assigned-students/',{
-            method:'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        })
-
-        //update data
-        if (eg.idUserCategories == 4 ) {
-            eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
-        }else{
-            eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
-        }
-    
-        eg.eventsFiltered = eg.events
-        
-        //filter
-        filterEvents()
-
-        //print events
-        printEvents(eg.eventsFiltered)
-
-        sspp.style.display = 'none'
-        stpp.style.display = 'none'
-        showOkPopup(stppOk)
-    })
-
-    uploadExcelIcon.addEventListener("click", async() => {
-        uepp.style.display = 'block'
-    })
-
-    ueppDownloadTemplate.addEventListener("click", async() => {
-        const fileUrl = '/files/studentsAssignation/uploadStudentsTemplate.xlsx'
-        const link = document.createElement('a')
-        link.href = fileUrl
-        link.download = 'uploadStudentsTemplate.xlsx'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-    })
-
-    ueppAccept.addEventListener("click", async() => {
-
-        const {data,errors} = await uploadExcelValidations()
-
-        if (errors == 0) {
-
-            const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
-            const maxId = eg.eventAssignedStudents.length == 0 ? 0 : eg.eventAssignedStudents.reduce((max, st) => (st.id > max ? st.id : max), eg.eventAssignedStudents[0].id);
-
-            data.forEach(element => {
-                eg.eventAssignedStudents.push({
-                    id: maxId + 1,
-                    dni:element[3],
-                    email:element[2],
-                    first_name:element[1],
-                    id_companies:eg.idCompanies,
-                    id_courses:eg.eventCourseId,
-                    id_events:eg.eventId,
-                    last_name:element[0]
-                })
-            })
-
-            printStudents(eg.eventAssignedStudents)
-            clearInputs(inputs)
-            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservationsQty + ' || <b>Cupos asignados: </b>' + eg.eventAssignedStudents.length
-
-            uepp.style.display = 'none'
-        }
 
     })
 

@@ -33,7 +33,9 @@ router.get('/quotations-status',quotationsApisController.quotationsStatus)
 router.post('/no-quotation-required',quotationsApisController.noQuotationRequired)
 router.post('/save-quotation',quotationsApisController.saveQuotation)
 router.post('/cancel-quotation',quotationsApisController.cancelQuotation)
+router.post('/refuse-quotation',quotationsApisController.refuseQuotation)
 router.post('/save-purchase-order',upload.single('uoppFile'),quotationsApisController.savePurchaseOrder)
 router.post('/accept-quotation',quotationsApisController.acceptQuotation)
+router.get('/quotations-status',quotationsApisController.quotationsStatus)
 
 module.exports = router

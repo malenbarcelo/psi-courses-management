@@ -59,13 +59,26 @@
         </div>
 <% } %>
 
+<!------NO EVENTS TO SHOW------>
+<div id="noQuotationsToShow">
+    <i class="fa-solid fa-circle-info nqtsIcon"></i>
+    <div class="nqtsText">No hay eventos para mostrar</div>
+</div>
+
 <div id="divEvents"></div>
 
 <!----------LOADER---------->
 <div class="loader" id="eventsLoader"></div>
 
+<!----------POPUPS---------->
 <%- include('./eventsPopups') %>
+<%- include('./popupsSTPP') %>
+<%- include('./popupsUEPP') %>
+<%- include('./popupsCOPP') %>
 <%- include('./eventsStudentsPopups') %>
-<%- include('./eventsCompaniesPopups') %>
+
 <%- include('../courses/coursesCreateEventPopup') %>
+
+
+<!----------SCRIPTS---------->
 <script type="module" src="/js/events/events.js"></script>

@@ -5,12 +5,10 @@ const model = db.Quotations
 const quotationsQueries = {
     quotations: async() => {
         const allData = await model.findAll({
-            where:{
-                enabled:1,
-            },
             include: [
                 {association: 'quotations_companies'},
                 {association: 'quotations_status'},
+                {association: 'quotations_details'},
                 {association: 'quotations_purchase_orders'}
             ],
             order:[['quotation_number','DESC']]
@@ -29,6 +27,7 @@ const quotationsQueries = {
             include: [
                 {association: 'quotations_companies'},
                 {association: 'quotations_status'},
+                {association: 'quotations_details'},
                 {association: 'quotations_purchase_orders'}
             ],
             order:[['quotation_number','DESC']]
@@ -57,7 +56,21 @@ const quotationsQueries = {
     cancel: async(idQuotation) => {        
         await model.update(
             {
-                enabled:0
+                enabled:0,
+                id_status:7
+            },
+            {
+                where:{
+                    id:idQuotation
+                }
+            }
+        )
+    },
+    refuse: async(idQuotation) => {        
+        await model.update(
+            {
+                enabled:0,
+                id_status:6
             },
             {
                 where:{

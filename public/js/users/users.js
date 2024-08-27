@@ -3,6 +3,10 @@ import ug from "./usersGlobals.js"
 import { printUsers,filterUsers } from "./usersFunctions.js"
 import { clearInputs, isValid, isInvalid,closePopupsEventListeners,acceptWithEnter,predictElements,selectFocusedElement,showTableInfo,showOkPopup, inputsValidation,emailValidation } from "../generalFunctions.js"
 
+//popups event listeners
+import { ccppEventListeners} from "./usersCCPP.js"
+import { vcppEventListeners,vcppPrintTable} from "./usersVCPP.js"
+
 window.addEventListener('load',async()=>{
 
     //get data and complete globals    
@@ -51,12 +55,35 @@ window.addEventListener('load',async()=>{
     })
 
     //table info events listeners
-    const tableIcons = [euppIcon,rpppIcon,duppIcon]
-    showTableInfo(tableIcons,41,25,40)
+    const tableIcons = [
+        {
+            icon:euppIcon,
+            right:'17.5%'
+        },
+        {
+            icon:rpppIcon,
+            right:'13.5%'
+        }
+        ,
+        {
+            icon:duppIcon,
+            right:'9.5%'
+        }
+    ]
+
+    showTableInfo(tableIcons,310,150)
 
     //close popups
-    const closePopups = [cuppClose,cuppCancel,ccppClose,ccppCancel,euppClose,euppCancel,rpppClose,rpppCancel,buppClose,buppCancel]
+    const closePopups = [cuppClose,cuppCancel,ccppClose,ccppCancel,euppClose,euppCancel,rpppClose,rpppCancel,buppClose,buppCancel,vcppClose,vcppCancel]
     closePopupsEventListeners(closePopups)
+
+    //create company
+    createCompany.addEventListener("click", async() => {
+
+        vcppPrintTable(ug.companies)
+        
+        vcpp.style.display = 'block'
+    })
 
     //create user
     DGAcreateUser.addEventListener("click", async() => {
@@ -67,66 +94,19 @@ window.addEventListener('load',async()=>{
         cupp.style.display = 'block'
     })
 
+    //CREATE COMPANY POPUP EVENT LISTENERS (ccpp)
+    ccppEventListeners()
+
+    //VIEW COMPANIES POPUP EVENT LISTENERS (vcpp)
+    vcppEventListeners()
+
     cuppCreateCompany.addEventListener("click", async() => {
         clearInputs([ccppCompany])
         isValid([ccppCompany])
+        ccpp.classList.remove('popup2')
+        ccpp.classList.add('popup')
         ccpp.style.display = 'block'
     })
-
-    ccppAccept.addEventListener("click", async() => {
-        
-        //general validations
-        let errors = inputsValidation([ccppCompany])
-
-        //existing company validation
-        const findCompany = ug.companies.filter(c => c.company_name == ccppCompany.value)
-        
-        if (findCompany.length > 0) {
-            
-            ccppCompany.classList.add('invalidInput')
-            ccppCompanyLabel.classList.add('invalidLabel')
-            ccppCompanyExistingError.innerHTML = 'La companía ' + ccppCompany.value + ' ya existe'
-            ccppCompanyExistingError.style.display = 'block'
-            errors += 1
-        }else{
-            ccppCompanyExistingError.style.display = 'none'
-        }
-
-        if (errors == 0) {
-            
-            const data = {company_name:ccppCompany.value}
-
-            await fetch(dominio + 'apis/companies/create-company',{
-                method:'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            })
-
-            ug.companies = await (await fetch(dominio + 'apis/companies')).json()
-
-            //change cuppCompany
-            cuppCompany.innerHTML = ''
-            const newCompany = ug.companies.filter(c => c.company_name == ccppCompany.value)           
-            ug.companies.forEach(company => {
-                const selected = company.id == newCompany[0].id ? 'selected' : ''
-                cuppCompany.innerHTML += '<option value="' + company.id + '" ' + selected + '>' + company.company_name + '</option>'                
-            })
-
-            //change cuppCategory
-            cuppCategory.innerHTML = '<option value=""></option>'
-            const categoriesIds = cuppCompany.value == 1 ? ug.psiCategoriesIds : ug.customersCategoriesIds
-            categoriesIds.forEach(category => {
-                const categoryName = ug.usersCategories.filter(uc => uc.id == category)[0].user_category
-                cuppCategory.innerHTML += '<option value="' + category + '">' + categoryName + '</option>'
-                
-            })
-
-            ccpp.style.display = 'none'
-            
-        }
-    })
-
-    acceptWithEnter(ccppCompany,ccppAccept)
 
     cuppCompany.addEventListener("change", async() => {
         
@@ -134,7 +114,7 @@ window.addEventListener('load',async()=>{
         cuppCategory.innerHTML = '<option value=""></option>'
 
         if (cuppCompany.value != '') {
-            const categoriesIds = cuppCompany.value == 1 ? ug.psiCategoriesIds : ug.customersCategoriesIds
+            const categoriesIds = cuppCompany.value == 36 ? ug.psiCategoriesIds : ug.customersCategoriesIds
             categoriesIds.forEach(category => {
                 const categoryName = ug.usersCategories.filter(uc => uc.id == category)[0].user_category
                 cuppCategory.innerHTML += '<option value="' + category + '">' + categoryName + '</option>'

@@ -1,8 +1,28 @@
 const db = require('../../../database/models')
 const model = db.Quotations_events_companies
 const { Op } = require('sequelize')
+const { allData } = require('./eventsStudentsQueries')
 
 const quotationsEventsCompaniesQueries = {
+    allData: async() => {        
+        const allData = await model.findAll({
+            where:{
+                enabled:1,
+            },
+            include: [
+                {
+                    association: 'quotation',
+                    include: [
+                        {association: 'quotations_status'},
+                        {association: 'quotations_details'},
+                        {association: 'quotations_purchase_orders'}
+                    ]                    
+                },
+            ],
+            nest:true,
+        })
+        return allData
+    },
     create: async(idEvents,idCompanies) => {        
         await model.create({
             id_events:idEvents,

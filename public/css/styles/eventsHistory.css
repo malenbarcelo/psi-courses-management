@@ -1,0 +1,12 @@
+/*thwith icon*/
+.thWithIcon{
+    position: relative;
+}
+
+.thIcon{
+    position: absolute;
+    top: 3px;
+    right: 13px;
+    cursor: pointer;
+    font-size: 12px;
+}

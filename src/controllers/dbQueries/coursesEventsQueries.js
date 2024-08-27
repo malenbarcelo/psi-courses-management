@@ -15,7 +15,7 @@ const coursesEventsQueries = {
                 {association: 'events_quota_reservations'},
                 { 
                     association: 'events_students',
-                    include: [{association: 'students_companies'}] 
+                    include: [{association: 'company_data'}] 
                 }
             ],
             order:['start_date'],
@@ -59,7 +59,7 @@ const coursesEventsQueries = {
                 {association: 'events_quota_reservations'},
                 { 
                     association: 'events_students',
-                    include: [{association: 'students_companies'}] 
+                    include: [{association: 'company_data'}] 
                 }
             ],
             order: ['start_date'],
@@ -99,7 +99,7 @@ const coursesEventsQueries = {
         return lastEvent
     },
     createEvent: async(data) => {        
-        await model.create({
+        const newEvent = await model.create({
             id_courses:data.id_courses,
             start_date:data.start_date,
             end_date:data.end_date,
@@ -108,6 +108,7 @@ const coursesEventsQueries = {
             event_quota:data.event_quota,
             enabled: 1
         })
+        return newEvent
     },
 }
 

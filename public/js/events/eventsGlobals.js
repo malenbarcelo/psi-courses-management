@@ -21,19 +21,6 @@ let eg = {
     companyReservations: 0,
     idStudentToDelete:0,
     studentsFrom:''
-
-
-
-
-
-    // eventAvailableQuota:0,
-    // eventCourseName:'',
-    // eventCourseId:0,
-    // editReservationType:'',
-    // companyReservationsQty:0,
-    // eventCompanyAssignedStudents:[],
-    // eventAssignedStudents:[],
-    // idStudentToDelete:0
 }
 
 export default eg

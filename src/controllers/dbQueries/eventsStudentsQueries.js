@@ -1,9 +1,42 @@
 const db = require('../../../database/models')
 const sequelize = require('sequelize')
-const { Op, fn, col } = require('sequelize')
+const { Op, fn, col, literal } = require('sequelize')
 const model = db.Courses_events_students
 
 const eventsStudentsQueries = {
+    allData: async() => {        
+        const allData = await model.findAll({
+            include: [
+                {association: 'event_data'},
+                {association: 'company_data'},
+                {association: 'course_data'}
+            ],
+            where:{
+                enabled:1
+            },
+            raw:true,
+            nest:true
+
+        })
+        return allData
+    },
+    filterStudents: async(idCompanies) => {        
+        const filterStudents = await model.findAll({
+            include: [
+                {association: 'event_data'},
+                {association: 'company_data'},
+                {association: 'course_data'}
+            ],
+            where:{
+                enabled:1,
+                id_companies:idCompanies
+            },
+            raw:true,
+            nest:true
+
+        })
+        return filterStudents
+    },
     eventCompanyAssignedStudents: async(companyId,eventId) => {        
         const assignedStudents = await model.findAll({
             where:{
@@ -74,6 +107,15 @@ const eventsStudentsQueries = {
             })
 
         return studentsPerCourse
+    },
+    distinctStudents: async() => {
+        const distinctStudents = await model.findAll({
+            attributes: [
+                [sequelize.literal("DISTINCT CONCAT(last_name, ', ', first_name)"), 'student']
+            ],
+            raw:true,
+        })
+        return distinctStudents
     },
 }
 

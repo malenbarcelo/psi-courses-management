@@ -1,5 +1,8 @@
 import qg from "./qGlobals.js"
+import quotationsGlobals from "../quotations/qGlobals.js"
 import { dateToString } from "../generalFunctions.js"
+import { printTableQuotation } from "../quotations/printTables.js"
+import { completeQuotationStatus } from "../quotations/functions.js"
 
 async function printTableQuotations(dataToPrint) {
 
@@ -8,6 +11,7 @@ async function printTableQuotations(dataToPrint) {
     bodyQuotesHistory.innerHTML = '';
 
     let html = dataToPrint.map((element, index) => {
+
         const rowClass = index % 2 === 0 ? 'tBody1 tBodyEven' : 'tBody1 tBodyOdd';
         const quotationNumber = '#' + String(element.quotation_number).padStart(6, '0');
 
@@ -19,79 +23,67 @@ async function printTableQuotations(dataToPrint) {
                 <th class="${rowClass}">${qg.formatter.format(element.total)}</th>
                 <th class="${rowClass}">${element.quotations_status.status}</th>
                 <th class="${rowClass}">
-                    <i class="fa-solid fa-magnifying-glass-plus allowedIcon" id="edit_${element.id}"></i>
+                    <i class="fa-solid fa-magnifying-glass-plus allowedIcon" id="view_${element.id}"></i>
                 </th>                
                 <th class="${rowClass}">
                     ${element.quotations_purchase_orders != null 
                         ? `<i class="fa-regular fa-file-pdf allowedIcon" id="download_${element.id}"></i>` 
                         : ''}
                 </th>
-                
-                ${qg.idUsersCategories != 4 ? `<th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>` : ''}
             </tr>
         `;
     }).join('');
 
     bodyQuotesHistory.innerHTML = html;
 
-    //tableQuotationEventListeners(dataToPrint)
-    //updateQuotationData(dataToPrint)
+    quotationsHistoryEventListeners(dataToPrint)
     quotesHistoryLoader.style.display = 'none';
 }
 
-async function tableQuotationEventListeners(dataToPrint) {
+async function quotationsHistoryEventListeners(dataToPrint) {
 
     dataToPrint.forEach(element => {
 
-        const deleteLine = document.getElementById('delete_' + element.id)
-        const edit = document.getElementById('edit_' + element.id)
+        const download = document.getElementById('download_' + element.id)
+        const view = document.getElementById('view_' + element.id)
 
-        //delete line
-        if (deleteLine) {
-            deleteLine.addEventListener('click',async()=>{
-                qg.elementsToQuote = qg.elementsToQuote.filter(eq => eq.id != element.id)
-                printTableQuotation(qg.elementsToQuote)            
-            })
-        }        
-
-        //edit
-        if (edit) {
-            edit.addEventListener('click',async()=>{
-
-                qg.elementToEdit = element
-                elppTitle.innerText = element.description
-                elppQuantity.value = element.quantity
-                elppPrice.value = element.unit_price
-                elppSubtotal.value = element.subtotal
-                elppDiscount.value = element.discount * 100
-                elppTotal.value = element.total    
-                elpp.style.display = 'block'
-                
+        //download order
+        if (download) {
+            download.addEventListener('click',async()=>{
+                console.log(element)
+                const fileUrl = '/files/purchaseOrders/' + element.quotations_purchase_orders.file_name
+                const link = document.createElement('a')
+                link.href = fileUrl
+                link.download = element.quotations_purchase_orders.file_name
+                document.body.appendChild(link)
+                link.click()
+                document.body.removeChild(link)
             })
         }
+
+        //view        
+        view.addEventListener('click',async()=>{
+
+            quotationsGlobals.editFrom = 'history'
+            quotationsTableData.style.right = '12%'
+            
+            cqppMainTitle.innerText = element.quotations_companies.company_name
+            cqppSubtitle.innerText = 'Cotización #' + String(element.quotation_number).padStart(6,'0')
+            cqppError2.style.display = 'none'
+
+            let quotationDetails = element.quotations_details
+            quotationDetails.sort((a, b) => a.type - b.type)
+
+            printTableQuotation(quotationDetails)
+
+            completeQuotationStatus(element.quotations_status.status,element.quotations_status.id)
+
+            cqpp.style.display = 'block'
+        })
+        
         
     })
 }
-
-function updateQuotationData(dataToPrint) {
-
-    let subtotal = 0    
-
-    dataToPrint.forEach(element => {
-        subtotal += element.total == null ? 0 : parseFloat(element.total,2)
-    })
-
-    qg.quotationData.subtotal = subtotal
-    qg.quotationData.total = subtotal * (1 - qg.quotationData.discount)
-    qg.quotationData.quotation_number = qg.quotationNumber
-
-    cqppSubtotal.innerText = qg.formatter.format(subtotal)
-    cqppTotal.innerText = qg.formatter.format(subtotal * (1 - qg.quotationData.discount))
-    cqppDiscount.innerText = qg.quotationData.discount * 100
-    
-}
-
-
 
 
 

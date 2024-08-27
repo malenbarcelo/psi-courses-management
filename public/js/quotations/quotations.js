@@ -1,7 +1,7 @@
 import { dominio } from "../dominio.js"
 import { printQuotations } from "./printCards.js"
 import { printTableQuotation } from "./printTables.js"
-import {filterQuotations } from "./functions.js"
+import {filterQuotations,completeQuotationStatus } from "./functions.js"
 import { closePopupsEventListeners, showOkPopup, uncheckInputs, clearInputs, acceptWithEnter} from "../generalFunctions.js"
 import qg from "./qGlobals.js"
 
@@ -16,6 +16,7 @@ import { sqppEventListeners} from "./quotationsSQPP.js"
 import { dqppEventListeners} from "./quotationsDQPP.js"
 import { uoppEventListeners} from "./quotationsUOPP.js"
 import { aqppEventListeners} from "./quotationsAQPP.js"
+import { reqppEventListeners} from "./quotationsREQPP.js"
 
 window.addEventListener('load',async()=>{
 
@@ -29,11 +30,11 @@ window.addEventListener('load',async()=>{
     qg.quotationsFiltered = qg.quotations
     qg.quotationsData = await (await fetch(dominio + 'apis/quotations/quotations-data')).json()
     
-    //print in progress quotations
     printQuotations(qg.quotationsFiltered)
+    
 
     //close popups
-    const closePopups = [nqppClose,nqppCancel,cqppClose,aeppClose,aeppCancel,alppClose,alppCancel,edppCancel,edppClose,elppClose,elppCancel,sqppClose,sqppCancel,dqppClose,dqppCancel,uoppClose,uoppCancel,aqppClose,aqppCancel]
+    const closePopups = [nqppClose,nqppCancel,cqppClose,aeppClose,aeppCancel,alppClose,alppCancel,edppCancel,edppClose,elppClose,elppCancel,sqppClose,sqppCancel,dqppClose,dqppCancel,uoppClose,uoppCancel,aqppClose,aqppCancel,reqppClose,reqppCancel]
     closePopupsEventListeners(closePopups)
 
     //accept with enter
@@ -118,13 +119,14 @@ window.addEventListener('load',async()=>{
                     })
     
                     printTableQuotation(qg.elementsToQuote)
+
+                    completeQuotationStatus('BORRADOR',3)
     
                     cqpp.style.display = 'block'
                 }
             }
         })
     }
-    
 
     //ADD EVENT POPUP EVENT LISTENERS (aepp)
     aeppEventListeners()
@@ -155,6 +157,9 @@ window.addEventListener('load',async()=>{
 
     //ACCEPT QUOTATION POPUP EVENT LISTENERS (aqpp)
     aqppEventListeners()
+
+    //REFUSE QUOTATION POPUP EVENT LISTENERS (reqpp)
+    reqppEventListeners()
 
 
 })

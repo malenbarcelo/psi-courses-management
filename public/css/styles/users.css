@@ -1,0 +1,55 @@
+/*----------------------users.ejs------------------------*/
+#createCompany{
+    position: absolute;
+    height: 100%;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    right: -25px;
+}
+
+#createCompanyInfo{
+    position: absolute;
+    height: 100%;
+    width: 70px;
+    font-size: 11px;
+    display: none;
+    align-items: center;
+    right: -80px;
+}
+
+#createCompany:hover{
+    color: var(--color2);
+}
+
+#createCompany:hover #createCompanyInfo{
+    display: flex;
+}
+
+/*----------------------popupsCUPP.ejs------------------------*/
+#cuppCreateCompany{
+    position: absolute;
+    height: 100%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    right: -25px;
+}
+
+#cuppCreateCompanyInfo{
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    font-size: 11px;
+    display: none;
+    align-items: center;
+    right: -60px;
+}
+
+#cuppCreateCompany:hover{
+    color: var(--color2);
+}
+
+#cuppCreateCompany:hover #cuppCreateCompanyInfo{
+    display: flex;
+}

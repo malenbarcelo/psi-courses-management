@@ -26,172 +26,206 @@ const quotationsApisController = {
       return res.send('Ha ocurrido un error')
     }
   },
-    inProgress: async(req,res) =>{
-      try{
+  inProgress: async(req,res) =>{
+    try{
 
-        const idUsersCategories = req.session.userLogged.id_users_categories
-        let inProgress = []
+      const idUsersCategories = req.session.userLogged.id_users_categories
+      let inProgress = []
 
-        if (idUsersCategories != 4) {
-          inProgress = await qecQueries.inProgress()
-        }else{
-          const idCompany = req.session.userLogged.id_companies
-          inProgress = await qecQueries.companyInProgress(idCompany)
-        }
-  
-        res.status(200).json(inProgress)
-  
-      }catch(error){
-        console.group(error)
-        return res.send('Ha ocurrido un error')
+      if (idUsersCategories != 4) {
+        inProgress = await qecQueries.inProgress()
+      }else{
+        const idCompany = req.session.userLogged.id_companies
+        inProgress = await qecQueries.companyInProgress(idCompany)
       }
-    },
-    noQuotationRequired: async(req,res) =>{
-      try{
-  
-        const data = req.body
 
-        await qecQueries.noQuotationRequired(data.id)
-  
-        res.status(200).json()
-  
-      }catch(error){
-        console.group(error)
-        return res.send('Ha ocurrido un error')
+      res.status(200).json(inProgress)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  noQuotationRequired: async(req,res) =>{
+    try{
+
+      const data = req.body
+
+      await qecQueries.noQuotationRequired(data.id)
+
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  quotationsData: async(req,res) =>{
+    try{
+
+      const allData = await quotationsQueries.quotations()
+
+      res.status(200).json(allData)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  quotationsStatus: async(req,res) =>{
+    try{
+
+      const allData = await quotationsStatusQueries.allData()
+
+      res.status(200).json(allData)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  saveQuotation: async(req,res) =>{
+    try{
+
+      let idQuotation = req.body.idQuotation
+      let quotationData = req.body.quotationData
+      quotationData.id_companies = req.body.companyData.id
+      let quotationDetails = req.body.quotationDetails.map(({ id, ...rest }) => rest)
+      let newQuotation 
+
+      quotationData.id_users_quotation = req.session.userLogged.id 
+      
+      //save quotation
+      if (idQuotation == null) {
+        newQuotation = await quotationsQueries.save(quotationData)
+      }else{
+        await quotationsDetailsQueries.delete(idQuotation)
+        await quotationsQueries.update(quotationData,idQuotation)
       }
-    },
-    quotationsData: async(req,res) =>{
-      try{
-  
-        const allData = await quotationsQueries.quotations()
-  
-        res.status(200).json(allData)
-  
-      }catch(error){
-        console.group(error)
-        return res.send('Ha ocurrido un error')
+
+      //save quotation details
+      idQuotation = idQuotation == null ? newQuotation.id : idQuotation
+      quotationDetails.forEach(element => {                
+        element.enabled = 1,
+        element.id_quotations = idQuotation
+      })
+
+      await quotationsDetailsQueries.save(quotationDetails)
+
+      //save data in quotations_events_companies
+      await qecQueries.updateToNull(idQuotation)
+      for (let i = 0; i < quotationDetails.length; i++) {
+        await qecQueries.update(quotationDetails[i].id_events,quotationDetails[i].id_companies,quotationData.id_status,idQuotation)          
       }
-    },
-    quotationsStatus: async(req,res) =>{
-      try{
-  
-        const allData = await quotationsStatusQueries.allData()
-  
-        res.status(200).json(allData)
-  
-      }catch(error){
-        console.group(error)
-        return res.send('Ha ocurrido un error')
+
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  cancelQuotation: async(req,res) =>{
+    try{
+
+      let idQuotation = req.body.idQuotation
+      let elementsToCancel = req.body.elementsToCancel
+      
+      //cancel quotation        
+      await quotationsQueries.cancel(idQuotation)
+
+      //cancel quotation details
+      await quotationsDetailsQueries.cancel(idQuotation)
+
+      //cancel quotations events companies
+      await qecQueries.updateToNull(idQuotation)
+
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  refuseQuotation: async(req,res) =>{
+    try{
+
+      let idQuotation = req.body.idQuotation
+      
+      //cancel quotation        
+      await quotationsQueries.refuse(idQuotation)
+
+      //cancel quotation details
+      await quotationsDetailsQueries.cancel(idQuotation)
+
+      //cancel quotations events companies
+      await qecQueries.updateToNull(idQuotation)
+
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  acceptQuotation: async(req,res) =>{
+    try{
+
+      const idQuotation = req.body.idQuotation
+      const data = {
+        id_status: 1
       }
-    },
-    saveQuotation: async(req,res) =>{
-      try{
+      
+      //accept quotation
+      await quotationsQueries.update(data,idQuotation)
 
-        let idQuotation = req.body.idQuotation
-        let quotationData = req.body.quotationData
-        quotationData.id_companies = req.body.companyData.id
-        let quotationDetails = req.body.quotationDetails.map(({ id, ...rest }) => rest)
-        let newQuotation 
+      //edit data in quotations events companies
+      await qecQueries.updateStatus(idQuotation,data.id_status)
 
-        quotationData.id_users_quotation = req.session.userLogged.id 
-        
-        //save quotation
-        if (idQuotation == null) {
-          newQuotation = await quotationsQueries.save(quotationData)
-        }else{
-          await quotationsDetailsQueries.delete(idQuotation)
-          await quotationsQueries.update(quotationData,idQuotation)
-        }
+      res.status(200).json()
 
-        //save quotation details
-        idQuotation = idQuotation == null ? newQuotation.id : idQuotation
-        quotationDetails.forEach(element => {                
-          element.enabled = 1,
-          element.id_quotations = idQuotation
-        })
-
-        await quotationsDetailsQueries.save(quotationDetails)
-
-        //save data in quotations_events_companies
-        await qecQueries.updateToNull(idQuotation)
-        for (let i = 0; i < quotationDetails.length; i++) {
-          await qecQueries.update(quotationDetails[i].id_events,quotationDetails[i].id_companies,quotationData.id_status,idQuotation)          
-        }
-  
-        res.status(200).json()
-  
-      }catch(error){
-        console.group(error)
-        return res.send('Ha ocurrido un error')
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  savePurchaseOrder: async(req,res) =>{
+    try{
+      const data = {
+        id_companies: req.body.id_companies,
+        id_quotations: req.body.id_quotations,
+        //file_name: req.file.filename
       }
-    },
-    cancelQuotation: async(req,res) =>{
-      try{
 
-        let idQuotation = req.body.idQuotation
-        let elementsToCancel = req.body.elementsToCancel
-        
-        //cancel quotation        
-        await quotationsQueries.cancel(idQuotation)
+      //find data if exists
+      const findFile = await qpoQueries.find(data)
 
-        //cancel quotation details
-        await quotationsDetailsQueries.cancel(idQuotation)
+      data.file_name = req.file.filename
 
-        //cancel quotations events companies
-        await qecQueries.updateToNull(idQuotation)
-
-        res.status(200).json()
-  
-      }catch(error){
-        console.group(error)
-        return res.send('Ha ocurrido un error')
+      if (findFile != null) {
+        await qpoQueries.update(data,findFile.id)
+      }else{          
+        await qpoQueries.create(data)
       }
-    },
-    acceptQuotation: async(req,res) =>{
-      try{
+      res.status(200).json()
 
-        const idQuotation = req.body.idQuotation
-        const data = {
-          id_status: 1
-        }
-        
-        //accept quotation
-        await quotationsQueries.update(data,idQuotation)
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  quotationsStatus: async(req,res) =>{
+    try{
 
-        //edit data in quotations events companies
-        await qecQueries.updateStatus(idQuotation,data.id_status)
+      quotationsStatus = await quotationsStatusQueries.allData()
 
-        res.status(200).json()
-  
-      }catch(error){
-        console.group(error)
-        return res.send('Ha ocurrido un error')
-      }
-    },
-    savePurchaseOrder: async(req,res) =>{
-      try{
-        const data = {
-          id_companies: req.body.id_companies,
-          id_quotations: req.body.id_quotations,
-          //file_name: req.file.filename
-        }
+      res.status(200).json(quotationsStatus)
 
-        //find data if exists
-        const findFile = await qpoQueries.find(data)
+    }catch(error){
+      console.log(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+}
 
-        data.file_name = req.file.filename
-
-        if (findFile != null) {
-          await qpoQueries.update(data,findFile.id)
-        }else{          
-          await qpoQueries.create(data)
-        }
-        res.status(200).json()
-  
-      }catch(error){
-        console.group(error)
-        return res.send('Ha ocurrido un error')
-      }
-    },
-  }
-  module.exports = quotationsApisController
+module.exports = quotationsApisController

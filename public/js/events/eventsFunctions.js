@@ -5,10 +5,15 @@ import {isInvalid,isValid,dateToString,clearInputs, inputsValidation } from "../
 async function printEvents(dataToPrint) {
 
     eventsLoader.style.display = 'block'
-
     divEvents.innerHTML = ''
 
-    const fragment = document.createDocumentFragment()
+    if (dataToPrint.length == 0) {
+        noQuotationsToShow.style.display = 'flex'
+        divEvents.style.display = 'none'
+    }else{
+        noQuotationsToShow.style.display = 'none'
+        divEvents.style.display = 'flex'
+        const fragment = document.createDocumentFragment()
 
     dataToPrint.forEach(element => {
 
@@ -101,6 +106,8 @@ async function printEvents(dataToPrint) {
     divEvents.appendChild(fragment);
 
     await addEventsEventListeners(dataToPrint);
+
+    }
 
     eventsLoader.style.display = 'none';
 }
@@ -347,8 +354,9 @@ async function uploadExcelValidations() {
 
             data = await response.json()
             data.shift()
+            
 
-            if (eg.companyReservationsQty < (eg.eventAssignedStudents.length + data.length)) {
+            if (eg.companyReservations < (eg.eventStudents.length + data.length)) {
                 errors += 1
                 ueppFileError.innerText = 'Supera la cantidad de cupos reservados'                
             }
@@ -370,7 +378,7 @@ async function uploadExcelValidations() {
                     errors +=1
                     ueppFileError.innerText = 'Se detectaron DNIs duplicados en el archivo'
                 }else{
-                    const assignedDnis = eg.eventAssignedStudents.map(students => students.dni)
+                    const assignedDnis = eg.eventStudents.length == 0 ? [] : eg.eventStudents.map(students => students.dni)
                     
                     const set1 = new Set(dnis)
                     const set2 = new Set(assignedDnis)                    
@@ -411,8 +419,14 @@ function addStudentValidations() {
             stppError.innerText = 'Ya existe en la lista un alumno con el DNI ' + stppDNI.value
             isInvalid([stppDNI])
         }else{
-            isValid([stppDNI])
-            stppError.style.display = 'none'
+            if (eg.companyReservations == eg.eventStudents.length) {
+                errors += 1
+                stppError.innerText = 'Supera la cantidad de cupos reservados'
+                
+            }else{
+                isValid([stppDNI])
+                stppError.style.display = 'none'
+            }
         }
     }else{
         stppError.innerText = 'Debe complear todos los datos'

@@ -1,0 +1,111 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+
+<div id="idCompanies" class="notVisible"><%= userLogged.id_companies %></div>
+<div id="idUsersCategories" class="notVisible"><%= userLogged.id_users_categories %></div>
+
+<div class="mainTitle">
+    HISTORIAL DE EVENTOS
+</div>
+
+<!------GENERAL ACTIONS------>
+<div class="divDGAs" id="DGAsEvents">
+    <div class="divDGA divDGAm" id="DGAdownload">
+        <i class="fa-regular fa-file-excel"></i>
+        <div class="DGAinfo">
+            Descargar
+        </div>        
+    </div>
+</div>
+
+<!------MAIN FILTERS------>
+<div class="mainFilters mbl">    
+    <div class="divInputsRow">
+        <% if (userLogged.id_users_categories != 4) { %>
+            <div class="divInput">
+                <label class="label1">Empresa</label>
+                <select class="input1 sl spm" id="filterCompany">
+                    <option value="">Todas las empresas</option>
+                    <% companies.forEach(company => { %>
+                        <option value="<%= company.id %>"><%= company.company_name %></option>
+                    <% }) %>                
+                </select>            
+            </div>
+        <% } %>
+        <div class="divInput">
+            <label class="label1">Curso</label>
+            <select class="input1 sl spm" id="filterCourse">
+                <option value="">Todos los cursos</option>
+                <% courses.forEach(course => { %>
+                    <option value="<%= course.id %>"><%= course.course_name %></option>
+                <% }) %>                
+            </select>            
+        </div>
+        <div class="divInput">
+            <label class="label1">Alumno</label>
+            <input type="text" class="input1 il ipm" id="filterStudent"> 
+            <ul class="predictedElements" id="ulPredictedStudents"></ul>                     
+        </div>
+        <div class="divInput">
+            <label class="label1">DNI</label>
+            <input type="text" class="input1 is ipm" id="filterDni">                      
+        </div>
+        <div class="divInput">
+            <label class="label1">AÑO</label>
+            <input type="number" class="input1 is ipm" id="filterYear">                      
+        </div>
+        <div class="divInput">
+            <label class="label1">Mes</label>
+            <select class="input1 ss ipm" id="filterMonth">
+                <option value=""></option>
+                <% months.forEach(month => { %>
+                    <option value="<%= month.number %>"><%= month.text %></option>
+                <% }) %>                
+            </select>                      
+        </div>
+        
+        <div class="divInput">
+            <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+        </div>
+    </div>    
+</div>
+
+<!------MAIN CONTENT------>
+
+<div class="divTable" id="eventsHistoryTable">
+
+    <div class="thInfo" id="vdppInfo">Ver / Editar</div>
+    <div class="thInfo" id="dfppInfo">Descargar OC</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="thCss thl">Empresa</th>
+                <th class="thCss thxl">Curso</th>
+                <th class="thCss ths">Evento</th>
+                <th class="thCss ths">Inicio</th>
+                <th class="thCss ths">Fin</th>
+                <th class="thCss thl">Alumno</th>
+                <th class="thCss thxs">DNI</th>
+                <th class="thCss ths">Cotización</th>
+                <th class="thCss thxs">OC</th>                
+            </tr>
+        </thead>
+        <tbody id="bodyEventsHistory"></tbody>
+    </table>
+</div>
+
+
+
+<div id="divQuotesHistory"></div>
+
+
+<!----------LOADER---------->
+<div class="loader" id="eventsHistoryLoader"></div>
+
+<!----------POPUPS---------->
+<%- include('./eventsHistoryPopups') %>
+<%- include('../quotations/quotationsPopups') %>
+
+<!----------SCRIPTS---------->
+<script type="module" src="/js/eventsHistory/eventsHistory.js"></script>

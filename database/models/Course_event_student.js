@@ -52,15 +52,15 @@ module.exports = (sequelize, DataTypes) => {
 
    Course_event_student.associate = (models) => {
       Course_event_student.belongsTo(models.Courses_events,{
-         as:'events_companies_events',
+         as:'event_data',
          foreignKey: 'id_events'
       }),
       Course_event_student.belongsTo(models.Users_companies,{
-         as:'students_companies',
+         as:'company_data',
          foreignKey: 'id_companies'
       })
       Course_event_student.belongsTo(models.Courses,{
-         as:'events_companies_courses',
+         as:'course_data',
          foreignKey: 'id_courses'
       })
    }

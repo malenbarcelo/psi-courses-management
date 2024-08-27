@@ -1,4 +1,22 @@
 /*----------------------quotations.ejs----------------------*/
+#noQuotationsToShow{
+    display: none;
+    column-gap: 10px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    margin: auto;
+    color: rgb(148, 146, 146);
+}
+
+.nqtsIcon{
+    font-size: 25px;
+}
+
+.nqtsText{
+    font-size: 18px;
+}
 
 .borderBottom{
     border-bottom: black solid 1px;
@@ -199,6 +217,22 @@
     top: 30px;
     font-weight: lighter;
     display: none;
+}
+
+#uoppFile{
+    text-align: center;
+    padding: 10px 15px;
+}
+
+#cqppQuotationStatus{
+    padding: 3px 6px;
+    position: absolute;
+    top: 10%;
+    left: 3%;
+    transform: rotate(-30deg);
+    background-color: var(--color1);
+    font-size: 13px;
+    font-weight: bold;
 }
 
 

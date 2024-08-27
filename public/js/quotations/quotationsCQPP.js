@@ -98,6 +98,7 @@ async function cqppEventListeners() {
             }    
         })
     }
+    
     //accept quotation
     const cqppAccept = document.getElementById('cqppAccept')
     if (cqppAccept) {
@@ -112,6 +113,18 @@ async function cqppEventListeners() {
             }
 
             aqpp.style.display = 'block'
+            
+        })
+    }
+
+    //refuse quotation
+    const cqppRefuse = document.getElementById('cqppRefuse')
+    if (cqppRefuse) {
+        cqppRefuse.addEventListener("click", async() => {
+
+            reqppQuestion.innerHTML = '¿Confirma que desea rechazar la cotización <b>#' + String(qg.quotationNumber).padStart(6,'0')+'</b>?'                
+            
+            reqpp.style.display = 'block'
             
         })
     }

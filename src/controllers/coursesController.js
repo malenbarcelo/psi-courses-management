@@ -17,21 +17,6 @@ const coursesController = {
             return res.send('Ha ocurrido un error')
         }
     },
-    events: async(req,res) => {
-        try{
-            const idSelectedItem = 1
-
-            const courses = await coursesQueries.courses()
-            const companies = await companiesQueries.companies()
-
-            return res.render('events/events',{title:'Eventos',bottomHeaderMenu,idSelectedItem,courses,companies})
-
-        }catch(error){
-
-            console.log(error)
-            return res.send('Ha ocurrido un error')
-        }
-    },
 }
 
 module.exports = coursesController

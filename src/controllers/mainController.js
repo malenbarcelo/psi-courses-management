@@ -33,7 +33,7 @@ const mainController = {
             delete userToLogin.password
             req.session.userLogged = userToLogin
 
-            return res.redirect('/courses/events')
+            return res.redirect('/events')
 
         }catch(error){
             console.log(error)

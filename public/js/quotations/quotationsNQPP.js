@@ -35,9 +35,6 @@ async function nqppEventListeners() {
         showOkPopup(nqppOk)
 
     })
-    
-
-    
 }
 
 export {nqppEventListeners}

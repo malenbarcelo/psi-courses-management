@@ -21,7 +21,15 @@ module.exports = (sequelize, DataTypes) => {
     tableName : 'users_companies',
     timestamps : false
     }
+
     const User_company = sequelize.define(alias, cols, config)
+
+    User_company.associate = (models) => {
+      User_company.hasMany(models.Users,{
+         as:'companies_users',
+         foreignKey: 'id_companies'
+      })
+   }
 
     return User_company
  }

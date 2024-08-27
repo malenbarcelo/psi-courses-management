@@ -24,6 +24,7 @@ thead{
     height: 1.5rem;
 }
 
+/*sizes*/
 .thxs{
     width: 50px;
 }
@@ -138,8 +139,20 @@ border-top-right-radius: 15px;
     height: 280px; /*to avoid overflow, it depends on the website landscape*/
 }
 
+#eventsHistoryTable{
+    height: 430px; /*to avoid overflow, it depends on the website landscape*/
+}
+
 #cqppTable{
     height: 280px; /*to avoid overflow, it depends on the website landscape*/
+}
+
+#coppTable{
+    height: 280px; /*to avoid overflow, it depends on the website landscape*/
+}
+
+#vcppTable{
+    height: 320px; /*to avoid overflow, it depends on the website landscape*/
 }
 
 

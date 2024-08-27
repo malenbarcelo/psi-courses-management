@@ -1,6 +1,7 @@
 import qg from "./qGlobals.js"
 import { dominio } from "../dominio.js"
 import { printQuotations } from "./printCards.js"
+import { printTableQuotation } from "./printTables.js"
 import { showOkPopup} from "../generalFunctions.js"
 
 function filterQuotations() {
@@ -85,4 +86,29 @@ async function saveQuotation(type,popupToClose) {
     showOkPopup(cqppOk)
 }
 
-export {filterQuotations,saveQuotation}
+function completeQuotationStatus(status,idStatus) {
+    
+    cqppQuotationStatus.innerText = status.toUpperCase()
+
+    if (idStatus == 1) {
+        cqppQuotationStatus.classList.remove('errorColor')
+        cqppQuotationStatus.classList.remove('yellowColor')
+        cqppQuotationStatus.classList.add('greenColor')                    
+    }else{
+        if (idStatus == 2 || idStatus == 3) {
+            cqppQuotationStatus.classList.remove('errorColor')
+            cqppQuotationStatus.classList.add('yellowColor')
+            cqppQuotationStatus.classList.remove('greenColor')                   
+        }else{
+            if (idStatus == 4 || idStatus == 6 || idStatus == 7) {
+                cqppQuotationStatus.classList.add('errorColor')
+            cqppQuotationStatus.classList.remove('yellowColor')
+            cqppQuotationStatus.classList.remove('greenColor')                    
+            }
+        }
+    }
+}
+
+
+
+export {filterQuotations,saveQuotation,completeQuotationStatus}

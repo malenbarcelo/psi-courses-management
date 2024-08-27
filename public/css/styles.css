@@ -1,31 +1,3 @@
-/*----------------------usersCreatePopup.ejs------------------------*/
-#cuppCreateCompany{
-    position: absolute;
-    height: 100%;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    right: -25px;
-}
-
-#cuppCreateCompanyInfo{
-    position: absolute;
-    height: 100%;
-    width: 50px;
-    font-size: 11px;
-    display: none;
-    align-items: center;
-    right: -60px;
-}
-
-#cuppCreateCompany:hover{
-    color: var(--color2);
-}
-
-#cuppCreateCompany:hover #cuppCreateCompanyInfo{
-    display: flex;
-}
-
 /*----------------------courses.ejs----------------------*/
 #divCourses{
     margin: auto;
@@ -320,7 +292,7 @@
     cursor: pointer;
 }
 
-#uploadExcelIcon{
+#stppUploadExcelIcon{
     font-size: 30px !important;
 }
 

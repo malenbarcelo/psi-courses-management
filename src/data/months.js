@@ -1,0 +1,53 @@
+const months = [
+    {
+        number:1,
+        text:'Enero'
+    },
+    {
+        number:2,
+        text:'Febrero'
+    },
+    {
+        number:3,
+        text:'Marzo'
+    },
+    {
+        number:4,
+        text:'Abril'
+    },
+    {
+        number:5,
+        text:'Mayo'
+    },
+    {
+        number:6,
+        text:'Junio'
+    },
+    {
+        number:7,
+        text:'Julio'
+    },
+    {
+        number:8,
+        text:'Agosto'
+    },
+    {
+        number:9,
+        text:'Septiembre'
+    },
+    {
+        number:10,
+        text:'Octubre'
+    },
+    {
+        number:11,
+        text:'Noviembre'
+    },
+    {
+        number:12,
+        text:'Diciembre'
+    },
+
+]
+
+module.exports = months

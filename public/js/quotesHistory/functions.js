@@ -19,11 +19,16 @@ function applyFilters() {
 
     //status
     const filterInProcess_3 = document.getElementById('filterInProcess_3')
+    const filterCanceled_7 = document.getElementById('filterCanceled_7')
     let checks = [filterAproved_1,filterQuoted_2,filterRefused_6]
     let checked = []
     
     if (filterInProcess_3) {
         checks.push(filterInProcess_3)        
+    }
+
+    if (filterCanceled_7) {
+        checks.push(filterCanceled_7)        
     }
 
     checks.forEach(check => {
