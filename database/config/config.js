@@ -1,5 +1,5 @@
 const username = "psicoursesmanage_adm"
-const password = ")Ob.6hV!Ki^Z"
+const password = "duE~n$C}uNrN"
 const database = "psicoursesmanage_db"
 
 module.exports =
