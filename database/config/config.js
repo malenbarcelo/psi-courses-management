@@ -1,4 +1,4 @@
-const username = "p3wnpowpsicoursesmanage_adm"
+const username = "wnpowpsicoursesmanage_adm"
 const password = ")Ob.6hV!Ki^Z"
 const database = "psicoursesmanage_db"
 
