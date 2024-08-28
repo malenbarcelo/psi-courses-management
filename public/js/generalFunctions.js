@@ -186,7 +186,6 @@ function clearInputs(inputs) {
         if (input) {
             input.value = ''
         }
-        
     })
 }
 
