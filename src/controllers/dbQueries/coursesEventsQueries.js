@@ -39,6 +39,16 @@ const coursesEventsQueries = {
             }
         })
     },
+    deleteEvent: async(idEvent) => {        
+        await model.update({
+            enabled: 0
+        },
+        {
+            where:{
+                id:idEvent
+            }
+        })
+    },
     companyEvents: async (idCompany) => {        
         const companyEvents = await model.findAll({
             where: {
@@ -67,7 +77,6 @@ const coursesEventsQueries = {
         });
         return companyEvents;
     },
-
     courseEvents: async(courseId) => {        
         const courseEvents = await model.findAll({
             where:{

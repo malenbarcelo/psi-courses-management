@@ -46,8 +46,8 @@ accent-color: black
 }
 
 .unabledInput{
-    color:grey;
-    border: grey solid 1px;
+    border: #6d6c6c solid 1px;
+    color: #6d6c6c;
 }
 
 .label1{
@@ -79,7 +79,7 @@ accent-color: black
 }
 
 .unabledLabel{
-    color: grey;
+    color: #6d6c6c;
 }
 
 /*----------INPUTS AND SELECTS SIZES----------*/
@@ -108,6 +108,14 @@ accent-color: black
     width: 250px;
 }
 
+.ixl{
+    width: 300px;
+}
+
+.sxl{
+    width: 300px;
+}
+
 .ixxl{
     width: 350px;
 }
@@ -133,7 +141,7 @@ accent-color: black
 }
 
 .ipm{
-    padding: 7px 0px 6px 0px;
+    padding: 7px 0px 7px 0px;
 }
 
 .spm{
@@ -160,10 +168,11 @@ accent-color: black
 .divCheckbox2{
     font-size: 13px;
     display: flex;
-    align-items: center;
+    align-items:center;
     width: 200px;
     background-color: white;
-    padding: 3px 0px;    
+    padding: 3px 0px;
+    height: 1.5rem;    
 }
 
 .absoluteCheck{

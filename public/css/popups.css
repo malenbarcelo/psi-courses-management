@@ -7,7 +7,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0,0,0,0.6);
 }
 
 .popup2{
@@ -84,6 +84,12 @@
     text-align: center;
 }
 
+.popupText{
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.8;
+}
+
 .popupQuestion{
     font-size: 14px;
     text-align: center;
@@ -91,6 +97,8 @@
     margin-bottom: 25px;
     line-height: 1.8;
 }
+
+
 
 /*----------okPopup----------*/
 .okPopup{
@@ -111,7 +119,6 @@
     border: green solid 3px;
     background-color: rgb(173, 204, 173);
     font-size: 16px;
-    width: fit-content;
     padding: 15px 30px;
     color: green;
     top: 40%;

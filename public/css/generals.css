@@ -111,6 +111,14 @@ ul {
     display: none;
 }
 
+.divErrorBE{ /*for backend validations*/
+    color: var(--errorColor);
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2px;
+}
+
 .divErrorFlex{
     display: flex;
     column-gap: 5px;

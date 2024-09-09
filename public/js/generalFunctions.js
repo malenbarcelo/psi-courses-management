@@ -22,7 +22,7 @@ function showOkPopup(popupToShow) {
     //hide okPopup after one second
     setTimeout(function() {
         popupToShow.style.display = 'none'
-    }, 1500)
+    }, 2000)
     
 }
 

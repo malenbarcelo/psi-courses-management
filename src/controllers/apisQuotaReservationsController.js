@@ -1,5 +1,6 @@
 const quotaReservationsQueries = require('./dbQueries/quotaReservationsQueries')
-const quotationsEventsCompaniesQueries = require('./dbQueries/quotationsEventsCompaniesQueries')
+const qecQueries = require('./dbQueries/quotationsEventsCompaniesQueries')
+const coursesQueries = require('./dbQueries/coursesQueries')
 
 const apisQuotaReservations = {
   companiesPerCourse: async(req,res) =>{
@@ -23,7 +24,7 @@ const apisQuotaReservations = {
       await quotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,data.reserved_quota,idUser)
 
       //create quotations_events_companies
-      await quotationsEventsCompaniesQueries.create(data.id_events,data.id_companies)
+      await qecQueries.create(data.id_events,data.id_companies)
 
       //send email
       const courseData = await coursesQueries.findCourse(data.id_courses)
@@ -69,7 +70,11 @@ const apisQuotaReservations = {
     try{
       const data = req.body
 
+      //cancel reservation
       await quotaReservationsQueries.cancelReservation(data)
+
+      //cancel quotations events companies
+      await qecQueries.cancel(data.id_events,data.id_companies)
 
       res.status(200).json()
 

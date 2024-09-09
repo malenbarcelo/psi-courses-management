@@ -35,26 +35,29 @@ const usersController = {
 
             const password = bcrypt.hashSync(randomPassword,10)
 
-            //return res.send(data)
-
             await usersQueries.createUser(data, password)
 
             const transporter = nodemailer.createTransport({
-                host: 'mail.multibrand.wnpower.host', // Servidor de correo saliente
+                host: 'mail.psi-courses-management.wnpower.host', // Servidor de correo saliente
                 port: 465, // Puerto SMTP
                 secure: true, // true para puerto 465, false para otros puertos
                 auth: {
-                  user: 'administracion@multibrand.wnpower.host', // Tu nombre de usuario
-                  pass: ']p66RdoWHDuE' // Tu contraseña
+                  user: 'administracion@psi-courses-management.wnpower.host', // Tu nombre de usuario
+                  pass: 'K918;.JWwlq]' // Tu contraseña
                 }
               });
 
             const mailOptions = {
-            from: 'administracion@multibrand.wnpower.host',
-            to: 'barcelomalen@gmail.com',
-            subject: 'Avisa de alta de usuario',
-            text: 'Hola, se ha dado de alta tu usuario'
-            };
+            from: 'administracion@psi-courses-management.wnpower.host',
+            to: data.cuppEmail,
+            subject: 'PSI SMart Services - Aviso de alta de usuario',
+            html: `
+            <p>Hola,</p>
+            <p>Se ha dado de alta tu usuario.</p>
+            <p><strong>Usuario:</strong> ${data.cuppEmail}</p>
+            <p><strong>Contraseña:</strong> ${randomPassword}</p>
+        `
+};
             
             transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
@@ -64,10 +67,6 @@ const usersController = {
             return res.redirect('/users')
             
         })
-
-            //return res.redirect('/users')
-
-
 
         }catch(error){
 

@@ -1,5 +1,5 @@
 import { dominio } from "../dominio.js"
-import ug from "../users/usersGlobals.js"
+import ug from "./globals.js"
 import { isValid } from "../generalFunctions.js"
 
 async function printUsers(dataToPrint) {

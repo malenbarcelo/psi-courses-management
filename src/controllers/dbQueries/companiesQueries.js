@@ -26,6 +26,30 @@ const companiesQueries = {
             enabled:1
         })
     },
+    editCompany: async(idCompany,companyName) => {        
+        await model.update(
+            {
+                company_name: companyName
+            },
+            {
+                where:{
+                    id:idCompany
+                }
+            }
+        )
+    },
+    blockCompany: async(idCompany) => {        
+        await model.update(
+            {
+                enabled: 0
+            },
+            {
+                where:{
+                    id:idCompany
+                }
+            }
+        )
+    },
 }
 
 module.exports = companiesQueries

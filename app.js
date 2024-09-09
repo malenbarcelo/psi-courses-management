@@ -50,6 +50,7 @@ app.listen(APP_PORT,() => console.log("Servidor corriendo en puerto " + APP_PORT
 //Routes
 app.use('/',mainRoutes)
 app.use('/users',usersRoutes)
+app.use('/apis/users',usersRoutes)
 app.use('/courses',coursesRoutes)
 app.use('/events',eventsRoutes)
 app.use('/apis/events',eventsRoutes)

@@ -2,6 +2,16 @@
     
     <div class="popupContent" id="coppContent">
 
+        <!------GENERAL ACTIONS------>
+        <div class="divDGAs" id="DGAsCopp">
+            <div class="divDGA divDGAm" id="coppNewReservation">
+                <i class="fa-solid fa-square-plus"></i>
+                <div class="DGAinfo">
+                    Nueva reserva
+                </div>        
+            </div>
+        </div>
+
         <div class="popupIcons">
             <div class="popupIcon2"><i class="fa-solid fa-industry"></i></div>
             <div class="popupClose2" id="coppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
@@ -9,9 +19,13 @@
 
         <div class="popupTitle1 mtm" id="coppMainTitle"></div>
         <div class="popupTitle2 mts" id="coppSubtitle"></div>
-        <div class="popupTitle1 mtl">EMPRESAS</div>
+        <div class="popupTitle1 mtl">RESERVAS POR EMPRESA</div>
 
         <div class="divTable mtm" id="coppTable">
+
+            <div class="thInfo" id="erppInfo">Editar reserva</div>
+            <div class="thInfo" id="crppInfo">Cancelar reserva</div>
+
             <table>
                 <thead>
                     <tr>
@@ -20,7 +34,10 @@
                         <th class="thCss fsm thm">Asignados</th>
                         <th class="thCss fsm thm">Por asignar</th>
                         <th class="thCss fsm thxs">
-                            <i class="fa-regular fa-trash-can"></i>
+                            <i class="fa-regular fa-pen-to-square icon" id="erppIcon"></i>
+                        </th>
+                        <th class="thCss fsm thxs">
+                            <i class="fa-regular fa-circle-xmark icon" id="crppIcon"></i>
                         </th>
                     </tr>
                 </thead>

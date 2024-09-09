@@ -8,7 +8,8 @@ window.addEventListener('load',async()=>{
     coursesLoader.style.display = 'block'
 
     //get data and complete globals
-    cg.companies = await (await fetch(dominio + 'apis/companies')).json()
+    const companies = await (await fetch(dominio + 'apis/users/companies')).json()
+    cg.companies = companies.filter(c => c.company_name != 'PSI Smart Services')
     cg.courses = await (await fetch(dominio + 'apis/courses')).json()
     cg.coursesFiltered = cg.courses
     cg.companiesPerCourse = await (await fetch(dominio + 'apis/quota-reservations/companies-per-course')).json()

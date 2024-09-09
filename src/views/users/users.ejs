@@ -28,8 +28,8 @@
             </select>            
         </div>
         <div id="createCompany">
-            <i class="fa-solid fa-magnifying-glass-plus icon"></i>
-            <div id="createCompanyInfo">Ver / Editar empresas</div>
+            <i class="fa-solid fa-square-plus icon"></i>
+            <div id="createCompanyInfo">Crear / Editar empresas</div>
         </div>
     </div>    
 </div>
@@ -38,22 +38,22 @@
     <div class="divInputsRow">
         <div class="divInput">
             <label class="label2">Apellido</label>
-            <input type="text" class="input1 il ipm" id="filterLastName" autocomplete="off">
+            <input type="text" class="input1 il ipl" id="filterLastName" autocomplete="new-password">
             <ul class="predictedElements" id="filterLastNameUl"></ul>            
         </div>            
         <div class="divInput">
             <label class="label2">Nombre</label>
-            <input type="text" class="input1 il ipm" id="filterFirstName" autocomplete="off">
+            <input type="text" class="input1 il ipl" id="filterFirstName" autocomplete="new-password">
             <ul class="predictedElements" id="filterFirstNameUl"></ul>            
         </div>
         <div class="divInput">
             <label class="label2">Email</label>
-            <input type="text" class="input1 il ipm" id="filterEmail" autocomplete="off">
+            <input type="text" class="input1 il ipl" id="filterEmail" autocomplete="new-password">
             <ul class="predictedElements" id="filterEmailUl"></ul>                   
         </div>
         <div class="divInput">
             <label class="label2">Perfil</label>
-            <select class="input1 sl spm" id="filterCategory">
+            <select class="input1 sl spl" id="filterCategory">
                 <option value=""></option>
                 <% usersCategories.forEach(category => { %>
                     <option value="<%= category.id %>">
@@ -103,12 +103,12 @@
 <div class="loader" id="usersLoader"></div>
 
 <!----------POPUPS---------->
-<%- include('./usersConfirmPopups') %>
-<%- include('./usersEditPopup') %>
 <%- include('./popupsVCPP') %>
 <%- include('./popupsCUPP') %>
 <%- include('./popupsCCPP') %>
-
+<%- include('./popupsEUPP') %>
+<%- include('./popupsECPP') %>
+<%- include('./usersConfirmPopups') %>
 
 <!----------SCRIPTS---------->
 <script type="module" src="/js/users/users.js"></script>

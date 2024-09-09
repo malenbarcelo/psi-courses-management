@@ -1,12 +1,13 @@
 import { dominio } from "../dominio.js"
 import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations,addStudentValidations, printStudents, uploadExcelValidations,clickAllCompanies, editEventValidations,filterStudents} from "./eventsFunctions.js"
 import eg from "./eventsGlobals.js"
-import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,isValid,uncheckInputs} from "../generalFunctions.js"
+import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,showTableInfo,uncheckInputs} from "../generalFunctions.js"
 
 //popups event listeners
 import { stppEventListeners} from "./eventsSTPP.js"
 import { ueppEventListeners} from "./eventsUEPP.js"
 import { ssppEventListeners} from "./eventsSSPP.js"
+import { deppEventListeners} from "./eventsDEPP.js"
 
 window.addEventListener('load',async()=>{
 
@@ -16,18 +17,20 @@ window.addEventListener('load',async()=>{
     eg.idCompanies = document.getElementById('idCompany').innerText
     eg.idUserCategories = document.getElementById('idUserCategories').innerText
     if (eg.idUserCategories == 4 ) {
-        eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
+        eg.events = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + eg.idCompanies)).json()
     }else{
-        eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
+        eg.events = await (await fetch(dominio + 'apis/courses-events/next-events')).json()
     }    
     eg.eventsFiltered = eg.events
-    eg.companies = await (await fetch(dominio + 'apis/companies')).json()
+    const companies = await (await fetch(dominio + 'apis/users/companies')).json()
+    eg.companies = companies.filter(c => c.company_name != 'PSI Smart Services')
     eg.reservationsPerEventCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
     
     //popups event listeners
     stppEventListeners()
     ueppEventListeners()
     ssppEventListeners()
+    deppEventListeners()    
     
     //print events
     printEvents(eg.eventsFiltered)
@@ -37,7 +40,7 @@ window.addEventListener('load',async()=>{
     if (eg.idUserCategories == 4) {
         filters.push(filterReserved)        
     }else{
-        filters.push(filterFinished,filterOnCourse,filterPending)
+        filters.push(filterOnCourse,filterPending)
     }
 
     filters.forEach(filter => {        
@@ -53,7 +56,7 @@ window.addEventListener('load',async()=>{
         if (eg.idUserCategories == 4) {
             uncheckInputs([filterReserved])
         }else{
-            uncheckInputs([filterFinished,filterOnCourse,filterPending])
+            uncheckInputs([filterOnCourse,filterPending])
         }
         eg.eventsFiltered = eg.events
         printEvents(eg.eventsFiltered)
@@ -61,8 +64,22 @@ window.addEventListener('load',async()=>{
 
 
     //close popups
-    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel]
+    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel]
     closePopupsEventListeners(closePopups)
+
+    //table info events listeners
+    const tableIcons = [
+        {
+            icon:erppIcon,
+            right:'7.5%'
+        },
+        {
+            icon:crppIcon,
+            right:'1.5%'
+        }
+    ]
+
+    showTableInfo(tableIcons,130,150)
 
     //reserve quota
     rqppAccept.addEventListener("click", async() => {
@@ -214,9 +231,9 @@ window.addEventListener('load',async()=>{
 
             //get data and complete globals
             if (eg.idUserCategories == 4 ) {
-                eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
+                eg.events = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + eg.idCompanies)).json()
             }else{
-                eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
+                eg.events = await (await fetch(dominio + 'apis/courses-events/next-events')).json()
             }
             eg.eventsFiltered = eg.events
 

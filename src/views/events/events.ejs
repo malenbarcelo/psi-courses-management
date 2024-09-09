@@ -5,7 +5,7 @@
 <div id="idUserCategories" class="notVisible"><%= userLogged.id_users_categories %></div>
 
 <div class="mainTitle">
-    EVENTOS
+    CALENDARIO DE EVENTOS
 </div>
 
 <!------MAIN FILTERS------>
@@ -45,10 +45,6 @@
     <% } else { %>
         <div class="eventsCheckboxs">    
             <div class="eventsCheckbox">
-                <input type="checkbox" id="filterFinished">
-                <label>Finalizados</label>
-            </div>
-            <div class="eventsCheckbox">
                 <input type="checkbox" id="filterOnCourse">
                 <label>En curso</label>
             </div>
@@ -71,12 +67,13 @@
 <div class="loader" id="eventsLoader"></div>
 
 <!----------POPUPS---------->
-<%- include('./eventsPopups') %>
+<%- include('./popupsCOPP') %>
+<%- include('./popupsRQPP') %>
 <%- include('./popupsSTPP') %>
 <%- include('./popupsUEPP') %>
-<%- include('./popupsCOPP') %>
+<%- include('./popupsDEPP') %>
 <%- include('./eventsStudentsPopups') %>
-
+<%- include('./eventsPopups') %>
 <%- include('../courses/coursesCreateEventPopup') %>
 
 

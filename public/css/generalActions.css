@@ -13,6 +13,12 @@
     cursor: pointer;
 }
 
+.divDGAs{
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+}
+
 .divDGAm{
     height: 30px;
     width: 30px;
@@ -38,11 +44,29 @@
     font-weight: bold;
 }
 
+.DGAinfoAside{
+    display: none;
+    padding: 2px 5px;
+    position: absolute;
+    font-size: 13px;
+    border-radius: 3px;
+    top:0px;
+    left: 100%;
+    text-align: center;
+    width: 150px;
+    color: var(--color2);
+    text-align: left;
+}
+
 .divDGA:hover{
     color:var(--color2);
 }
 
 .divDGA:hover .DGAinfo{
+    display: block;
+}
+
+.divDGA:hover .DGAinfoAside{
     display: block;
 }
 
@@ -97,5 +121,15 @@
 #DGBsQuotations{
     top: 6%;
     right: 9%;
+}
+
+#DGAsCompanies{
+    top: 6.5%;
+    right: 38%;
+}
+
+#DGAsCopp{
+    top: 15%;
+    right: 15%;
 }
 

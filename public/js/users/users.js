@@ -1,6 +1,6 @@
 import { dominio } from "../dominio.js"
-import ug from "./usersGlobals.js"
-import { printUsers,filterUsers } from "./usersFunctions.js"
+import ug from "./globals.js"
+import { printUsers,filterUsers } from "./functions.js"
 import { clearInputs, isValid, isInvalid,closePopupsEventListeners,acceptWithEnter,predictElements,selectFocusedElement,showTableInfo,showOkPopup, inputsValidation,emailValidation } from "../generalFunctions.js"
 
 //popups event listeners
@@ -11,8 +11,8 @@ window.addEventListener('load',async()=>{
 
     //get data and complete globals    
     usersLoader.style.display = 'block'
-    ug.users = await (await fetch(dominio + 'apis/users')).json()
-    ug.companies = await (await fetch(dominio + 'apis/companies')).json()
+    ug.users = await (await fetch(dominio + 'apis/users/get-users')).json()
+    ug.companies = await (await fetch(dominio + 'apis/users/companies')).json()
     ug.usersCategories = await (await fetch(dominio + 'apis/users-categories')).json()
     ug.usersFiltered = ug.users
     usersLoader.style.display = 'none'
@@ -74,14 +74,12 @@ window.addEventListener('load',async()=>{
     showTableInfo(tableIcons,310,150)
 
     //close popups
-    const closePopups = [cuppClose,cuppCancel,ccppClose,ccppCancel,euppClose,euppCancel,rpppClose,rpppCancel,buppClose,buppCancel,vcppClose,vcppCancel]
+    const closePopups = [cuppClose,cuppCancel,ccppClose,ccppCancel,euppClose,euppCancel,rpppClose,rpppCancel,buppClose,buppCancel,vcppClose,vcppCancel,ecppClose,ecppCancel,bcppClose,bcppCancel]
     closePopupsEventListeners(closePopups)
 
     //create company
     createCompany.addEventListener("click", async() => {
-
-        vcppPrintTable(ug.companies)
-        
+        vcppPrintTable(ug.companies)        
         vcpp.style.display = 'block'
     })
 
@@ -105,6 +103,7 @@ window.addEventListener('load',async()=>{
         isValid([ccppCompany])
         ccpp.classList.remove('popup2')
         ccpp.classList.add('popup')
+        ug.createCompanyFrom = 'cupp'
         ccpp.style.display = 'block'
     })
 
@@ -154,11 +153,11 @@ window.addEventListener('load',async()=>{
         }
 
         if (errors == 0) {
+            bodyUsers.innerHTML = ''
+            usersLoader.style.display = 'block'
             cupp.style.display = 'none'
             showOkPopup(cuppOk)
-            setTimeout(function() {
-                e.target.form.submit()
-            }, 1500) 
+            e.target.form.submit()
         }
 
     })

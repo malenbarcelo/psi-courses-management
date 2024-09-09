@@ -1,5 +1,7 @@
 
 const eventsStudentsQueries = require('./dbQueries/eventsStudentsQueries')
+const ceicQueries = require('./dbQueries/coursesEventsInvitedCompaniesQueries')
+const coursesEventsQueries = require('./dbQueries/coursesEventsQueries')
 const qecQueries = require('./dbQueries/quotationsEventsCompaniesQueries')
 const ExcelJS = require('exceljs')
 
@@ -98,6 +100,26 @@ const eventsApisController = {
 
       await workbook.xlsx.write(res)
       res.end()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  deleteEvent: async(req,res) =>{
+    try{
+
+      const data = req.body
+      
+      console.log(data)
+
+      //unable event
+      await ceicQueries.delete(data.id_events)
+
+      //delete courses_events_invited_companies
+      await coursesEventsQueries.deleteEvent(data.id_events)
+
+      res.status(200).json()
 
     }catch(error){
       console.group(error)

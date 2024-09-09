@@ -15,7 +15,7 @@ const loginValidations = {
                 throw new Error('Usuario inválido')
                 }
                 return true
-            }),
+            }).bail(),
         body('password')
             .notEmpty().withMessage('Ingrese una contraseña')
             .custom(async(value,{ req }) => {

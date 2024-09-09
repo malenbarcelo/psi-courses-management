@@ -11,8 +11,8 @@
 
             <div class="divInput">
                 <label class="label1 <%= locals.errors && errors.email ? 'invalidLabel' : null %>">Usuario</label>
-                <input type="text" name="email" class="input1 ixxxl ipl <%= locals.errors && errors.email ? 'invalidInput' : null %>" value="<%= locals.oldData ? oldData.email : null %>" autocomplete="off">
-                <div class="divError2">
+                <input type="text" name="email" class="input1 ixxxl ipl <%= locals.errors && errors.email ? 'invalidInput' : null %>" value="<%= locals.oldData ? oldData.email : null %>" autocomplete="new-password">
+                <div class="divErrorBE">
                     <% if (locals.errors && errors.email) { %>
                         <%= errors.email.msg %>
                     <% } %>
@@ -21,8 +21,8 @@
 
             <div class="divInput mtm">
                 <label class="label1 <%= locals.errors && errors.password ? 'invalidLabel' : null %>">Contraseña</label>
-                <input type="password" name="password" class="input1 ixxxl ipl <%= locals.errors && errors.password ? 'invalidInput' : null %>" autocomplete="off">
-                <div class="divError2">
+                <input type="password" name="password" class="input1 ixxxl ipl <%= locals.errors && errors.password ? 'invalidInput' : null %>" autocomplete="new-password">
+                <div class="divErrorBE">
                     <% if (locals.errors && errors.password) { %>
                         <%= errors.password.msg %>
                     <% } %>

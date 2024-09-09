@@ -13,6 +13,8 @@ let ug = {
     idUserToEdit:0,
     psiCategoriesIds:[2,3],
     customersCategoriesIds:[4],
+    companyToEdit:'',
+    createCompanyFrom: '',
     elementsToPredict:[
         {
             input:filterLastName,

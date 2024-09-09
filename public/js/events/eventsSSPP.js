@@ -20,12 +20,11 @@ async function ssppEventListeners() {
             body: JSON.stringify(data)
         })
 
-        //update data
         if (eg.idUserCategories == 4 ) {
-            eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
+            eg.events = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + eg.idCompanies)).json()
         }else{
-            eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
-        }
+            eg.events = await (await fetch(dominio + 'apis/courses-events/next-events')).json()
+        }   
     
         eg.eventsFiltered = eg.events
         

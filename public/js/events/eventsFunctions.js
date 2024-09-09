@@ -1,6 +1,6 @@
 import { dominio } from "../dominio.js"
 import eg from "./eventsGlobals.js"
-import {isInvalid,isValid,dateToString,clearInputs, inputsValidation } from "../generalFunctions.js"
+import {isInvalid,isValid,dateToString,clearInputs, inputsValidation, showOkPopup } from "../generalFunctions.js"
 
 async function printEvents(dataToPrint) {
 
@@ -49,11 +49,15 @@ async function printEvents(dataToPrint) {
 
         const onCourse = document.createElement('div');
         onCourse.id = 'onCourse';
-        onCourse.innerHTML = element.status == 'onCourse' ? 'En curso' : element.status == 'finished' ? 'Finalizado' : 'Por comenzar';
+        onCourse.innerHTML = element.status == 'onCourse' ? 'En curso' : element.status == 'finished' ? 'Finalizado' : 'Por iniciar';
 
         const editEventAction = document.createElement('div');
         editEventAction.className = element.status == 'finished' ? 'courseAction notVisible' : 'courseAction';
         editEventAction.innerHTML = '<i class="fa-regular fa-pen-to-square icon" id="editE_' + element.id + '"></i><div class="courseActionInfo2">Editar evento</div>';
+
+        const deleteEventAction = document.createElement('div');
+        deleteEventAction.className = element.status == 'finished' ? 'courseAction notVisible' : 'courseAction';
+        deleteEventAction.innerHTML = '<i class="fa-regular fa-trash-can icon" id="deleteE_' + element.id + '"></i><div class="courseActionInfo2">Eliminar evento</div>';
         
         const editReservationAction = document.createElement('div');
         editReservationAction.className = element.companyReservations == 0 ? 'courseAction notVisible' : 'courseAction';
@@ -87,6 +91,7 @@ async function printEvents(dataToPrint) {
             eventActions.appendChild(alert);
         }else{
             eventActions.appendChild(editEventAction);
+            eventActions.appendChild(deleteEventAction);
             eventActions.appendChild(studentsAction);
             eventActions.appendChild(companiesAction);
             eventActions.appendChild(alert);
@@ -120,6 +125,7 @@ async function addEventsEventListeners(dataToPrint) {
         const cancel = document.getElementById('cancel_' + element.id)
         const editR = document.getElementById('editR_' + element.id)
         const editE = document.getElementById('editE_' + element.id)
+        const deleteE = document.getElementById('deleteE_' + element.id)
         const students = document.getElementById('students_' + element.id)
         const companies = document.getElementById('companies_' + element.id)
 
@@ -215,9 +221,31 @@ async function addEventsEventListeners(dataToPrint) {
 
                 clickCompanies()
                 
+                //delete errors
+                isValid([ceppStartDate,ceppEndDate,ceppStartTime,ceppEndTime,ceppEventQuota])
+                ceppDateError.style.display = 'none'
+                ceppTimeError.style.display = 'none'
+                ceppCompaniesError.style.display = 'none'
+
+                //show popup
                 cepp.style.display = 'block'
             })
-        }        
+        }
+        
+        //delete event
+        if (deleteE) {
+            deleteE.addEventListener('click',async()=>{
+
+                if (element.eventReservations > 0) {
+                    showOkPopup(deppError)
+                    
+                }else{
+                    eg.idEvents = element.id
+                    deppQuestion.innerHTML = '¿Confirma que desea eliminar el evento <b>#' + String(element.id).padStart(8,'0') + '</b> del curso <b>' + element.events_courses.course_name + ' </b> con fecha de inicio ' + dateToString(element.start_date) + '?'
+                    depp.style.display = 'block'
+                }
+            })
+        } 
     })
 }
 
@@ -259,9 +287,6 @@ function filterEvents() {
         }
     }else{
         const checkedElements = []
-        if (filterFinished.checked) {
-            checkedElements.push('finished')
-        }
         if (filterOnCourse.checked) {
             checkedElements.push('onCourse')
         }
@@ -576,9 +601,9 @@ function editEventValidations() {
         isInvalid([ceppEventQuota])
         ceppEventQuotaError.style.display = 'block'
         errors +=1
-    }else{
-        if (ceppEventQuota.value < eg.eventStudents.length) {
-            ceppEventQuotaError.innerText = 'El cupo es inferior a la cantidad de alumnos asignados al evento'
+    }else{      
+        if (ceppEventQuota.value < eg.eventData.eventReservations) {
+            ceppEventQuotaError.innerText = 'El cupo no puede ser inferior a las reservas del evento'
             isInvalid([ceppEventQuota])
             ceppEventQuotaError.style.display = 'block'
             errors +=1
@@ -590,11 +615,19 @@ function editEventValidations() {
 
     //companies
     if (eg.eventInvitedCompanies.length == 0) {
+        ceppCompaniesError.innerText = 'Debe seleccionar al menos una empresa'
         ceppCompaniesError.style.display = 'block'
         errors +=1
     }else{
-        ceppCompaniesError.style.display = 'none'
-    }
+        
+        if (eg.eventCompanies.some(item => !eg.eventInvitedCompanies.includes(item))) {
+            ceppCompaniesError.innerText = 'No se puede quitar la invitación a empresas que poseen reservas para el evento'
+            ceppCompaniesError.style.display = 'block'
+            errors +=1
+        }else{
+            ceppCompaniesError.style.display = 'none'
+        }
+    }    
 
     return errors
 }
@@ -616,7 +649,6 @@ async function filterStudents() {
 }
 
 async function printCompanies(dataToPrint) {
-    console.log(eg.eventStudents)
 
     companiesLoader.style.display = 'block'
     
@@ -636,7 +668,8 @@ async function printCompanies(dataToPrint) {
                 <th class="${rowClass}">${reservations}</th>
                 <th class="${rowClass}">${assignations}</th>
                 <th class="${rowClass}">${toAssign}</th>
-                <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="edit_${element.id}"></i></th>
+                <th class="${rowClass}"><i class="fa-regular fa-pen-to-square allowedIcon" id="edit_${element}"></i></th>
+                <th class="${rowClass}"><i class="fa-regular fa-circle-xmark allowedIcon" id="cancel_${element}"></i></th>
             </tr>
         `;
         counter += 1;
@@ -645,9 +678,36 @@ async function printCompanies(dataToPrint) {
     // Insertar todo el HTML en el DOM de una sola vez
     bodyCompanies.innerHTML += html;
 
-    //addStudentsEventListeners(dataToPrint)
+    companiesEventListeners(dataToPrint)
 
     companiesLoader.style.display = 'none'
+}
+
+async function companiesEventListeners(dataToPrint) {
+
+    dataToPrint.forEach(element => {
+
+        const edit = document.getElementById('edit_' + element)
+        const cancel = document.getElementById('cancel_' + element)
+        
+        //edit reservations
+        edit.addEventListener('click',async()=>{
+
+            const companyEventData = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + element)).json()
+
+            console.log(companyEventData)
+            
+            rqppMainTitle.innerText = 'EDITAR RESERVA'
+            rqppQuota.value = companyEventData[0].companyReservations
+            rqppAccept.innerText = 'Editar'
+            eg.editReservationType = 'edit'
+
+            rqpp.style.display = 'block'
+        })
+            
+        
+        
+    })
 }
 
 export {printEvents,filterEvents,reserveQuotaValidations,editQuotaValidations,addStudentValidations,printStudents,uploadExcelValidations,clickAllCompanies,editEventValidations,filterStudents}

@@ -268,9 +268,9 @@
 
 .divEventCompanies{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    height: 200px;
+    max-height: 200px;
     overflow-y: auto;
     column-gap: 5px;
 }

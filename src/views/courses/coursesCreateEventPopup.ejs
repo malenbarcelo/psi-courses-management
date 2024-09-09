@@ -66,14 +66,16 @@
                 <label>Todas las empresas</label><br>
             </div>
 
-            <div id="ceppCompaniesError" class="divError mbs">Debe seleccionar al menos una empresa</div>
+            <div id="ceppCompaniesError" class="divError mbs"></div>
 
             <div class="divEventCompanies">
                 <% companies.forEach(company => { %>
-                    <div class="divCheckbox2 mts">
-                        <input type="checkbox" id="<%= 'ceppCompany_' + company.id %>" checked>
-                        <label><%= company.company_name %></label><br>
-                    </div>
+                    <% if (company.company_name != 'PSI Smart Services') { %>
+                        <div class="divCheckbox2 mts">
+                            <input type="checkbox" id="<%= 'ceppCompany_' + company.id %>" checked>
+                            <label><%= company.company_name %></label><br>
+                        </div>
+                    <% } %>
                 <% }) %>
             </div>
 

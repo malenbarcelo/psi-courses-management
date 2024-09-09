@@ -8,12 +8,6 @@
     left: calc(50vw - 200px);
 }
 
-#euppContent{
-    top: 28%;
-    width: 400px;
-    left: calc(50vw - 200px);
-}
-
 
 
 #ccoppContent{
@@ -103,8 +97,9 @@
 /*-----------------------------------*/
 /*------------OK CONTENTS------------*/
 #buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent,#ccoppOkContent,#ceppOkContent,#rqppOkContent,#creppOkContent,#stppOkContent{
+    width: 300px;
     top: 40%;
-    left: calc(50vw - 150px);
+    left: calc(50vw - 183px);
 }
 
 /*---quotationsPopups.ejs---*/
@@ -125,23 +120,40 @@
 
 
 /*POPUPS*/
-/* users.ejs --> cupp, ccpp, vcpp */
-/* events.ejs --> copp */
+/* users.ejs --> cupp, ccpp, vcpp, eupp */
+/* events.ejs --> copp, depp */
 /* quotations.ejs --> reqpp */
 
 /*-----------------------users.ejs-----------------------*/
 /*create user popup (cupp)*/
 #cuppContent{
-    top: 28%;
+    top: 20%;
     width: 450px;
     left: calc(50vw - 235px);
 }
 
 /*create company popup (ccpp)*/
 #ccppContent{
-    top: 37%;
+    top: 25%;
     width: 350px;
     left: calc(50vw - 185px);
+}
+
+#ecppOkContent{
+    top: 40%;
+    left: calc(50vw - 180px);
+}
+
+/*edit company popup (ecpp)*/
+#ecppContent{
+    top: 25%;
+    width: 350px;
+    left: calc(50vw - 185px);
+}
+
+#ecppOkContent{
+    top: 40%;
+    left: calc(50vw - 180px);
 }
 
 /*view companies popup (vcpp)*/
@@ -151,6 +163,31 @@
     left: calc(50vw - 335px);
 }
 
+/*edit user popup (eupp)*/
+#euppContent{
+    top: 20%;
+    width: 400px;
+    left: calc(50vw - 210px);
+}
+
+/*block company popup (bcpp)*/
+#bcppContent{
+    top: 35%;
+    width: 400px;
+    left: calc(50vw - 210px);
+}
+
+#bcppErrorContent{
+    width: 450px;
+    top: 40%;
+    left: calc(50vw - 250px);
+}
+
+#bcppOkContent{
+    width: 300px;
+    top: 40%;
+    left: calc(50vw - 183px)
+}
 
 /*-----------------------events.ejs-----------------------*/
 /*companies popup (copp)*/
@@ -158,6 +195,19 @@
     top: 16%;
     width: 900px;
     left: calc(50vw - 450px)
+}
+
+/*delete event popup (depp)*/
+#deppContent{
+    top: 35%;
+    width: 400px;
+    left: calc(50vw - 210px)
+}
+
+#deppOkContent, #deppErrorContent{
+    width: 300px;
+    top: 40%;
+    left: calc(50vw - 183px)
 }
 
 /*-----------------------quotations.ejs-----------------------*/

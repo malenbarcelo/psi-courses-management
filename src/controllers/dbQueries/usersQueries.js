@@ -29,7 +29,10 @@ const usersQueries = {
     },
     findUserByEmail: async(email) => {        
         const user = await db.Users.findOne({
-            where:{email:email},
+            where:{
+                email:email,
+                enabled:1
+            },
             raw:true,
         })
         return user
@@ -78,6 +81,12 @@ const usersQueries = {
         await db.Users.update(
             { enabled:0 },
             { where: { id:idUser } }
+        )
+    },
+    blockUsers: async(idCompany) => {        
+        await db.Users.update(
+            { enabled:0 },
+            { where: { id_companies:idCompany } }
         )
     },
     restorePassword: async(idUser,newPassword) => {        

@@ -28,12 +28,27 @@ const usersApisController = {
       return res.send('Ha ocurrido un error')
     }
   },
-  createCompanyProcess: async(req,res) =>{
+  createCompany: async(req,res) =>{
     try{
 
       const companyName = req.body.company_name
 
       await companiesQueries.createCompany(companyName)
+
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  editCompany: async(req,res) =>{
+    try{
+
+      const companyName = req.body.companyName
+      const idCompany = req.body.idCompany      
+
+      await companiesQueries.editCompany(idCompany,companyName)
 
       res.status(200).json()
 
@@ -116,6 +131,24 @@ const usersApisController = {
       const idUser = req.body.idUserToBlock
 
       await usersQueries.blockUser(idUser)
+      
+      res.status(200).json()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  blockCompany: async(req,res) =>{
+    try{
+
+      const idCompany = req.body.idCompany
+      
+      //block company
+      await companiesQueries.blockCompany(idCompany)
+
+      //block users
+      await usersQueries.blockUsers(idCompany)
       
       res.status(200).json()
 

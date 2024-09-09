@@ -46,6 +46,17 @@ const quotationsEventsCompaniesQueries = {
             }
         })
     },
+    cancel: async(idEvents,idCompanies) => {        
+        await model.update({
+            enabled: 0,
+        },
+        {
+            where:{
+                id_events:idEvents,
+                id_companies:idCompanies
+            }
+        })
+    },
     updateStatus: async(idQuotation,idStatus) => {        
         await model.update({
             id_quotations_status:idStatus

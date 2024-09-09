@@ -19,6 +19,25 @@ const apisCoursesEventsController = {
       return res.send('Ha ocurrido un error')
     }
   },
+  nextEvents: async(req,res) =>{
+    try{
+
+      const idCompany = 1 //PSI SMART SERVICES
+
+      let events = await coursesEventsQueries.events()
+      events = events.map(event => event.get({ plain: true })) //get plain data to edit json
+
+      addEventInformation(events, idCompany)
+
+      const nextEvents = events.filter( e => e.status != 'finished')
+
+      res.status(200).json(nextEvents)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
   createEvent: async(req,res) =>{
     try{
 
@@ -68,6 +87,25 @@ const apisCoursesEventsController = {
       addEventInformation(events,idCompany)
 
       res.status(200).json(events)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  companyNextEvents: async(req,res) =>{
+    try{
+
+      const idCompany = req.params.idCompany
+
+      let events = await coursesEventsQueries.companyEvents(idCompany)
+      events = events.map(event => event.get({ plain: true })) //get plain data to edit json
+
+      addEventInformation(events,idCompany)
+
+      const nextEvents = events.filter( e => e.status != 'finished')
+
+      res.status(200).json(nextEvents)
 
     }catch(error){
       console.group(error)
