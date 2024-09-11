@@ -38,6 +38,44 @@ const apisCoursesEventsController = {
       return res.send('Ha ocurrido un error')
     }
   },
+  companyEvents: async(req,res) =>{
+    try{
+
+      const idCompany = req.params.idCompany
+
+      let events = await coursesEventsQueries.companyEvents(idCompany)
+      events = events.map(event => event.get({ plain: true })) //get plain data to edit json
+
+      addEventInformation(events,idCompany)
+
+      res.status(200).json(events)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  companyNextEvents: async(req,res) =>{
+    try{
+
+      const idCompany = req.params.idCompany
+
+      let events = await coursesEventsQueries.companyEvents(idCompany)
+      
+      events = events.map(event => event.get({ plain: true })) //get plain data to edit json
+      console.log(events)
+
+      addEventInformation(events,idCompany)
+
+      const nextEvents = events.filter( e => e.status != 'finished')
+
+      res.status(200).json(nextEvents)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
   createEvent: async(req,res) =>{
     try{
 
@@ -76,42 +114,7 @@ const apisCoursesEventsController = {
       return res.send('Ha ocurrido un error')
     }
   },
-  companyEvents: async(req,res) =>{
-    try{
-
-      const idCompany = req.params.idCompany
-
-      let events = await coursesEventsQueries.companyEvents(idCompany)
-      events = events.map(event => event.get({ plain: true })) //get plain data to edit json
-
-      addEventInformation(events,idCompany)
-
-      res.status(200).json(events)
-
-    }catch(error){
-      console.group(error)
-      return res.send('Ha ocurrido un error')
-    }
-  },
-  companyNextEvents: async(req,res) =>{
-    try{
-
-      const idCompany = req.params.idCompany
-
-      let events = await coursesEventsQueries.companyEvents(idCompany)
-      events = events.map(event => event.get({ plain: true })) //get plain data to edit json
-
-      addEventInformation(events,idCompany)
-
-      const nextEvents = events.filter( e => e.status != 'finished')
-
-      res.status(200).json(nextEvents)
-
-    }catch(error){
-      console.group(error)
-      return res.send('Ha ocurrido un error')
-    }
-  },  
+    
 }
 
 function addEventInformation(events,idCompany) {

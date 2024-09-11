@@ -1,5 +1,6 @@
 const quotaReservationsQueries = require('./dbQueries/quotaReservationsQueries')
 const qecQueries = require('./dbQueries/quotationsEventsCompaniesQueries')
+const quotationsQueries = require('./dbQueries/quotationsQueries')
 const coursesQueries = require('./dbQueries/coursesQueries')
 
 const apisQuotaReservations = {
@@ -59,10 +60,22 @@ const apisQuotaReservations = {
       //edit reservation
       await quotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,quotaDifference,idUser)
 
+      //reject quotation if applies
+      if (data.idQuoteToReject != 0) {
+        await quotationsQueries.refuse(data.idQuoteToReject)
+        await qecQueries.updateToNull(data.idQuoteToReject)
+      }
+      
+      //cancel quotation if applies
+      if (data.idQuoteToCancel != 0) {
+        await quotationsQueries.cancel(data.idQuoteToCancel)
+        await qecQueries.updateToNull(data.idQuoteToCancel)
+      }      
+
       res.status(200).json()
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -76,10 +89,22 @@ const apisQuotaReservations = {
       //cancel quotations events companies
       await qecQueries.cancel(data.id_events,data.id_companies)
 
+      //reject quotation if applies
+      if (data.idQuoteToReject != 0) {
+        await quotationsQueries.refuse(data.idQuoteToReject)
+        await qecQueries.updateToNull(data.idQuoteToReject)
+      }
+      
+      //cancel quotation if applies
+      if (data.idQuoteToCancel != 0) {
+        await quotationsQueries.cancel(data.idQuoteToCancel)
+        await qecQueries.updateToNull(data.idQuoteToCancel)
+      }
+
       res.status(200).json()
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },

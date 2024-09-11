@@ -134,9 +134,6 @@ const quotationsApisController = {
       //cancel quotation        
       await quotationsQueries.cancel(idQuotation)
 
-      //cancel quotation details
-      await quotationsDetailsQueries.cancel(idQuotation)
-
       //cancel quotations events companies
       await qecQueries.updateToNull(idQuotation)
 
@@ -154,9 +151,6 @@ const quotationsApisController = {
       
       //cancel quotation        
       await quotationsQueries.refuse(idQuotation)
-
-      //cancel quotation details
-      await quotationsDetailsQueries.cancel(idQuotation)
 
       //cancel quotations events companies
       await qecQueries.updateToNull(idQuotation)

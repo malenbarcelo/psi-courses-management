@@ -184,7 +184,7 @@ window.addEventListener('load',async()=>{
                 body: JSON.stringify(data)
             })
 
-            ug.users = await (await fetch(dominio + 'apis/users')).json()
+            ug.users = await (await fetch(dominio + 'apis/users/get-users')).json()
             ug.usersFiltered = ug.users
             printUsers(ug.usersFiltered)
             eupp.style.display = 'none'
@@ -222,7 +222,7 @@ window.addEventListener('load',async()=>{
             body: JSON.stringify(data)
         })
 
-        ug.users = await (await fetch(dominio + 'apis/users')).json()
+        ug.users = await (await fetch(dominio + 'apis/users/get-users')).json()
         ug.usersFiltered = ug.users
         printUsers(ug.usersFiltered)
         bupp.style.display = 'none'

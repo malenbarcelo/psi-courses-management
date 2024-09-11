@@ -1,5 +1,7 @@
-import { addStudentValidations, printStudents,filterStudents} from "./eventsFunctions.js"
-import eg from "./eventsGlobals.js"
+import { addStudentValidations } from "./validations.js"
+import { printStudents } from "./printEventStudents.js"
+import { filterStudents } from "./filters.js"
+import eg from "./globals.js"
 import { acceptWithEnter,clearInputs, isValid} from "../generalFunctions.js"
 
 //STUDENTS POPUP (stpp)

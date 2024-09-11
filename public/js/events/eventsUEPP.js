@@ -1,5 +1,6 @@
-import { printStudents, uploadExcelValidations } from "./eventsFunctions.js"
-import eg from "./eventsGlobals.js"
+import { printStudents } from "./printEventStudents.js"
+import { uploadExcelValidations } from "./validations.js"
+import eg from "./globals.js"
 import { clearInputs} from "../generalFunctions.js"
 
 //UPLOAD EXCEL POPUP (uepp)

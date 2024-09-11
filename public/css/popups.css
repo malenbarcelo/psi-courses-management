@@ -90,6 +90,24 @@
     line-height: 1.8;
 }
 
+.popupAlert{
+    color: var(--errorColor);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    column-gap: 3px;
+}
+
+.popupAlertText{
+    text-align: center;
+    font-size: 13px;
+}
+
+.popupAlertIcon{
+    font-size: 17px;
+}
+
+
 .popupQuestion{
     font-size: 14px;
     text-align: center;

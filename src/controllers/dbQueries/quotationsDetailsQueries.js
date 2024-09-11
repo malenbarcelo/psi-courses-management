@@ -16,7 +16,6 @@ const quotationsQueries = {
         await model.update(
             {
                 enabled:0,
-                id_status:7
             },
             {
                 where:{

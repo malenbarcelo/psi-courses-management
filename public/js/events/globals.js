@@ -7,20 +7,24 @@ let eg = {
     idUserCategories:0,
     events:[],
     eventsFiltered:[],
+    companyEventData:[],
     companies:[],
     reservationsPerEventCompany:[],
     idEvents:0,
-    idCourses:0,    
+    idCourses:0,
+    idCompanyToEdit:0,    
     eventCourseName:'',
-    eventData:{},
     eventStudents:[],
     eventStudentsFiltered:[],
     eventInvitedCompanies:[],
     eventCompanies: [],
     editReservationType:'',
+    editReservationFrom:'',    
     companyReservations: 0,
     idStudentToDelete:0,
-    studentsFrom:''
+    studentsFrom:'',
+    idQuoteToCancel:0,
+    idQuoteToReject:0
 }
 
 export default eg

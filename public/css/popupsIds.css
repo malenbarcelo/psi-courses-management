@@ -28,16 +28,10 @@
     color: var(--color2);
 }
 
-#rqppContent{
-    top: 30%;
-    width: 450px;
-    left: calc(50vw - 238px);
-}
-
 #crppContent,#creppContent{
-    top: 37%;
-    width: 300px;
-    left: calc(50vw - 157px);
+    top: 34%;
+    width: 400px;
+    left: calc(50vw - 210px);
 }
 
 #stppContent{
@@ -76,7 +70,7 @@
 }
 
 #elppContent{
-    top: 15%;
+    top: 20%;
     width: 300px;
     left: calc(50vw - 150px);
 }
@@ -96,14 +90,15 @@
 
 /*-----------------------------------*/
 /*------------OK CONTENTS------------*/
-#buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent,#ccoppOkContent,#ceppOkContent,#rqppOkContent,#creppOkContent,#stppOkContent{
+#buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent,#ccoppOkContent,#ceppOkContent,#creppOkContent,#stppOkContent{
     width: 300px;
     top: 40%;
     left: calc(50vw - 183px);
 }
 
 /*---quotationsPopups.ejs---*/
-#nqppOkContent,#cqppOkContent,#dqppOkContent,#aqppOkContent{
+#nqppOkContent,#dqppOkContent,#aqppOkContent{
+    width: 300px;
     top: 40%;
     left: calc(50vw - 150px);
 }
@@ -194,7 +189,7 @@
 #coppContent{
     top: 16%;
     width: 900px;
-    left: calc(50vw - 450px)
+    left: calc(50vw - 460px)
 }
 
 /*delete event popup (depp)*/
@@ -210,10 +205,30 @@
     left: calc(50vw - 183px)
 }
 
+/*request quota popup (rqpp)*/
+#rqppContent{
+    top: 30%;
+    width: 450px;
+    left: calc(50vw - 235px);
+}
+
+#rqppOkContent, #rqppErrorContent{
+    width: 300px;
+    top: 40%;
+    left: calc(50vw - 183px);
+}
+
 /*-----------------------quotations.ejs-----------------------*/
 /*refuse quotation popup (reqpp)*/
 #reqppContent{
     top: 30%;
     width: 450px;
     left: calc(50vw - 238px);
+}
+
+/*create quotation popup (cqpp)*/
+#cqppOkContent{
+    width: 300px;
+    top: 40%;
+    left: calc(50vw - 183px);
 }

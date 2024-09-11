@@ -12,12 +12,27 @@ const coursesEventsQueries = {
             include: [
                 {association: 'events_courses'},
                 {association: 'events_invited_companies'},
-                {association: 'events_quota_reservations'},
+                {
+                    association: 'events_quota_reservations',
+                    where: {
+                        enabled:1
+                    },
+                    required:false
+                },
                 { 
                     association: 'events_students',
                     include: [{association: 'company_data'}] 
-                }
+                },
+                {
+                    association: 'quotations_events_companies',
+                    where: {
+                        enabled:1
+                    },
+                    include: [{association: 'quotation_status'}],
+                    required:false
+                },
             ],
+            
             order:['start_date'],
             nest:true,
         })
@@ -65,11 +80,33 @@ const coursesEventsQueries = {
                     },
                     required: true
                 },
-                {association: 'events_quota_reservations'},
-                {association: 'events_quota_reservations'},
+                {
+                    association: 'events_quota_reservations',
+                    where: {
+                        enabled:1
+                    },
+                },
+                {
+                    association: 'quotations_events_companies',
+                    where: {
+                        id_companies: {
+                            [Op.eq]: idCompany
+                        },
+                        enabled:1
+                    },
+                    include: [{association: 'quotation_status'}],
+                    required:false
+                },
                 { 
                     association: 'events_students',
-                    include: [{association: 'company_data'}] 
+                    where: {
+                        id_companies: {
+                            [Op.eq]: idCompany
+                        },
+                        enabled:1
+                    },
+                    include: [{association: 'company_data'}],
+                    required:false
                 }
             ],
             order: ['start_date'],

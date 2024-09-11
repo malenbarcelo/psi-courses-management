@@ -1,6 +1,7 @@
 import { dominio } from "../dominio.js"
-import { printEvents, filterEvents} from "./eventsFunctions.js"
-import eg from "./eventsGlobals.js"
+import { printEvents } from "./printEvents.js"
+import { filterEvents } from "./filters.js"
+import eg from "./globals.js"
 import { showOkPopup} from "../generalFunctions.js"
 
 //SAVE STUDENTS POPUP (sspp)

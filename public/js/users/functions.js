@@ -57,7 +57,8 @@ function addUsersEventListeners(dataToPrint) {
             
             //complete input select category
             euppCategory.innerHTML = ''
-            const categoriesIds = element.id_companies == 1 ? ug.psiCategoriesIds : ug.customersCategoriesIds
+            const categoriesIds = element.users_companies.company_name == 'PSI Smart Services' ? ug.psiCategoriesIds : ug.customersCategoriesIds
+            console.log(element)
             categoriesIds.forEach(category => {
                 const categoryName = ug.usersCategories.filter(uc => uc.id == category)[0].user_category
                 const selected = element.id_users_categories == category ? 'selected' : ''

@@ -48,16 +48,17 @@ const usersController = {
               });
 
             const mailOptions = {
-            from: 'administracion@psi-courses-management.wnpower.host',
-            to: data.cuppEmail,
-            subject: 'PSI SMart Services - Aviso de alta de usuario',
-            html: `
-            <p>Hola,</p>
-            <p>Se ha dado de alta tu usuario.</p>
-            <p><strong>Usuario:</strong> ${data.cuppEmail}</p>
-            <p><strong>Contraseña:</strong> ${randomPassword}</p>
-        `
-};
+                from: 'administracion@psi-courses-management.wnpower.host',
+                to: data.cuppEmail,
+                subject: 'PSI Smart Services - Aviso alta de usuario',
+                html: `
+                <p style="color:black;">PSI Smart Services le informa que ha dado de alta su usuario: </p>
+                <p style="color:black;"><strong>Usuario:</strong> ${data.cuppEmail}</p>
+                <p style="color:black;"><strong>Contraseña:</strong> ${randomPassword}</p>
+                <p>Puede ingresar a https://psi-courses-management.wnpower.host con sus datos para administrar cursos </p>
+                
+                `
+            }
             
             transporter.sendMail(mailOptions, (error, info) => {
             if (error) {

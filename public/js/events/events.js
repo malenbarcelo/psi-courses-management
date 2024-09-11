@@ -1,13 +1,20 @@
 import { dominio } from "../dominio.js"
-import { printEvents, filterEvents, reserveQuotaValidations,editQuotaValidations,addStudentValidations, printStudents, uploadExcelValidations,clickAllCompanies, editEventValidations,filterStudents} from "./eventsFunctions.js"
-import eg from "./eventsGlobals.js"
+import { editEventValidations} from "./validations.js"
+import { printStudents } from "./printEventStudents.js"
+import { clickAllCompanies } from "./functions.js"
+import { filterEvents} from "./filters.js"
+import { printEvents} from "./printEvents.js"
 import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,showTableInfo,uncheckInputs} from "../generalFunctions.js"
+import eg from "./globals.js"
 
 //popups event listeners
 import { stppEventListeners} from "./eventsSTPP.js"
 import { ueppEventListeners} from "./eventsUEPP.js"
 import { ssppEventListeners} from "./eventsSSPP.js"
 import { deppEventListeners} from "./eventsDEPP.js"
+import { rqppEventListeners} from "./eventsRQPP.js"
+import { crppEventListeners} from "./eventsCRPP.js"
+import { creppEventListeners} from "./eventsCREPP.js"
 
 window.addEventListener('load',async()=>{
 
@@ -30,7 +37,10 @@ window.addEventListener('load',async()=>{
     stppEventListeners()
     ueppEventListeners()
     ssppEventListeners()
-    deppEventListeners()    
+    deppEventListeners()
+    rqppEventListeners()
+    crppEventListeners()
+    creppEventListeners()      
     
     //print events
     printEvents(eg.eventsFiltered)
@@ -80,105 +90,6 @@ window.addEventListener('load',async()=>{
     ]
 
     showTableInfo(tableIcons,130,150)
-
-    //reserve quota
-    rqppAccept.addEventListener("click", async() => {
-
-        let errors = 0
-
-        if (eg.editReservationType == 'reserve') {
-            errors = reserveQuotaValidations()
-        }else{
-            errors = editQuotaValidations()
-        }
-
-        if (errors == 0) {
-            if (eg.editReservationType == 'reserve') {
-                crppQuestion.innerHTML = '¿Confirma que desea reservar <b>' + rqppQuota.value + '</b> cupos para el curso <b>' + eg.eventCourseName + '</b>?'
-            }else{
-                crppQuestion.innerHTML = '¿Confirma que desea editar la reserva a <b>' + rqppQuota.value + '</b> cupos para el curso <b>' + eg.eventCourseName + '</b>?'
-            }
-            
-            crpp.style.display = 'block'            
-        }
-    })
-
-    acceptWithEnter(rqppQuota,rqppAccept)
-
-    crppAccept.addEventListener("click", async() => {
-
-        const data = {
-            id_events: eg.idEvents,
-            id_courses: eg.idCourses,
-            id_companies: eg.idCompanies,
-            reserved_quota: rqppQuota.value
-        }
-
-        if (eg.editReservationType == 'reserve') {
-            rqppOkText.innerText = 'Cupos reservados con éxito'
-            await fetch(dominio + 'apis/quota-reservations/reserve-quota',{
-                method:'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            })
-        }else{
-            rqppOkText.innerText = 'Reserva editada con éxito'
-            await fetch(dominio + 'apis/quota-reservations/edit-reservation',{
-                method:'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            })
-        }
-
-        //get data and complete globals
-        if (eg.idUserCategories == 4 ) {
-            eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
-        }else{
-            eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
-        }
-        eg.eventsFiltered = eg.events
-
-        filterEvents()
-        
-        //print events
-        printEvents(eg.eventsFiltered)
-
-        crpp.style.display = 'none'
-        rqpp.style.display = 'none'
-
-        showOkPopup(rqppOk)
-    })
-
-    creppAccept.addEventListener("click", async() => {
-        const data = {
-            id_events: eg.idEvents,
-            id_companies: eg.idCompanies
-        }
-
-        await fetch(dominio + 'apis/quota-reservations/cancel-reservation',{
-            method:'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        })
-
-        //get data and complete globals
-        if (eg.idUserCategories == 4 ) {
-            eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
-        }else{
-            eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
-        }
-        eg.eventsFiltered = eg.events
-
-        //filter
-        filterEvents()
-        
-        //print events
-        printEvents(eg.eventsFiltered)
-
-        crepp.style.display = 'none'
-
-        showOkPopup(creppOk)
-    })
 
     dsppAccept.addEventListener("click", async() => {
         eg.eventStudents = eg.eventStudents.filter(s => s.id != eg.idStudentToDelete)

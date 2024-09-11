@@ -107,7 +107,7 @@ const usersApisController = {
       res.status(200).json(uniqueList)
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -121,7 +121,7 @@ const usersApisController = {
       res.status(200).json()
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
