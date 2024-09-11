@@ -7,6 +7,7 @@ let eg = {
     idUserCategories:0,
     events:[],
     eventsFiltered:[],
+    eventData:[],
     companyEventData:[],
     companies:[],
     reservationsPerEventCompany:[],

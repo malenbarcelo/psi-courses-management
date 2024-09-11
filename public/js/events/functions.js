@@ -4,6 +4,7 @@ import {dateToString, showOkPopup } from "../generalFunctions.js"
 function completeNextEventsGlobals(element) {
     eg.studentsFrom = eg.idUserCategories == 4 ? 'customer' : 'administrator'
     eg.companyEventData = element
+    eg.eventData = element
     eg.idEvents = element.id
     eg.eventCourseName = element.events_courses.course_name
     eg.idCourses = element.id_courses

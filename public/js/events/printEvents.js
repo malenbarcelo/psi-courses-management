@@ -147,6 +147,7 @@ async function addEventsEventListeners(dataToPrint) {
                             clearInputs([rqppQuota])
                             isValid([rqppQuota])
                             rqppAccept.innerText = 'Reservar'
+                            rqppDivCompany.style.display = 'none'
                             eg.editReservationType = 'reserve'                    
                         }else{
                             rqppMainTitle.innerText = 'EDITAR RESERVA'

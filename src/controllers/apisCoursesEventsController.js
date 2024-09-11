@@ -63,7 +63,6 @@ const apisCoursesEventsController = {
       let events = await coursesEventsQueries.companyEvents(idCompany)
       
       events = events.map(event => event.get({ plain: true })) //get plain data to edit json
-      console.log(events)
 
       addEventInformation(events,idCompany)
 

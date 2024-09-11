@@ -15,6 +15,7 @@ import { deppEventListeners} from "./eventsDEPP.js"
 import { rqppEventListeners} from "./eventsRQPP.js"
 import { crppEventListeners} from "./eventsCRPP.js"
 import { creppEventListeners} from "./eventsCREPP.js"
+import { coppEventListeners} from "./eventsCOPP.js"
 
 window.addEventListener('load',async()=>{
 
@@ -40,7 +41,9 @@ window.addEventListener('load',async()=>{
     deppEventListeners()
     rqppEventListeners()
     crppEventListeners()
-    creppEventListeners()      
+    creppEventListeners()
+    coppEventListeners()
+          
     
     //print events
     printEvents(eg.eventsFiltered)

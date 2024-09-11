@@ -52,6 +52,7 @@ const apisQuotaReservations = {
     try{
       const data = req.body
       const idUser = req.session.userLogged.id
+      console.log(data)
 
       //get reservations data
       const eventReservedQuota = await quotaReservationsQueries.eventReservedQuota(data.id_companies,data.id_events)

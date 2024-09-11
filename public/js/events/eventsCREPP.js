@@ -26,9 +26,9 @@ async function creppEventListeners() {
 
         //get data and complete globals
         if (eg.idUserCategories == 4 ) {
-            eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
+            eg.events = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + eg.idCompanies)).json()
         }else{
-            eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
+            eg.events = await (await fetch(dominio + 'apis/courses-events/next-events')).json()
         }
         eg.eventsFiltered = eg.events
 
@@ -41,9 +41,12 @@ async function creppEventListeners() {
         //print companies if applies
         if (eg.editReservationFrom == 'administrator') {
             eg.reservationsPerEventCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
-            eg.eventCompanies = [...new Set(eg.reservationsPerEventCompany.map(rpc => rpc.id_companies))]
-            console.log(eg.eventCompanies)
-            printCompanies(eg.eventCompanies)
+            let element = await (await fetch(dominio + 'apis/courses-events/next-events/')).json()
+            element = element.filter(e => e.id == eg.idEvents)[0]
+            completeNextEventsGlobals(element)
+            printCompanies(eg.eventCompanies,element)
+
+            
         }
 
         crepp.style.display = 'none'

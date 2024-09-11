@@ -2,18 +2,30 @@ import eg from "./globals.js"
 import {isValid, isInvalid, inputsValidation } from "../generalFunctions.js"
 
 function reserveQuotaValidations() {
+    console.log(rqppCompany.value)
 
     let errors = 0
 
     //quota
+    if (rqppCompany.value == '' && eg.editReservationFrom == 'administrator') {
+        rqppCompanyError.innerText = 'Debe seleccionar una empresa'
+        isInvalid([rqppCompany])
+        rqppQuotaError.style.display = 'block'
+        errors +=1
+    }else{
+        isValid([rqppCompany])
+    }
+
     if (rqppQuota.value == '' || rqppQuota.value <= 0) {
         rqppQuotaError.innerText = 'El cupo debe ser un número mayor a 0'
         isInvalid([rqppQuota])
         rqppQuotaError.style.display = 'block'
         errors +=1
-    }else{
-        if (rqppQuota.value > eg.eventAvailableQuota) {
-            rqppQuotaError.innerText = 'Se puede reservar una cantidad máxima de ' + eg.eventAvailableQuota + ' cupos'
+    }
+
+    if (errors == 0) {
+        if (rqppQuota.value > eg.eventData.event_quota - eg.eventData.eventReservations) {
+            rqppQuotaError.innerText = 'Se puede reservar una cantidad máxima de ' + (eg.eventData.event_quota - eg.eventData.eventReservations) + ' cupos'
             isInvalid([rqppQuota])
             rqppQuotaError.style.display = 'block'
             errors +=1
@@ -22,6 +34,7 @@ function reserveQuotaValidations() {
             rqppQuotaError.style.display = 'none'
         }
     }
+
     return errors
 }
 

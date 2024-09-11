@@ -17,12 +17,8 @@ async function printCompanies(dataToPrint,eventData) {
         const reservations = eg.reservationsPerEventCompany.filter(r => r.id_events == eg.idEvents && r.id_companies == element)[0].total_quota_reservations
         const assignations = eg.eventStudents.filter( es => es.id_events == eg.idEvents && es.id_companies == element).length
         const toAssign = reservations - assignations
-        const quotation = eventData.quotations_events_companies.filter(qec => qec.id_companies == element)[0]
-
-        console.log(quotation)
-
+        const quotation = eventData.quotations_events_companies.filter(qec => qec.id_companies == element)[0]        
         
-
         html += `
             <tr>
                 <th class="${rowClass}">${companyName}</th>
@@ -70,7 +66,7 @@ async function companiesEventListeners(dataToPrint) {
 
                 if (eg.companyEventData.quotations_events_companies[0].id_quotations_status == 2 || eg.companyEventData.quotations_events_companies[0].id_quotations_status == 3) {
                     crppAlertText.innerHTML = 'El evento posee una cotización en estado: <b>' + eg.companyEventData.quotations_events_companies[0].quotation_status.status + '</b>. Si edita el cupo, la cotización será cancelada en su totalidad.'
-                    eg.idQuoteToCancel = eg.companyEventData.quotations_events_companies[0].id_quotation
+                    eg.idQuoteToCancel = eg.companyEventData.quotations_events_companies[0].id_quotations
                     crppAlert.style.display = 'flex'
                 }else{
                     eg.idQuoteToCancel = 0
@@ -78,9 +74,10 @@ async function companiesEventListeners(dataToPrint) {
                     crppAlert.style.display = 'none'
                 }
 
-                eg.idCompanies = element
+                eg.idCompanyToEdit = element
                 eg.editReservationFrom = 'administrator'
                 isValid([rqppQuota])
+                rqppDivCompany.style.display = 'none'
                 rqpp.style.display = 'block'
             }
         })

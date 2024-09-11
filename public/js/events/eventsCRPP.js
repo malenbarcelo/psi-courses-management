@@ -12,10 +12,12 @@ async function crppEventListeners() {
     
     crppAccept.addEventListener("click", async() => {
 
+        eg.idCompanyToEdit = eg.editReservationType == 'reserve' && eg.editReservationFrom == 'administrator' ? rqppCompany.value : eg.idCompanyToEdit
+
         const data = {
             id_events: eg.idEvents,
             id_courses: eg.idCourses,
-            id_companies: eg.idCompanies,
+            id_companies: eg.idCompanyToEdit,
             reserved_quota: rqppQuota.value,
             idQuoteToCancel: eg.idQuoteToCancel,
             idQuoteToReject: eg.idQuoteToReject
@@ -39,9 +41,9 @@ async function crppEventListeners() {
 
         //get data and complete globals
         if (eg.idUserCategories == 4 ) {
-            eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
+            eg.events = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + eg.idCompanies)).json()
         }else{
-            eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
+            eg.events = await (await fetch(dominio + 'apis/courses-events/next-events')).json()
         }
         eg.eventsFiltered = eg.events
 
@@ -53,10 +55,10 @@ async function crppEventListeners() {
         //print companies if applies
         if (eg.editReservationFrom == 'administrator') {
             eg.reservationsPerEventCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
-            let element = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
+            let element = await (await fetch(dominio + 'apis/courses-events/next-events/')).json()
             element = element.filter(e => e.id == eg.idEvents)[0]
             completeNextEventsGlobals(element)
-            printCompanies(eg.eventCompanies)
+            printCompanies(eg.eventCompanies,element)
         }
 
         crpp.style.display = 'none'

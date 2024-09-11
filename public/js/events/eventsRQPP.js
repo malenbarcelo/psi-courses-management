@@ -25,7 +25,9 @@ async function rqppEventListeners() {
             
             crpp.style.display = 'block'            
         }
+
     })
+
     acceptWithEnter(rqppQuota,rqppAccept)
 }
 
