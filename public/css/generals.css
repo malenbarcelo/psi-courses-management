@@ -162,3 +162,11 @@ ul {
     font-size: 13px
 }
 
+/*---------------------forgot psw---------------------*/
+.forgotPsw{
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 13px;
+
+}

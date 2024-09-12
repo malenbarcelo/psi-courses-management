@@ -17,6 +17,8 @@ router.post('/edit-user',usersApisController.editUser)
 router.post('/restore-password',usersApisController.restorePassword)
 router.post('/block-user',usersApisController.blockUser)
 router.post('/block-company',usersApisController.blockCompany)
+router.post('/psw-validation',usersApisController.pswValidation)
+router.post('/change-password',usersApisController.changePassword)
 
 //companies
 router.get('/companies',usersApisController.companies)

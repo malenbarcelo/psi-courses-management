@@ -56,7 +56,6 @@ const quotationsQueries = {
     cancel: async(idQuotation) => {        
         await model.update(
             {
-                enabled:0,
                 id_status:7
             },
             {
@@ -69,7 +68,6 @@ const quotationsQueries = {
     refuse: async(idQuotation) => {        
         await model.update(
             {
-                enabled:0,
                 id_status:6
             },
             {

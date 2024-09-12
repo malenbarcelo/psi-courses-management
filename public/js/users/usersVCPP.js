@@ -1,6 +1,6 @@
 import { dominio } from "../dominio.js"
 import ug from "./globals.js"
-import { showTableInfo,acceptWithEnter,inputsValidation, showOkPopup } from "../generalFunctions.js"
+import { showTableInfo,acceptWithEnter,inputsValidation, showOkPopup,isValid } from "../generalFunctions.js"
 import { filterUsers,printUsers } from "./functions.js"
 
 //VIEW COMPANIES POPUP
@@ -22,6 +22,7 @@ async function vcppEventListeners() {
 
     //create company
     vcppCreate.addEventListener("click", async() => {
+        isValid([ccppCompany])
         ug.createCompanyFrom = 'vcpp' 
         ccpp.style.display = 'block'
     })
@@ -46,8 +47,7 @@ async function vcppEventListeners() {
             ecppCompanyExistingError.style.display = 'none'
         }
 
-        if (errors == 0) {           
-            
+        if (errors == 0) {
             const data = {
                 idCompany: ug.companyToEdit.id,
                 companyName: ecppCompany.value
@@ -156,6 +156,7 @@ function vcppTableEventListeners(dataToPrint) {
         edit.addEventListener('click',async()=>{
             ug.companyToEdit = element            
             ecppCompany.value = element.company_name
+            isValid([ecppCompany])
             ecpp.style.display = 'block'
         })
 

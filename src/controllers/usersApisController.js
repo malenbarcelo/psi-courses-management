@@ -1,6 +1,7 @@
 const usersQueries = require('./dbQueries/usersQueries')
 const usersCategoriesQueries = require('./dbQueries/usersCategoriesQueries')
 const companiesQueries = require('./dbQueries/companiesQueries')
+const {createPassword,transporterData} = require('./functions/generalFunctions')
 const bcrypt = require('bcryptjs')
 
 const usersApisController = {
@@ -160,18 +161,95 @@ const usersApisController = {
   restorePassword: async(req,res) =>{
     try{
 
-      const idUser = req.body.idUserToRestore
-      const user = await usersQueries.findUser(idUser)
-      const newPassword = bcrypt.hashSync(user.email,10)
+        const user = req.body      
+        const password = createPassword()
 
-      await usersQueries.restorePassword(idUser,newPassword)
+        //restore password
+        await usersQueries.restorePassword(user.id,password.password)
+
+        //send email
+        const transporter = transporterData()
+
+        const mailOptions = {
+          from: 'administracion@psi-courses-management.wnpower.host',
+          to: user.email,
+          subject: 'PSI Smart Services - Recuperación de contraseña',
+          html: `
+          <p style="color:black;">PSI Smart Services le informa que ha restablecido su contraseña: </p>
+          <p style="color:black;"><strong>Usuario:</strong> ${user.email}</p>
+          <p style="color:black;"><strong>Contraseña:</strong> ${password.randomPassword}</p>
+          <p>Puede ingresar a https://psi-courses-management.wnpower.host con sus datos para administrar cursos </p>                
+          `
+        }
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return res.status(500).send(error.toString())
+          }
+        
+        })
+
+        res.status(200).json()
+
+
+      }catch(error){
+        console.group(error)
+        return res.send('Ha ocurrido un error')
+      }
       
-      res.status(200).json()
+  },
+  pswValidation: async(req,res) =>{
+    try{
+
+      const data = req.body
+
+      res.status(200).json(bcrypt.compareSync(data.password, data.user.password))
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
+  },
+  changePassword: async(req,res) =>{
+    try{
+
+        const user = req.body.user      
+        const password = req.body.password
+
+        //change password
+        const newPassword = bcrypt.hashSync(password,10)
+        await usersQueries.restorePassword(user.id,newPassword)
+
+        //send email
+        const transporter = transporterData()
+
+        const mailOptions = {
+          from: 'administracion@psi-courses-management.wnpower.host',
+          to: user.email,
+          subject: 'PSI Smart Services - Cambio de contraseña',
+          html: `
+          <p style="color:black;">PSI Smart Services le informa que ha cambiado su contraseña: </p>
+          <p style="color:black;"><strong>Usuario:</strong> ${user.email}</p>
+          <p style="color:black;"><strong>Contraseña:</strong> ${password}</p>
+          <p>Puede ingresar a https://psi-courses-management.wnpower.host con sus datos para administrar cursos </p>                
+          `
+        }
+
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return res.status(500).send(error.toString())
+          }
+        
+        })
+
+        res.status(200).json()
+
+
+      }catch(error){
+        console.group(error)
+        return res.send('Ha ocurrido un error')
+      }
+      
   },
 
 

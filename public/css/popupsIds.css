@@ -115,9 +115,37 @@
 
 
 /*POPUPS*/
+/* login.ejs --> fppp, chppp */
 /* users.ejs --> cupp, ccpp, vcpp, eupp */
 /* events.ejs --> copp, depp */
 /* quotations.ejs --> reqpp */
+
+/*-----------------------login.ejs-----------------------*/
+/*forgot password popup (fppp)*/
+#fpppContent{
+    top: 35%;
+    width: 450px;
+    left: calc(50vw - 235px);
+}
+
+#fpppOkContent{
+    width: 300px;
+    top: 42%;
+    left: calc(50vw - 180px);
+}
+
+#chpppContent{
+    top: 25%;
+    width: 450px;
+    left: calc(50vw - 235px);
+}
+
+#chpppOkContent{
+    width: 300px;
+    top: 42%;
+    left: calc(50vw - 180px);
+}
+
 
 /*-----------------------users.ejs-----------------------*/
 /*create user popup (cupp)*/
@@ -135,6 +163,7 @@
 }
 
 #ecppOkContent{
+    width: 300px;
     top: 40%;
     left: calc(50vw - 180px);
 }
@@ -147,6 +176,7 @@
 }
 
 #ecppOkContent{
+    width: 300px;
     top: 40%;
     left: calc(50vw - 180px);
 }
@@ -224,6 +254,12 @@
     top: 30%;
     width: 450px;
     left: calc(50vw - 238px);
+}
+
+#reqppOkContent{
+    width: 300px;
+    top: 40%;
+    left: calc(50vw - 183px);
 }
 
 /*create quotation popup (cqpp)*/

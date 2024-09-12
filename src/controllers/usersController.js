@@ -55,19 +55,18 @@ const usersController = {
                 <p style="color:black;">PSI Smart Services le informa que ha dado de alta su usuario: </p>
                 <p style="color:black;"><strong>Usuario:</strong> ${data.cuppEmail}</p>
                 <p style="color:black;"><strong>Contraseña:</strong> ${randomPassword}</p>
-                <p>Puede ingresar a https://psi-courses-management.wnpower.host con sus datos para administrar cursos </p>
-                
+                <p>Puede ingresar a https://psi-courses-management.wnpower.host con sus datos para administrar cursos </p>                
                 `
             }
             
             transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return res.status(500).send(error.toString())
-            }
+                if (error) {
+                    return res.status(500).send(error.toString())
+                }
             
             return res.redirect('/users')
             
-        })
+            })
 
         }catch(error){
 

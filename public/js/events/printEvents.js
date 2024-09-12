@@ -154,6 +154,7 @@ async function addEventsEventListeners(dataToPrint) {
                             rqppQuota.value = element.companyReservations
                             rqppAccept.innerText = 'Editar'
                             eg.editReservationType = 'edit'
+                            rqppDivCompany.style.display = 'none'
                             if (eg.companyEventData.quotations_events_companies[0].id_quotations_status == 2 || eg.companyEventData.quotations_events_companies[0].id_quotations_status == 3) {
                                 crppAlertText.innerHTML = 'El evento posee una cotización en estado: <b>' + eg.companyEventData.quotations_events_companies[0].quotation_status.status + '</b>. Si edita el cupo, la cotización será rechazada en su totalidad.'
                                 eg.idQuoteToReject = eg.companyEventData.quotations_events_companies[0].id_quotations

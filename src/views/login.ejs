@@ -7,11 +7,11 @@
 
     <form action="/login" method="POST">
 
-        <div class="divInputsColumn mtxl mbxxl">
+        <div class="divInputsColumn mtxl mbxl">
 
             <div class="divInput">
                 <label class="label1 <%= locals.errors && errors.email ? 'invalidLabel' : null %>">Usuario</label>
-                <input type="text" name="email" class="input1 ixxxl ipl <%= locals.errors && errors.email ? 'invalidInput' : null %>" value="<%= locals.oldData ? oldData.email : null %>" autocomplete="new-password">
+                <input type="text" name="email" class="input1 ixxxl ipl <%= locals.errors && errors.email ? 'invalidInput' : null %>" value="<%= locals.oldData ? oldData.email : null %>" autocomplete="new-password" id="email">
                 <div class="divErrorBE">
                     <% if (locals.errors && errors.email) { %>
                         <%= errors.email.msg %>
@@ -29,11 +29,106 @@
                 </div>
             </div>
 
+            <div class="forgotPsw mtm" id="forgotPsw">Olvidé mi contraseña</div>
+            <div class="forgotPsw mtm" id="changePsw">Cambiar mi contraseña</div>
+
         </div>
 
         <div class="divButtonsRow">
             <button type="submit" class="button1 bl">Ingresar</button>
         </div>
-
     </form>
 </div>
+
+<!----------Forgot psw popup (fppp)---------->
+<div class="popup" id="fppp">
+
+    <div class="popupContent" id="fpppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-solid fa-unlock-keyhole"></i></div>
+            <div class="popupClose1" id="fpppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1" id="fpppTitle">RECUPERAR CONTRASEÑA</div>       
+        
+        <div class="divInputsColumn mtl mbl">
+            <div class="divInput">
+                <label class="label3" id="fpppEmailLabel">Email</label>
+                <input type="text" class="input1 ixl ipl" id="fpppEmail" autocomplete="off">
+                <div class="divError" id="fpppEmailError">Debe completar el email</div>
+                <div class="divError" id="fpppEmailError2"></div>
+            </div>
+        </div>
+
+        <div class="divButtonsRow mbs">
+            <button type="submit" class="button1 bs" id="fpppAccept">Recuperar</button>
+            <div id="fpppCancel" class="button1 bs">Cerrar</div>
+        </div>
+    </div>
+</div>
+
+<!----------Forgot password Ok---------->
+<div class="okPopup" id="fpppOk">    
+    <div class="okContent" id="fpppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Se le ha enviado un email con la nueva contraseña</div>
+        </div>
+    </div>
+</div>
+
+<!----------Change psw popup (chppp)---------->
+<div class="popup" id="chppp">
+
+    <div class="popupContent" id="chpppContent">
+
+        <div class="popupIcons">
+            <div class="popupIcon1"><i class="fa-solid fa-unlock-keyhole"></i></div>
+            <div class="popupClose1" id="chpppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1" id="chpppTitle">CAMBIAR CONTRASEÑA</div>       
+        
+        <div class="divInputsColumn mtl mbl">
+            <div class="divInput mbm">
+                <label class="label3" id="chpppEmailLabel">Email</label>
+                <input type="text" class="input1 ixl ipl" id="chpppEmail" autocomplete="off">
+                <div class="divError" id="chpppEmailError">Usuario inválido</div>
+            </div>
+            <div class="divInput mbm">
+                <label class="label3" id="chpppPswLabel">Contraseña actual</label>
+                <input type="password" class="input1 ixl ipl" id="chpppPsw" autocomplete="off">
+                <div class="divError" id="chpppPswError">Constraseña inválida</div>
+            </div>
+            <div class="divInput mbm">
+                <label class="label3" id="chpppNewPswLabel">Nueva contraseña</label>
+                <input type="password" class="input1 ixl ipl" id="chpppNewPsw" autocomplete="off">
+                <div class="divError" id="chpppNewPswError">Las contraseñas deben estar completas y coincidir</div>
+            </div>
+            <div class="divInput mbm">
+                <label class="label3" id="chpppConfirmLabel">Confirme contraseña</label>
+                <input type="password" class="input1 ixl ipl" id="chpppConfirm" autocomplete="off">
+                <div class="divError" id="chpppConfirmError">Las contraseñas deben estar completas y coincidir</div>
+            </div>
+        </div>
+
+        <div class="divButtonsRow mbs">
+            <button type="submit" class="button1 bs" id="chpppAccept">Cambiar</button>
+            <div id="chpppCancel" class="button1 bs">Cerrar</div>
+        </div>
+    </div>
+</div>
+
+<!----------Forgot password Ok---------->
+<div class="okPopup" id="chpppOk">    
+    <div class="okContent" id="chpppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText">Se ha cambiado su contraseña</div>
+        </div>
+    </div>
+</div>
+
+<!----------SCRIPTS---------->
+<script type="module" src="/js/login/login.js"></script>

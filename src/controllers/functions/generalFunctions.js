@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer')
+const bcrypt = require('bcryptjs')
 
 function getDateArg(date) {
     
@@ -25,30 +26,34 @@ function eventDateToArg(date) {
     return dateArg
 }
 
-function sendEmail(subject,body) {
-    const transporter = nodemailer.createTransport({
-        host: 'mail.multibrand.wnpower.host', // Servidor de correo saliente
+function transporterData() {
+    const transporterData = nodemailer.createTransport({
+        host: 'mail.psi-courses-management.wnpower.host', // Servidor de correo saliente
         port: 465, // Puerto SMTP
         secure: true, // true para puerto 465, false para otros puertos
         auth: {
-          user: 'administracion@multibrand.wnpower.host', //Tu nombre de usuario
-          pass: ']p66RdoWHDuE' // Tu contraseña
+          user: 'administracion@psi-courses-management.wnpower.host', // Tu nombre de usuario
+          pass: 'K918;.JWwlq]' // Tu contraseña
         }
-    })
+      })
 
-    const mailOptions = {
-        from: 'administracion@multibrand.wnpower.host',
-        to: 'barcelomalen@gmail.com',
-        subject: subject,
-        html: body
-    };
-    
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.status(500).send(error.toString())
-        }
-    })
+    return transporterData
 }
+
+function createPassword() {
+    //create password
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let randomPassword = ''
+    for (let i = 0; i < 10; i++) {
+        randomPassword += characters.charAt(Math.floor(Math.random() * characters.length))
+    }
+
+    const password = bcrypt.hashSync(randomPassword,10)
+
+    return {password, randomPassword}
+}
+
+
         
 
-module.exports = {getDateArg,sendEmail,eventDateToArg}
+module.exports = {getDateArg,transporterData,eventDateToArg,createPassword}
