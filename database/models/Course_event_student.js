@@ -18,13 +18,20 @@ module.exports = (sequelize, DataTypes) => {
       },
       email:{
          type: DataTypes.STRING,
-         allowNull: false,
+         allowNull: true,
       },
       dni:{
          type: DataTypes.STRING,
          allowNull: false,
       },
-
+      art:{
+         type: DataTypes.STRING,
+         allowNull: false,
+      },
+      medical_certificate:{
+         type: DataTypes.INTEGER,
+         allowNull: false,
+      },
       id_events:{
          type: DataTypes.INTEGER,
          allowNull: false,

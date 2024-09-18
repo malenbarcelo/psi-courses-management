@@ -1,7 +1,7 @@
 /*-----------------------------general actions-----------------------------*/
 .divDGAs{
     display: flex;
-    column-gap: 8px;
+    column-gap: 12px;
     position: absolute;    
 }
 
@@ -13,10 +13,16 @@
     cursor: pointer;
 }
 
-.divDGAs{
+.divDGAxxs{
     height: 20px;
     width: 20px;
     font-size: 20px;
+}
+
+.divDGAxs{
+    height: 25px;
+    width: 25px;
+    font-size: 25px;
 }
 
 .divDGAm{
@@ -37,7 +43,7 @@
     position: absolute;
     font-size: 13px;
     border-radius: 3px;
-    top:-20px;
+    top:-25px;
     text-align: center;
     width: 150px;
     color: var(--color2);
@@ -129,7 +135,12 @@
 }
 
 #DGAsCopp{
-    top: 15%;
+    top: 14%;
+    right: 15%;
+}
+
+#DGAsStpp{
+    top: 10%;
     right: 15%;
 }
 

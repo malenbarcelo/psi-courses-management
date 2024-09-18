@@ -25,9 +25,9 @@ window.addEventListener('load',async()=>{
     eg.idCompanies = document.getElementById('idCompany').innerText
     eg.idUserCategories = document.getElementById('idUserCategories').innerText
     if (eg.idUserCategories == 4 ) {
-        eg.events = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + eg.idCompanies)).json()
+        eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
     }else{
-        eg.events = await (await fetch(dominio + 'apis/courses-events/next-events')).json()
+        eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
     }    
     eg.eventsFiltered = eg.events
     const companies = await (await fetch(dominio + 'apis/users/companies')).json()
@@ -49,13 +49,8 @@ window.addEventListener('load',async()=>{
     printEvents(eg.eventsFiltered)
 
     //filters event listeners
-    const filters = [filterCourse,filterStartDate,filterEndDate]
-    if (eg.idUserCategories == 4) {
-        filters.push(filterReserved)        
-    }else{
-        filters.push(filterOnCourse,filterPending)
-    }
-
+    const filters = [filterCourse,filterMonth,filterYear,filterReserved,filterOnCourse,filterPending,filterFinished]
+    
     filters.forEach(filter => {        
         filter.addEventListener("change", async() => {
             filterEvents()
@@ -65,34 +60,66 @@ window.addEventListener('load',async()=>{
 
     //unFilter
     unfilter.addEventListener("click", async() => {
-        clearInputs([filterCourse,filterStartDate,filterEndDate])
-        if (eg.idUserCategories == 4) {
-            uncheckInputs([filterReserved])
-        }else{
-            uncheckInputs([filterOnCourse,filterPending])
-        }
+        clearInputs([filterCourse,filterMonth,filterYear,filterReserved])
+        uncheckInputs([filterOnCourse,filterPending,filterFinished])
         eg.eventsFiltered = eg.events
         printEvents(eg.eventsFiltered)
     })
 
+    //complete year
+    filterYear.value = (new Date()).getFullYear()
+    filterEvents()
+    printEvents(eg.eventsFiltered)
 
     //close popups
     const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel]
     closePopupsEventListeners(closePopups)
 
     //table info events listeners
-    const tableIcons = [
-        {
-            icon:erppIcon,
-            right:'7.5%'
-        },
-        {
-            icon:crppIcon,
-            right:'1.5%'
-        }
-    ]
+    let tableIcons = []
+    
+    if (eg.idUserCategories == 4) {
+        tableIcons = [
+            {
+                icon:rqppIcon,
+                right:'14%'
+            },
+            {
+                icon:erpp2Icon,
+                right:'11%'
+            },
+            {
+                icon:crpp2Icon,
+                right:'8%'
+            },
+            {
+                icon:stppIcon,
+                right:'5%'
+            }
+        ]
+    }else{
+        tableIcons = [
+            {
+                icon:ceppIcon,
+                right:'14%'
+            },
+            {
+                icon:deppIcon,
+                right:'11%'
+            },
+            {
+                icon:coppIcon,
+                right:'8%'
+            },
+            {
+                icon:stppIcon,
+                right:'5%'
+            },
+        ]
+    }
+    
 
-    showTableInfo(tableIcons,130,150)
+    showTableInfo(tableIcons,250,150)
 
     dsppAccept.addEventListener("click", async() => {
         eg.eventStudents = eg.eventStudents.filter(s => s.id != eg.idStudentToDelete)
@@ -145,9 +172,9 @@ window.addEventListener('load',async()=>{
 
             //get data and complete globals
             if (eg.idUserCategories == 4 ) {
-                eg.events = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + eg.idCompanies)).json()
+                eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
             }else{
-                eg.events = await (await fetch(dominio + 'apis/courses-events/next-events')).json()
+                eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
             }
             eg.eventsFiltered = eg.events
 

@@ -2,7 +2,7 @@ import { addStudentValidations } from "./validations.js"
 import { printStudents } from "./printEventStudents.js"
 import { filterStudents } from "./filters.js"
 import eg from "./globals.js"
-import { acceptWithEnter,clearInputs, isValid} from "../generalFunctions.js"
+import { acceptWithEnter,clearInputs, isInvalid, isValid} from "../generalFunctions.js"
 
 //STUDENTS POPUP (stpp)
 async function stppEventListeners() {
@@ -23,7 +23,8 @@ async function stppEventListeners() {
 
         if (errors == 0) {
 
-            const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+            const inputs = [stppLastName,stppFirstName,stppDNI,stppART]
+
             if (eg.studentsFrom == 'Administrator') {
                 inputs.push('stppCompany')
             }
@@ -33,13 +34,14 @@ async function stppEventListeners() {
             eg.eventStudents.push({
                 id: maxId + 1,
                 dni:stppDNI.value,
-                email:stppEmail.value,
+                art:stppART.value,
+                medical_certificate:1,
                 first_name:stppFirstName.value,
                 id_companies:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
                 id_courses:eg.idCourses,
                 id_events:eg.idEvents,
                 last_name:stppLastName.value,
-                students_companies:{
+                company_data:{
                     id:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
                     company_name: eg.companies.filter(c => c.id == (eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value))[0].company_name,
                 }
@@ -61,15 +63,58 @@ async function stppEventListeners() {
 
     //accept
     stppAccept.addEventListener("click", async() => {
-        sspp.style.display = 'block'
+        if (!stppAcceptConditions.checked) {
+            isInvalid([stppAcceptCheckbox])
+            stppError2.style.display = 'block'
+            
+        }else{
+            isValid([stppAcceptCheckbox])
+            stppError2.style.display = 'none'
+            sspp.style.display = 'block'
+        }
+        
     })
 
     //uploadExcelIcon
     stppUploadExcelIcon.addEventListener("click", async() => {
-        isValid([stppLastName,stppFirstName,stppEmail,stppDNI])
-        clearInputs([stppLastName,stppFirstName,stppEmail,stppDNI])
+        isValid([stppLastName,stppFirstName,stppDNI,stppART,stppCheckbox,ueppDivInput])
+        clearInputs([stppLastName,stppFirstName,stppDNI,stppART])
+        stppMedicalCert.checked = false
         stppError.style.display = 'none'
+        ueppFileError.style.display = 'none'
         uepp.style.display = 'block'
+    })
+
+    //download data
+    stppDownloadExcelIcon.addEventListener("click", async() => {
+
+        const data = {
+            students: eg.eventStudents,
+            eventData: eg.eventData
+        }
+
+        console.log(data)
+
+        const response = await fetch('/apis/events/students/download-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        if (response.ok) {
+            const blob = await response.blob()
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = 'historial_de_eventos.xlsx'
+            document.body.appendChild(a)
+            a.click()
+            a.remove()
+        } else {
+            console.error('Error al descargar el archivo')
+        }
     })
     
        

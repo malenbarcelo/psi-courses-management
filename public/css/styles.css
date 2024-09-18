@@ -292,10 +292,6 @@
     cursor: pointer;
 }
 
-#stppUploadExcelIcon{
-    font-size: 30px !important;
-}
-
 #downloadTemplate{
     position: absolute;
     right: 3%;

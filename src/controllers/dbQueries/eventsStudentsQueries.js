@@ -20,6 +20,20 @@ const eventsStudentsQueries = {
         })
         return allData
     },
+    cancel: async(data) => {        
+        await model.update(
+            {
+                enabled:0
+            },
+            {
+                where:{
+                    id_companies:data.id_companies,
+                    id_events:data.id_events
+                }
+            }            
+        )
+    },
+
     filterStudents: async(idCompanies) => {        
         const filterStudents = await model.findAll({
             include: [
@@ -85,7 +99,8 @@ const eventsStudentsQueries = {
             await model.create({
                 first_name:students[i].first_name,
                 last_name:students[i].last_name,
-                email:students[i].email,
+                art:students[i].art,
+                medical_certificate:1,
                 dni:students[i].dni,
                 id_events:students[i].id_events,
                 id_companies:students[i].id_companies,

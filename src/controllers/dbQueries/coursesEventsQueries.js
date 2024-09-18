@@ -11,7 +11,10 @@ const coursesEventsQueries = {
             },
             include: [
                 {association: 'events_courses'},
-                {association: 'events_invited_companies'},
+                {
+                    association: 'events_invited_companies',
+                    required: false
+                },
                 {
                     association: 'events_quota_reservations',
                     where: {
@@ -23,17 +26,17 @@ const coursesEventsQueries = {
                     association: 'events_students',
                     include: [{association: 'company_data'}] 
                 },
-                {
-                    association: 'quotations_events_companies',
-                    where: {
-                        enabled:1
-                    },
-                    include: [{association: 'quotation_status'}],
-                    required:false
-                },
+                // {
+                //     association: 'quotations_events_companies',
+                //     where: {
+                //         enabled:1
+                //     },
+                //     include: [{association: 'quotation_status'}],
+                //     required:false
+                // },
             ],
             
-            order:['start_date'],
+            order:[['start_date','DESC']],
             nest:true,
         })
         return events
@@ -83,20 +86,21 @@ const coursesEventsQueries = {
                 {
                     association: 'events_quota_reservations',
                     where: {
-                        enabled:1
+                        enabled:1,
                     },
+                    required: false
                 },
-                {
-                    association: 'quotations_events_companies',
-                    where: {
-                        id_companies: {
-                            [Op.eq]: idCompany
-                        },
-                        enabled:1
-                    },
-                    include: [{association: 'quotation_status'}],
-                    required:false
-                },
+                // {
+                //     association: 'quotations_events_companies',
+                //     where: {
+                //         id_companies: {
+                //             [Op.eq]: idCompany
+                //         },
+                //         enabled:1
+                //     },
+                //     include: [{association: 'quotation_status'}],
+                //     required:false
+                // },
                 { 
                     association: 'events_students',
                     where: {
@@ -109,7 +113,7 @@ const coursesEventsQueries = {
                     required:false
                 }
             ],
-            order: ['start_date'],
+            order:[['start_date','DESC']],
             nest: true,
         });
         return companyEvents;

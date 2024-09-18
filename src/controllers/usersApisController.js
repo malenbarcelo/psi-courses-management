@@ -161,7 +161,8 @@ const usersApisController = {
   restorePassword: async(req,res) =>{
     try{
 
-        const user = req.body      
+        const user = req.body
+
         const password = createPassword()
 
         //restore password
@@ -182,18 +183,13 @@ const usersApisController = {
           `
         }
 
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-              return res.status(500).send(error.toString())
-          }
-        
-        })
+        await transporter.sendMail(mailOptions)
 
         res.status(200).json()
 
 
       }catch(error){
-        console.group(error)
+        console.log(error)
         return res.send('Ha ocurrido un error')
       }
       

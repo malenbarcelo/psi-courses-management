@@ -21,19 +21,24 @@ async function ueppEventListeners() {
 
         if (errors == 0) {
 
-            const inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+            const inputs = [stppLastName,stppFirstName,stppDNI,stppART]
             const maxId = eg.eventStudents.length == 0 ? 0 : eg.eventStudents.reduce((max, st) => (st.id > max ? st.id : max), eg.eventStudents[0].id);
 
             data.forEach(element => {
                 eg.eventStudents.push({
                     id: maxId + 1,
-                    dni:element[3],
-                    email:element[2],
+                    dni:element[2],
+                    art:element[3],
                     first_name:element[1],
                     id_companies:eg.idCompanies,
                     id_courses:eg.idCourses,
                     id_events:eg.idEvents,
-                    last_name:element[0]
+                    last_name:element[0],
+                    medical_certificate:element[4] == 'si' ? 1 : 0,
+                    company_data:{
+                        id:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
+                        company_name: eg.companies.filter(c => c.id == (eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value))[0].company_name,
+                    }
                 })
             })
 

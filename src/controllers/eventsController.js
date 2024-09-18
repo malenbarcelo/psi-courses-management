@@ -11,7 +11,7 @@ const eventsController = {
             const courses = await coursesQueries.courses()
             const companies = await companiesQueries.companies()
 
-            return res.render('events/events',{title:'Eventos',bottomHeaderMenu,idSelectedItem,courses,companies})
+            return res.render('events/events',{title:'Eventos',bottomHeaderMenu,idSelectedItem,courses,companies, months})
 
         }catch(error){
 
@@ -21,7 +21,7 @@ const eventsController = {
     },
     eventsHistory: async(req,res) => {
         try{
-            const idSelectedItem = 1
+            const idSelectedItem = 3
             const route = 'events-history'
 
             const courses = await coursesQueries.courses()

@@ -9,7 +9,7 @@
 </div>
 
 <!------MAIN FILTERS------>
-<div class="mainFilters" id="eventsMainFilters">
+<div class="mainFilters mbl" id="eventsMainFilters">
     <div class="divInputsRow">            
         <div class="divInput">
             <label class="label1">Curso</label>
@@ -21,47 +21,115 @@
             </select>            
         </div>
         <div class="divInput">
-            <label class="label1">Inicio</label>
-            <input type="date" class="input1 is ipm" id="filterStartDate">                    
+            <label class="label1">Mes</label>
+            <select class="input1 ss ipm" id="filterMonth">
+                <option value=""></option>
+                <% months.forEach(month => { %>
+                    <option value="<%= month.number %>"><%= month.text %></option>
+                <% }) %>                
+            </select>
         </div>
         <div class="divInput">
-            <label class="label1">Fin</label>
-            <input type="date" class="input1 is ipm" id="filterEndDate">                    
+            <label class="label1">Año</label>
+            <input type="number" class="input1 is ipm" id="filterYear">                    
         </div>
         <div class="divInput">
-            <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+            <label class="label1">Reservas</label>
+            <select class="input1 ss spm" id="filterReserved">
+                <option value=""></option>
+                <option value="1">si</option>
+                <option value="0">no</option>
+            </select>            
+        </div>
+        <div class="divIcons">
+            <div class="divIcon">
+                <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+                <div class="divIconInfo">Quitar filtros</div>
+            </div>
+            <div class="divIcon">
+                <i class="fa-solid fa-download unfilterIcon" id="download"></i>
+                <div class="divIconInfo">Descargar datos</div>
+            </div>
         </div>
     </div>    
 </div>
 
 <!------MAIN CONTENT------>
-<% if (userLogged.id_users_categories == 4) { %>
-    <div class="eventsCheckboxs">
-        <div class="eventsCheckbox">
-            <input type="checkbox" id="filterReserved">
-            <label>Mostrar sólo eventos reservados</label>
-        </div>
+<div class="eventsCheckboxs">    
+    <div class="eventsCheckbox">
+        <input type="checkbox" id="filterOnCourse">
+        <label>En curso</label>
     </div>
-    <% } else { %>
-        <div class="eventsCheckboxs">    
-            <div class="eventsCheckbox">
-                <input type="checkbox" id="filterOnCourse">
-                <label>En curso</label>
-            </div>
-            <div class="eventsCheckbox">
-                <input type="checkbox" id="filterPending">
-                <label>Por comenzar</label>
-            </div>
-        </div>
-<% } %>
-
-<!------NO EVENTS TO SHOW------>
-<div id="noQuotationsToShow">
-    <i class="fa-solid fa-circle-info nqtsIcon"></i>
-    <div class="nqtsText">No hay eventos para mostrar</div>
+    <div class="eventsCheckbox">
+        <input type="checkbox" id="filterPending">
+        <label>Por comenzar</label>
+    </div>
+    <div class="eventsCheckbox">
+        <input type="checkbox" id="filterFinished">
+        <label>Finalizados</label>
+    </div>
 </div>
 
-<div id="divEvents"></div>
+<!------MAIN CONTENT------>
+<div class="divTable" id="eventsTable">
+
+    <div class="thInfo" id="ceppInfo">Editar evento</div>
+    <div class="thInfo" id="deppInfo">Eliminar evento</div>
+    <div class="thInfo" id="coppInfo">Empresas</div>
+    <div class="thInfo" id="stppInfo">Alumnos</div>
+    <div class="thInfo" id="rqppInfo">Reservar</div>
+    <div class="thInfo" id="erpp2Info">Editar reserva</div>
+    <div class="thInfo" id="crpp2Info">Cancelar reserva</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="thCss thl">Curso</th>
+                <th class="thCss ths">Evento</th>
+                <th class="thCss ths">Inicio</th>
+                <th class="thCss ths">Fin</th>
+                <th class="thCss thm">Horario</th>
+                <th class="thCss ths">Estado</th>
+                <th class="thCss thxs">Cupo</th>
+                <th class="thCss thxs">Disponible</th>
+                <th class="thCss thxs">Reservado</th>
+                <th class="thCss thxs">Asignado</th>
+
+                <% if (userLogged.id_users_categories != 4 ) { %>
+                    <th class="thCss thxxs">
+                        <i class="fa-regular fa-pen-to-square icon" id="ceppIcon"></i>
+                    </th>
+                    <th class="thCss thxxs">
+                        <i class="fa-regular fa-trash-can icon" id="deppIcon"></i>
+                    </th>
+                    <th class="thCss thxxs">
+                        <i class="fa-solid fa-industry icon" id="coppIcon"></i>
+                    </th>
+                <% } %>
+
+                <% if (userLogged.id_users_categories == 4 ) { %>
+                    <th class="thCss thxxs">
+                        <i class="fa-regular fa-calendar-plus icon" id="rqppIcon"></i>
+                    </th>
+                    <th class="thCss thxxs">
+                        <i class="fa-regular fa-pen-to-square icon" id="erpp2Icon"></i>
+                    </th>
+                    <th class="thCss thxxs">
+                        <i class="fa-regular fa-circle-xmark icon" id="crpp2Icon"></i>
+                    </th>
+                <% } %>
+
+                <th class="thCss thxxs">
+                    <i class="fa-solid fa-user icon" id="stppIcon"></i>
+                </th>
+
+
+                
+            </tr>
+        </thead>
+        <tbody id="bodyEvents"></tbody>
+    </table>
+</div>
 
 <!----------LOADER---------->
 <div class="loader" id="eventsLoader"></div>

@@ -3,7 +3,7 @@ import { closePopupsEventListeners, isInvalid, inputsValidation, emailValidation
 
 window.addEventListener('load',async()=>{
 
-    const users = await (await fetch(dominio + 'apis/users/get-users')).json()
+    let users = await (await fetch(dominio + 'apis/users/get-users')).json()
 
     //close popups
     const closePopups = [fpppClose,fpppCancel,chpppClose,chpppCancel]
@@ -56,14 +56,19 @@ window.addEventListener('load',async()=>{
 
             const data = findUser[0]
 
+            loginLoader.style.display = 'block'
+
             await fetch(dominio + 'apis/users/restore-password',{
                 method:'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             })
 
+            users = await (await fetch(dominio + 'apis/users/get-users')).json()
             fppp.style.display = 'none'
 
+            loginLoader.style.display = 'none'
+            
             showOkPopup(fpppOk)
             
         }
@@ -142,8 +147,8 @@ window.addEventListener('load',async()=>{
                 body: JSON.stringify(data)
             })
 
+            users = await (await fetch(dominio + 'apis/users/get-users')).json()
             chppp.style.display = 'none'
-
             showOkPopup(chpppOk)
             
         }

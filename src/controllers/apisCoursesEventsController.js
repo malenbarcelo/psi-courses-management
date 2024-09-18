@@ -121,8 +121,13 @@ function addEventInformation(events,idCompany) {
   //datetime today
   const dateTime = new Date()
   dateTime.setHours(dateTime.getHours() - 3);
-
+  
   events.forEach(element => {
+
+    //year and month
+    element.year = parseInt(element.start_date.split('-')[0])
+    element.month = parseInt(element.start_date.split('-')[1])
+    
 
     //start date time
     let startDateTime = new Date(element.start_date)
@@ -150,6 +155,9 @@ function addEventInformation(events,idCompany) {
       }
     }
 
+    //hoursToStart
+    element.hoursToStart = (startDateTime - dateTime)  / (1000 * 60 * 60)
+
     //event reservations
     const eventReservations = element.events_quota_reservations.filter(e => e.enabled == 1)
     element.eventReservations = eventReservations.reduce((accum, e) => accum + e.reserved_quota, 0);
@@ -167,6 +175,7 @@ function addEventInformation(events,idCompany) {
     element.companyAssignations = companyAssignations.length
 
   })
+
 }
 module.exports = apisCoursesEventsController
 

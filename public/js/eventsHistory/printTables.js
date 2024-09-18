@@ -6,7 +6,6 @@ import { printTableQuotation } from "../quotations/printTables.js"
 import { completeQuotationStatus } from "../quotations/functions.js"
 
 async function printEventsHistory(dataToPrint) {
-    console.log(dataToPrint)
 
     eventsHistoryLoader.style.display = 'block'
 

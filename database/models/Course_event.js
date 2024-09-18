@@ -61,11 +61,12 @@ module.exports = (sequelize, DataTypes) => {
       Course_event.hasMany(models.Courses_events_students,{
          as:'events_students',
          foreignKey: 'id_events'
-      }),
-      Course_event.hasMany(models.Quotations_events_companies,{
-         as:'quotations_events_companies',
-         foreignKey: 'id_events'
       })
+
+      // Course_event.hasMany(models.Quotations_events_companies,{
+      //    as:'quotations_events_companies',
+      //    foreignKey: 'id_events'
+      // })
    }
 
    return Course_event

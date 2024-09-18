@@ -35,6 +35,31 @@ ul {
 .unfilterIcon{
     cursor: pointer;
     font-size: 17px;
+    width: 25px;
+    text-align: center;
+}
+
+.divIcons{
+    display: flex;
+    column-gap: 10px;
+}
+
+.divIcon{
+    position: relative;
+}
+
+.divIconInfo{
+    position: absolute;
+    font-size: 12px;
+    text-align: center;
+    width: 60px;
+    right: -15px;
+    bottom: 25px;
+    display: none;
+}
+
+.divIcon:hover .divIconInfo{
+    display: block;
 }
 
 
@@ -170,3 +195,4 @@ ul {
     font-size: 13px;
 
 }
+

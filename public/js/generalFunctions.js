@@ -167,16 +167,18 @@ function acceptWithEnter(input,button) {
 function showTableInfo(tableIcons,top,width) {
     tableIcons.forEach(element => {
         const info = document.getElementById(element.icon.id.replace('Icon','Info'))
-        element.icon.addEventListener("mouseover", async(e) => {
-            info.style.top = top + 'px'
-            info.style.right = element.right
-            
-            info.style.width = width + 'px'
-            info.style.display = 'block'
-        })
-        element.icon.addEventListener("mouseout", async(e) => {
-            info.style.display = 'none'
-        })
+        if (info) {
+            element.icon.addEventListener("mouseover", async(e) => {
+                info.style.top = top + 'px'
+                info.style.right = element.right
+                
+                info.style.width = width + 'px'
+                info.style.display = 'block'
+            })
+            element.icon.addEventListener("mouseout", async(e) => {
+                info.style.display = 'none'
+            })
+        }
     })
     
 }
@@ -202,7 +204,10 @@ function isValid(inputs) {
         const label = document.getElementById(input.id + 'Label')
         const error = document.getElementById(input.id + 'Error')
         input.classList.remove('invalidInput')
-        label.classList.remove('invalidLabel')
+        if (label) {
+            label.classList.remove('invalidLabel')
+        }
+        
         if (error) {
             error.style.display = 'none'
         }

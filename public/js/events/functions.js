@@ -51,27 +51,14 @@ function clickCancel(element){
 
     const action = eg.editReservationFrom == 'administrator' ? 'cancelada' : 'rechazada'
 
-    if (eg.companyEventData.quotations_events_companies[0].id_quotations_status == 1) {
-        rqppErrorText.innerText = 'No es posible cancelar reservas con cotizaciones aprobadas.'
-        showOkPopup(rqppError)
-    }else{
-        creppQuestion.innerHTML = '¿Confirma que desea cancelar la reserva del curso <b>' + element.events_courses.course_name + '</b> que se dictará el <b>' + dateToString(element.start_date) + '</b>?'
+    creppQuestion.innerHTML = '¿Confirma que desea cancelar la reserva del curso <b>' + element.events_courses.course_name + '</b> que se dictará el <b>' + dateToString(element.start_date) + '</b>?'
 
-        if (eg.companyEventData.quotations_events_companies[0].id_quotations_status == 2 || eg.companyEventData.quotations_events_companies[0].id_quotations_status == 3) {
-            creppAlertText.innerHTML = 'El evento posee una cotización en estado: <b>' + eg.companyEventData.quotations_events_companies[0].quotation_status.status + '</b>. Si cencela la reserva, la cotización será ' + action + ' en su totalidad.'
-            eg.idQuoteToReject = eg.editReservationFrom == 'customer' ? eg.companyEventData.quotations_events_companies[0].id_quotations : 0
-            eg.idQuoteToCancel = eg.editReservationFrom == 'administrator' ? eg.companyEventData.quotations_events_companies[0].id_quotations : 0
-            creppAlert.style.display = 'flex'
-        }else{
-            eg.idQuoteToReject = 0
-            eg.idQuoteToCancel = 0
-            creppAlert.style.display = 'none'
-        }
-
-        crepp.style.display = 'block'
-
-        
-    }
+    eg.idQuoteToReject = 0
+    eg.idQuoteToCancel = 0
+    creppAlert.style.display = 'none'
+    
+    crepp.style.display = 'block'
+    
 }
 
 export {clickAllCompanies, clickCompanies, completeNextEventsGlobals,clickCancel}

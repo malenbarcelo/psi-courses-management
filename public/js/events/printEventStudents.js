@@ -18,8 +18,9 @@ async function printStudents(dataToPrint) {
             <tr>
                 <th class="${rowClass}">${element.last_name}</th>
                 <th class="${rowClass}">${element.first_name}</th>
-                <th class="${rowClass}">${element.email}</th>
                 <th class="${rowClass}">${element.dni}</th>
+                <th class="${rowClass}">${element.art}</th>
+                <th class="${rowClass}">si</th>
                 <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
             </tr>
         `;  
@@ -28,9 +29,10 @@ async function printStudents(dataToPrint) {
             <tr>
                 <th class="${rowClass}">${element.last_name}</th>
                 <th class="${rowClass}">${element.first_name}</th>
-                <th class="${rowClass}">${element.email}</th>
                 <th class="${rowClass}">${element.dni}</th>
-                <th class="${rowClass}">${element.students_companies.company_name}</th>
+                <th class="${rowClass}">${element.art}</th>
+                <th class="${rowClass}">${element.medical_certificate}</th>
+                <th class="${rowClass}">si</th>
                 <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
             </tr>
         `;

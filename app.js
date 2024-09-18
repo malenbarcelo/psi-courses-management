@@ -12,7 +12,7 @@ const mainRoutes = require('./src/routes/mainRoutes.js')
 const usersRoutes = require('./src/routes/usersRoutes.js')
 const coursesRoutes = require('./src/routes/coursesRoutes.js')
 const eventsRoutes = require('./src/routes/eventsRoutes.js')
-const quotationsRoutes = require('./src/routes/quotationsRoutes.js')
+//const quotationsRoutes = require('./src/routes/quotationsRoutes.js')
 const apisRoutes = require('./src/routes/apisRoutes.js')
 
 const app = express()
@@ -33,11 +33,11 @@ app.set('view engine','ejs')
 
 //configure session
 app.use(session({
-    //store: new FileStore(),
+    store: new FileStore(),
     secret:'secret',
     resave: false,
     saveUninitialized: false,
-    //cookie: { secure: false }
+    cookie: { secure: false }
 }))
 
 //middlewares
@@ -54,8 +54,8 @@ app.use('/apis/users',usersRoutes)
 app.use('/courses',coursesRoutes)
 app.use('/events',eventsRoutes)
 app.use('/apis/events',eventsRoutes)
-app.use('/quotations',quotationsRoutes)
-app.use('/apis/quotations',quotationsRoutes)
+//app.use('/quotations',quotationsRoutes)
+//app.use('/apis/quotations',quotationsRoutes)
 app.use('/apis',apisRoutes)
 
 

@@ -1,15 +1,5 @@
 const bottomHeaderMenu = [
     {
-        id:1,
-        name:'EVENTOS',
-        href:'/events',
-        subitems:[
-            {'subitem':'EN CURSO', 'href':'/events'},
-            {'subitem':'HISTORIAL', 'href':'/events/events-history'}
-        ],
-        idsUsersCategories:[1,2,3,4]
-    },
-    {
         id:2,
         name:'CURSOS',
         href:'/courses',
@@ -17,16 +7,19 @@ const bottomHeaderMenu = [
         idsUsersCategories:[1,2,3]
     },
     {
-        id:3,
-        name:'COTIZACIONES',
-        href:'/quotations',
-        subitems:[
-            {'subitem':'EN CURSO', 'href':'/quotations'},
-            {'subitem':'HISTORIAL', 'href':'/quotations/quotes-history'}
-        ],
+        id:1,
+        name:'EVENTOS',
+        href:'/events',
+        subitems:[],
         idsUsersCategories:[1,2,3,4]
     },
-
+    {
+        id:3,
+        name:'ALUMNOS',
+        href:'/events/events-history',
+        subitems:[],
+        idsUsersCategories:[1,2,3,4]
+    },
     {
         id:4,
         name:'USUARIOS',

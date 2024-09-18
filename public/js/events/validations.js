@@ -118,7 +118,7 @@ async function uploadExcelValidations() {
             }
 
             if (errors == 0) {
-                const dnis = data.map(subArray => String(subArray[3]))
+                const dnis = data.map(subArray => String(subArray[2]))
                 const uniqueDnis = [...new Set(dnis)]
 
                 if (dnis.length != uniqueDnis.length) {
@@ -138,6 +138,15 @@ async function uploadExcelValidations() {
                     }
                 }
             }
+
+            if (errors == 0) {
+                data.forEach(row => {
+                    if (row[4] != 'si') {
+                        errors +=1
+                        ueppFileError.innerText = 'Todos los alumnos deben tener el apto médico vigente'
+                    }
+                })
+            }
         }
     }
 
@@ -151,7 +160,7 @@ async function uploadExcelValidations() {
 
 function addStudentValidations() {
 
-    let inputs = [stppLastName,stppFirstName,stppEmail,stppDNI]
+    let inputs = [stppLastName,stppFirstName,stppDNI,stppART]
 
     if (eg.studentsFrom == 'administrator') {
         inputs.push(stppCompany)
@@ -166,13 +175,19 @@ function addStudentValidations() {
             stppError.innerText = 'Ya existe en la lista un alumno con el DNI ' + stppDNI.value
             isInvalid([stppDNI])
         }else{
-            if (eg.companyReservations == eg.eventStudents.length) {
+            if (!stppMedicalCert.checked) {
                 errors += 1
-                stppError.innerText = 'Supera la cantidad de cupos reservados'
-                
+                stppError.innerText = 'El alumno debe poseer el apto médico vigente'
+                isInvalid([stppCheckbox])
             }else{
-                isValid([stppDNI])
-                stppError.style.display = 'none'
+                console.log(eg.companyEventData)
+                if (eg.companyReservations == eg.eventStudents.length) {
+                    errors += 1
+                    stppError.innerText = 'Supera la cantidad de cupos reservados'                
+                }else{
+                    isValid([stppDNI,stppCheckbox])
+                    stppError.style.display = 'none'
+                }
             }
         }
     }else{

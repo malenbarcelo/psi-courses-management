@@ -197,8 +197,12 @@ window.addEventListener('load',async()=>{
 
     //accept restore password
     rpppAccept.addEventListener("click", async() => {
+
+        const findUser = ug.users.filter(u => u.id  == ug.idUserToRestore)[0]
         
-        const data = {idUserToRestore:ug.idUserToRestore}
+        const data = findUser
+
+        usersLoader2.style.display = 'block'
 
         await fetch(dominio + 'apis/users/restore-password',{
             method:'POST',
@@ -208,7 +212,11 @@ window.addEventListener('load',async()=>{
 
         printUsers(ug.usersFiltered)
         rppp.style.display = 'none'
+
+        usersLoader2.style.display = 'none'
+
         showOkPopup(rpppOk)
+
     })
 
     //accept block user

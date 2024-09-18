@@ -97,6 +97,4 @@ window.addEventListener('load',async()=>{
             console.error('Error al descargar el archivo')
         }
     })
-
-
 })

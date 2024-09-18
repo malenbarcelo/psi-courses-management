@@ -7,15 +7,13 @@ import { completeNextEventsGlobals} from "./functions.js"
 import eg from "./globals.js"
 
 
-//CANCEL RESERVATION POPUP (crrpp)
+//CANCEL RESERVATION POPUP (crepp)
 async function creppEventListeners() {
 
     creppAccept.addEventListener("click", async() => {
         const data = {
             id_events: eg.idEvents,
-            id_companies: eg.idCompanyToEdit,
-            idQuoteToCancel: eg.idQuoteToCancel,
-            idQuoteToReject: eg.idQuoteToReject
+            id_companies: eg.idCompanyToEdit
         }
 
         await fetch(dominio + 'apis/quota-reservations/cancel-reservation',{
@@ -26,9 +24,9 @@ async function creppEventListeners() {
 
         //get data and complete globals
         if (eg.idUserCategories == 4 ) {
-            eg.events = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + eg.idCompanies)).json()
+            eg.events = await (await fetch(dominio + 'apis/courses-events/company-events/' + eg.idCompanies)).json()
         }else{
-            eg.events = await (await fetch(dominio + 'apis/courses-events/next-events')).json()
+            eg.events = await (await fetch(dominio + 'apis/courses-events/events')).json()
         }
         eg.eventsFiltered = eg.events
 
@@ -41,7 +39,7 @@ async function creppEventListeners() {
         //print companies if applies
         if (eg.editReservationFrom == 'administrator') {
             eg.reservationsPerEventCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
-            let element = await (await fetch(dominio + 'apis/courses-events/next-events/')).json()
+            let element = await (await fetch(dominio + 'apis/courses-events/events/')).json()
             element = element.filter(e => e.id == eg.idEvents)[0]
             completeNextEventsGlobals(element)
             printCompanies(eg.eventCompanies,element)

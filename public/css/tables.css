@@ -26,8 +26,13 @@ thead{
 }
 
 /*sizes*/
+
+.thxxs{
+    width: 40px;
+}
+
 .thxs{
-    width: 50px;
+    width: 75px;
 }
 
 .ths{
@@ -138,6 +143,7 @@ border-top-right-radius: 15px;
 
 #studentsTable{
     height: 280px; /*to avoid overflow, it depends on the website landscape*/
+    border: black solid 1px
 }
 
 #eventsHistoryTable{

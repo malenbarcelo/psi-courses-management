@@ -2,3 +2,35 @@
 #rqppQuotaError{
     width: 230px;
 }
+
+#stppText{
+    margin: auto;
+    width: 900px;
+    font-size: 13px;
+}
+
+#stppCheckLabel{
+    width: 70px;
+}
+
+#stppCheckbox{
+    font-size: 12px;
+    font-weight: lighter;
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+    border: rgb(171, 171, 171) solid 1px;
+    padding: 1px 3px;
+}
+
+#stppAcceptCheckbox{
+    font-size: 12px;
+    font-weight: lighter;
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+    border: rgb(171, 171, 171) solid 1px;
+    padding: 1px 3px;
+    width: fit-content;
+    margin: auto;
+}

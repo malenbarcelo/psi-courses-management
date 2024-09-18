@@ -168,11 +168,7 @@ function vcppTableEventListeners(dataToPrint) {
             let companyNextEvents = await (await fetch(dominio + 'apis/courses-events/company-next-events/' + ug.companyToEdit.id)).json()
             companyNextEvents = companyNextEvents.filter( ne => ne.companyReservations > 0)
 
-            //findout if company has quotations in progress
-            let inProgressQuotations = await (await fetch(dominio + 'apis/quotations/in-progress-quotations')).json()
-            inProgressQuotations = inProgressQuotations.filter( ipq => ipq.id_companies == ug.companyToEdit.id)
-            
-            if (companyNextEvents.length > 0 || inProgressQuotations.length > 0) {
+            if (companyNextEvents.length > 0) {
                 showOkPopup(bcppError)
                 
             }else{

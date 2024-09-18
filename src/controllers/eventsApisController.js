@@ -2,7 +2,7 @@
 const eventsStudentsQueries = require('./dbQueries/eventsStudentsQueries')
 const ceicQueries = require('./dbQueries/coursesEventsInvitedCompaniesQueries')
 const coursesEventsQueries = require('./dbQueries/coursesEventsQueries')
-const qecQueries = require('./dbQueries/quotationsEventsCompaniesQueries')
+//const qecQueries = require('./dbQueries/quotationsEventsCompaniesQueries')
 const ExcelJS = require('exceljs')
 
 const eventsApisController = {
@@ -87,6 +87,66 @@ const eventsApisController = {
           nombre:element.first_name,
           email:element.email,
           dni:element.dni
+        })
+      })
+
+      excelData.forEach((row) => {
+        worksheet.addRow(row)
+      })
+
+      //create excel file
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+      res.setHeader('Content-Disposition', 'attachment; filename=historial_de_eventos.xlsx')
+
+      await workbook.xlsx.write(res)
+      res.end()
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
+  downloadStudents: async(req,res) =>{
+    try{
+
+      const dataToPrint = req.body.students
+      const eventData = req.body.eventData
+
+      let excelData = []
+
+      const workbook = new ExcelJS.Workbook()
+      const worksheet = workbook.addWorksheet('Historial de Eventos')
+
+      //add headers
+      worksheet.columns = [
+        { header: 'Empresa', key: 'empresa', width: 18 },        
+        { header: 'Curso', key: 'curso', width: 18 },
+        { header: 'Evento', key: 'evento', width: 15 },
+        { header: 'Inicio', key: 'inicio', width: 12 },
+        { header: 'Fin', key: 'fin', width: 12 },
+        { header: 'Horario', key: 'horario', width: 18 },
+        { header: 'Apellido', key: 'apellido', width: 18 },
+        { header: 'Nombre', key: 'nombre', width: 18 },
+        { header: 'DNI', key: 'dni', width: 15 },
+        { header: 'ART', key: 'art', width: 15 },
+        { header: 'Apto médico', key: 'aptoMedico', width: 15 },
+      ]
+
+      //add data
+      dataToPrint.forEach(element => {
+        excelData.push({
+          empresa:element.company_data.company_name,
+          curso:eventData.events_courses.course_name,
+          evento:'#' + String(eventData.id).padStart(8,'0'),
+          inicio: eventData.start_date.split('-')[2] + '/' + eventData.start_date.split('-')[1] + '/' + eventData.start_date.split('-')[0],
+          fin:eventData.end_date.split('-')[2] + '/' + eventData.end_date.split('-')[1] + '/' + eventData.end_date.split('-')[0],
+          horario:eventData.start_time.slice(0,-3) + 'hs. a ' + eventData.end_time.slice(0,-3) + 'hs.',
+          apellido:element.last_name,
+          nombre:element.first_name,
+          dni:element.dni,
+          art:element.art,
+          aptoMedico:element.medical_certificate == 1 ? 'si' : 'no'
+
         })
       })
 

@@ -5,15 +5,15 @@
 <div id="idUsersCategories" class="notVisible"><%= userLogged.id_users_categories %></div>
 
 <div class="mainTitle">
-    HISTORIAL DE EVENTOS
+    ALUMNOS
 </div>
 
 <!------GENERAL ACTIONS------>
 <div class="divDGAs" id="DGAsEvents">
     <div class="divDGA divDGAm" id="DGAdownload">
-        <i class="fa-regular fa-file-excel"></i>
+        <i class="fa-solid fa-download"></i>
         <div class="DGAinfo">
-            Descargar
+            Descargar datos
         </div>        
     </div>
 </div>
@@ -42,9 +42,14 @@
             </select>            
         </div>
         <div class="divInput">
-            <label class="label1">Alumno</label>
-            <input type="text" class="input1 il ipm" id="filterStudent"> 
-            <ul class="predictedElements" id="ulPredictedStudents"></ul>                     
+            <label class="label1">Apellido</label>
+            <input type="text" class="input1 im ipm" id="filterLastName"> 
+            <ul class="predictedElements" id="ulPredictedLastName"></ul>                     
+        </div>
+        <div class="divInput">
+            <label class="label1">Nombre</label>
+            <input type="text" class="input1 im ipm" id="filterFirstName"> 
+            <ul class="predictedElements" id="ulPredictedFirstName"></ul>                     
         </div>
         <div class="divInput">
             <label class="label1">DNI</label>
@@ -71,7 +76,6 @@
 </div>
 
 <!------MAIN CONTENT------>
-
 <div class="divTable" id="eventsHistoryTable">
 
     <div class="thInfo" id="vdppInfo">Ver / Editar</div>
@@ -81,21 +85,18 @@
         <thead>
             <tr>
                 <th class="thCss thl">Empresa</th>
-                <th class="thCss thxl">Curso</th>
+                <th class="thCss thm">Apellido</th>
+                <th class="thCss thm">Nombre</th>
+                <th class="thCss thxs">DNI</th>
+                <th class="thCss thl">Curso</th>
                 <th class="thCss ths">Evento</th>
                 <th class="thCss ths">Inicio</th>
-                <th class="thCss ths">Fin</th>
-                <th class="thCss thl">Alumno</th>
-                <th class="thCss thxs">DNI</th>
-                <th class="thCss ths">Cotización</th>
-                <th class="thCss thxs">OC</th>                
+                <th class="thCss ths">Fin</th>        
             </tr>
         </thead>
         <tbody id="bodyEventsHistory"></tbody>
     </table>
 </div>
-
-
 
 <div id="divQuotesHistory"></div>
 
@@ -105,7 +106,6 @@
 
 <!----------POPUPS---------->
 <%- include('./eventsHistoryPopups') %>
-<%- include('../quotations/quotationsPopups') %>
 
 <!----------SCRIPTS---------->
 <script type="module" src="/js/eventsHistory/eventsHistory.js"></script>

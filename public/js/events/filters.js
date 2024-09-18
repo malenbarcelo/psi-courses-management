@@ -1,4 +1,5 @@
 import eg from "./globals.js"
+import { dominio } from "../dominio.js"
 
 function filterEvents() {
     eg.eventsFiltered = eg.events
@@ -6,30 +7,31 @@ function filterEvents() {
     //course
     eg.eventsFiltered = filterCourse.value == '' ? eg.eventsFiltered : eg.eventsFiltered.filter(e => e.id_courses == filterCourse.value)
 
-    //startDate
-    eg.eventsFiltered = filterStartDate.value == '' ? eg.eventsFiltered : eg.eventsFiltered.filter(e => e.start_date == filterStartDate.value)
+    //month
+    eg.eventsFiltered = filterMonth.value == '' ? eg.eventsFiltered : eg.eventsFiltered.filter(e => e.month == filterMonth.value)
 
-    //endDate
-    eg.eventsFiltered = filterEndDate.value == '' ? eg.eventsFiltered : eg.eventsFiltered.filter(e => e.end_date == filterEndDate.value)
+    //year
+    eg.eventsFiltered = filterYear.value == '' ? eg.eventsFiltered : eg.eventsFiltered.filter(e => e.year == filterYear.value)
 
     //reserved events
-    if (eg.idUserCategories == 4) {
-        if (filterReserved.checked) {
-            eg.eventsFiltered = eg.eventsFiltered.filter(e => e.companyReservations != 0)
-        }else{
-            eg.eventsFiltered = eg.eventsFiltered
-        }
+    if (eg.idUserCategories != 4) {        
+        eg.eventsFiltered = filterReserved.value == '' ? eg.eventsFiltered : eg.eventsFiltered.filter(e => filterReserved.value == 1 ? e.eventReservations != 0 : e.eventReservations == 0)        
     }else{
-        const checkedElements = []
-        if (filterOnCourse.checked) {
-            checkedElements.push('onCourse')
-        }
-        if (filterPending.checked) {
-            checkedElements.push('pending')
-        }
-        eg.eventsFiltered = (checkedElements.length == 0 || checkedElements.length == 3) ? eg.eventsFiltered : eg.eventsFiltered.filter(e => checkedElements.includes(e.status))
-
+        eg.eventsFiltered = filterReserved.value == '' ? eg.eventsFiltered : eg.eventsFiltered.filter(e => filterReserved.value == 1 ? e.companyReservations != 0 : e.companyReservations == 0)
     }
+
+    //event status
+    const checkedElements = []
+    if (filterOnCourse.checked) {
+        checkedElements.push('onCourse')
+    }
+    if (filterPending.checked) {
+        checkedElements.push('pending')
+    }
+    if (filterFinished.checked) {
+        checkedElements.push('finished')
+    }
+    eg.eventsFiltered = (checkedElements.length == 0 || checkedElements.length == 4) ? eg.eventsFiltered : eg.eventsFiltered.filter(e => checkedElements.includes(e.status))
 }
 
 async function filterStudents() {
