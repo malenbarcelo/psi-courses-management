@@ -20,6 +20,7 @@ const mainController = {
             const resultValidation = validationResult(req)
 
             if (resultValidation.errors.length > 0){
+                console.log(resultValidation)
                 return res.render('login',{
                     errors:resultValidation.mapped(),
                     oldData: req.body,

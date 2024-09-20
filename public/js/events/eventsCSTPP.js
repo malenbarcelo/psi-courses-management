@@ -4,96 +4,97 @@ import { filterStudents } from "./filters.js"
 import eg from "./globals.js"
 import { acceptWithEnter,clearInputs, isInvalid, isValid} from "../generalFunctions.js"
 
-//STUDENTS POPUP (stpp)
-async function stppEventListeners() {
+//CUSTOMER STUDENTS POPUP (cstpp)
+async function cstppEventListeners() {
     
     //change company
-    const stppCompany = document.getElementById('stppCompany')
-    if (stppCompany) {
-        stppCompany.addEventListener("change", async() => {
+    const cstppCompany = document.getElementById('cstppCompany')
+    if (cstppCompany) {
+        cstppCompany.addEventListener("change", async() => {
             await filterStudents()
             printStudents(eg.eventStudentsFiltered)
         })
     }
 
     //add student
-    stppAddStudent.addEventListener("click", async() => {
+    cstppAddStudent.addEventListener("click", async() => {
         
-        const errors = addStudentValidations()
+        const errors = await addStudentValidations()
 
         if (errors == 0) {
 
-            const inputs = [stppLastName,stppFirstName,stppDNI,stppART]
-
-            if (eg.studentsFrom == 'Administrator') {
-                inputs.push('stppCompany')
-            }
+            const inputs = [cstppLastName,cstppFirstName,cstppDNI,cstppART]
 
             const maxId = eg.eventStudents.length == 0 ? 0 : eg.eventStudents.reduce((max, st) => (st.id > max ? st.id : max), eg.eventStudents[0].id);
 
             eg.eventStudents.push({
                 id: maxId + 1,
-                dni:stppDNI.value,
-                art:stppART.value,
+                dni:cstppDNI.value,
+                art:cstppART.value,
                 medical_certificate:1,
-                first_name:stppFirstName.value,
-                id_companies:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
+                first_name:cstppFirstName.value,
+                id_companies:eg.idCompanies,
                 id_courses:eg.idCourses,
                 id_events:eg.idEvents,
-                last_name:stppLastName.value,
+                last_name:cstppLastName.value,
                 company_data:{
-                    id:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
-                    company_name: eg.companies.filter(c => c.id == (eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value))[0].company_name,
+                    id:eg.idCompanies,
+                    company_name: eg.companies.filter(c => c.id == eg.idCompanies)[0].company_name,
                 }
             })
 
-            if (eg.studentsFrom == 'administrator') {
-                await filterStudents()
-            }else{
-                stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length 
-            }
-
+            cstppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length 
+            
+            cstppMedicalCert.checked = false
             clearInputs(inputs)
             printStudents(eg.eventStudentsFiltered)
         }
 
     })
 
-    acceptWithEnter(stppDNI,stppAddStudent)
+    acceptWithEnter(cstppDNI,cstppAddStudent)
 
     //accept
-    stppAccept.addEventListener("click", async() => {
-        if (!stppAcceptConditions.checked) {
-            isInvalid([stppAcceptCheckbox])
-            stppError2.style.display = 'block'
+    cstppAccept.addEventListener("click", async() => {
+        if (eg.idUserCategories == 4 && !cstppAcceptConditions.checked) {
+            isInvalid([cstppAcceptCheckbox])
+            cstppError2.style.display = 'block'
             
         }else{
-            isValid([stppAcceptCheckbox])
-            stppError2.style.display = 'none'
+            isValid([cstppAcceptCheckbox])
+            cstppError2.style.display = 'none'
             sspp.style.display = 'block'
         }
         
     })
 
     //uploadExcelIcon
-    stppUploadExcelIcon.addEventListener("click", async() => {
-        isValid([stppLastName,stppFirstName,stppDNI,stppART,stppCheckbox,ueppDivInput])
-        clearInputs([stppLastName,stppFirstName,stppDNI,stppART])
-        stppMedicalCert.checked = false
-        stppError.style.display = 'none'
+    cstppUploadExcelIcon.addEventListener("click", async() => {
+        
+        const cstppCheckbox = document.getElementById('stppCheckbox')
+        const cstppMedicalCert = document.getElementById('stppMedicalCert')
+
+        isValid([cstppLastName,cstppFirstName,cstppDNI,cstppART,cstppCheckbox,ueppDivInput])
+        clearInputs([cstppLastName,cstppFirstName,cstppDNI,cstppART])
+        
+        if (cstppMedicalCert) {
+            cstppMedicalCert.checked = false
+        }
+        
+        ueppFile.value = ''
+        cstppError.style.display = 'none'
         ueppFileError.style.display = 'none'
         uepp.style.display = 'block'
+        
     })
 
     //download data
-    stppDownloadExcelIcon.addEventListener("click", async() => {
+    cstppDownloadExcelIcon.addEventListener("click", async() => {
 
         const data = {
             students: eg.eventStudents,
             eventData: eg.eventData
         }
-
-        console.log(data)
 
         const response = await fetch('/apis/events/students/download-data', {
             method: 'POST',
@@ -120,4 +121,4 @@ async function stppEventListeners() {
        
 }
 
-export {stppEventListeners}
+export {cstppEventListeners}

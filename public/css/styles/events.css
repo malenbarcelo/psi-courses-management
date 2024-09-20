@@ -3,7 +3,7 @@
     width: 230px;
 }
 
-#stppText{
+#cstppText{
     margin: auto;
     width: 900px;
     font-size: 13px;
@@ -13,7 +13,7 @@
     width: 70px;
 }
 
-#stppCheckbox{
+#cstppCheckbox{
     font-size: 12px;
     font-weight: lighter;
     display: flex;
@@ -23,7 +23,7 @@
     padding: 1px 3px;
 }
 
-#stppAcceptCheckbox{
+#cstppAcceptCheckbox{
     font-size: 12px;
     font-weight: lighter;
     display: flex;
@@ -33,4 +33,34 @@
     padding: 1px 3px;
     width: fit-content;
     margin: auto;
+}
+
+
+
+#askForQuotaBtn{
+    position: absolute;
+    top: 180px;
+    right: 80px;
+    padding: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    border: black solid 2px;
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+#askForQuotaBtn:hover{
+    background-color: white;
+    color:black;
+}
+
+#askForQuotaInfo{
+    position: absolute;
+    border: red solid 1px;
+    top: 230px;
+    right: 80px;
 }

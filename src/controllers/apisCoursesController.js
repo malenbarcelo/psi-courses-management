@@ -74,8 +74,6 @@ const coursesApisController = {
       return res.send('Ha ocurrido un error')
     }
   },
-  
-  
   companyReservations: async(req,res) =>{
     try{
 

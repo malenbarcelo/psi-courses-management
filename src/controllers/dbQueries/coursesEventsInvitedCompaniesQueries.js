@@ -23,7 +23,7 @@ const coursesEventsInvitedCompaniesQueries = {
             }
         )
     },
-    getCompanyNextEvents: async(idCompany,endDate) => {        
+    getCompanyNextEvents: async(idCompany,idEvent) => {        
         const companyNextEvents = await model.findAll({
             where:{id_companies:idCompany},
             include: [
@@ -42,6 +42,16 @@ const coursesEventsInvitedCompaniesQueries = {
             order: [[{ model: model.associations.events_companies_events }, 'start_date', 'ASC']],
         })
         return companyNextEvents
+    },
+    findCompany: async(idCompany,idEvent) => {        
+        const company = await model.findAll({
+            where:{
+                id_companies:idCompany,
+                id_events:idEvent
+            },
+            
+        })
+        return company
     },
 }
 

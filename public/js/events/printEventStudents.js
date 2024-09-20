@@ -13,7 +13,7 @@ async function printStudents(dataToPrint) {
         const rowClass = counter % 2 == 0 ? 'tBody1 tBodyEven' : 'tBody1 tBodyOdd';
         
         // Construir las filas de la tabla
-        if (eg.studentsFrom == 'customer') {
+        if (eg.idUserCategories == 4) {
             html += `
             <tr>
                 <th class="${rowClass}">${element.last_name}</th>
@@ -27,11 +27,11 @@ async function printStudents(dataToPrint) {
         }else{
             html += `
             <tr>
+                <th class="${rowClass}">${element.company_data.company_name}</th>
                 <th class="${rowClass}">${element.last_name}</th>
                 <th class="${rowClass}">${element.first_name}</th>
                 <th class="${rowClass}">${element.dni}</th>
                 <th class="${rowClass}">${element.art}</th>
-                <th class="${rowClass}">${element.medical_certificate}</th>
                 <th class="${rowClass}">si</th>
                 <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
             </tr>

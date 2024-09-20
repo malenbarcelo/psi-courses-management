@@ -1,17 +1,17 @@
-<!---students popup (stpp)--->
-<div class="popup" id="stpp">
+<!---customer students popup (ccstpp)--->
+<div class="popup" id="cstpp">
 
-    <div class="popupContent" id="stppContent">
+    <div class="popupContent" id="cstppContent">
 
         <!------GENERAL ACTIONS------>
         <div class="divDGAs" id="DGAsStpp">
-            <div class="divDGA divDGAxs" id="stppUploadExcelIcon">
+            <div class="divDGA divDGAxs" id="cstppUploadExcelIcon">
                 <i class="fa-solid fa-upload"></i>
                 <div class="DGAinfo">
                     Subir datos desde excel
                 </div>        
             </div>
-            <div class="divDGA divDGAxs" id="stppDownloadExcelIcon">
+            <div class="divDGA divDGAxs" id="cstppDownloadExcelIcon">
                 <i class="fa-solid fa-download"></i>
                 <div class="DGAinfo">
                     Descargar datos
@@ -21,51 +21,55 @@
 
         <div class="popupIcons">
             <div class="popupIcon3"><i class="fa-regular fa-user"></i></div>
-            <div class="popupClose3" id="stppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+            <div class="popupClose3" id="cstppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
         </div>
 
-        <div class="popupTitle1 mts" id="stppMainTitle"></div>
-        <div class="popupTitle2 mts" id="stppSubtitle"></div>
+        <div class="popupTitle1 mts" id="cstppMainTitle"></div>
+        <div class="popupTitle2 mts" id="cstppSubtitle"></div>
         <div class="popupTitle1 mtm">ALUMNOS</div>
         
         <% if (userLogged.id_users_categories != 4) { %>
             <div class="divInputsRow mtm mbm">
                 <div class="divInput">
-                    <label class="label1" id="stppCompanyLabel">Institución</label>
-                    <select class="input1 sxxl spm" id="stppCompany"></select>           
+                    <label class="label1" id="cstppCompanyLabel">Institución</label>
+                    <select class="input1 sxxl spm" id="cstppCompany"></select>
+                    <div class="divError" id="cstppCompanyError">Debe seleccionar una empresa</div>           
                 </div>
             </div>
         <% } %>
         
-        <div class="popupTitle2 mts" id="stppSubtitle2"></div>
+        <div class="popupTitle2 mts" id="cstppSubtitle2"></div>
 
         <div class="divInputsRow mtm">            
             <div class="divInput">
-                <label class="label1 fwb" id="stppLastNameLabel">Apellido</label>
-                <input type="text" class="input1 im ipm" id="stppLastName" autocomplete="off">                    
+                <label class="label1 fwb" id="cstppLastNameLabel">Apellido</label>
+                <input type="text" class="input1 im ipm" id="cstppLastName" autocomplete="off">                    
             </div>
             <div class="divInput">
-                <label class="label1 fwb" id="stppFirstNameLabel">Nombre</label>
-                <input type="text" class="input1 im ipm" id="stppFirstName" autocomplete="off">                    
+                <label class="label1 fwb" id="cstppFirstNameLabel">Nombre</label>
+                <input type="text" class="input1 im ipm" id="cstppFirstName" autocomplete="off">                    
             </div>            
             <div class="divInput">
-                <label class="label1 fwb" id="stppDNILabel">DNI</label>
-                <input type="number" class="input1 is ipm" id="stppDNI" autocomplete="off">                    
+                <label class="label1 fwb" id="cstppDNILabel">DNI</label>
+                <input type="number" class="input1 is ipm" id="cstppDNI" autocomplete="off">                    
             </div>
             <div class="divInput">
-                <label class="label1 fwb" id="stppARTLabel">ART</label>
-                <input type="text" class="input1 il ipm" id="stppART" autocomplete="off">
+                <label class="label1 fwb" id="cstppARTLabel">ART</label>
+                <input type="text" class="input1 il ipm" id="cstppART" autocomplete="off">
             </div>
-            <div id="stppCheckbox">
-                <input type="checkbox" id="stppMedicalCert">
-                <label id="stppCheckLabel">Apto médico vigente</label>
-            </div>
-            <div id="stppAddStudent">
+            <% if (userLogged.id_users_categories == 4) { %>
+                <div id="cstppCheckbox">
+                    <input type="checkbox" id="cstppMedicalCert">
+                    <label id="cstppCheckLabel">Apto médico vigente</label>
+                </div>
+            <% } %>
+            
+            <div id="cstppAddStudent">
                 <i class="fa-solid fa-plus"></i>
             </div>
         </div>
 
-        <div class="divError" id="stppError"></div>
+        <div class="divError" id="cstppError"></div>
 
         <div class="divTable mtm" id="studentsTable">
             <table>
@@ -88,33 +92,31 @@
             </table>
         </div>
 
-        <div id="stppText" class="mts">
+        <div id="cstppText" class="mts">
             <div><b>Enviar la siguiente documentación previa a la fecha de curso:</b></div>
             <div class="mts">- Orden de compra/presupuesto aprobado.</div>
             <div class="mts">- Registro de asistencia con los datos del/los participantes al curso. La misma, tiene carácter de declaración jurada y debe ser firmada por el responsable de RRHH, HSE o Medicina Laboral (excluyente).</div>
             <div class="mts">- Recordar que es obligatorio asistir a la capacitación con los siguientes EPP: guantes, casco, mameluco, anteojos y calzado de seguridad.</div>
-            <div id="stppAcceptCheckbox" class="mtm">
-                <input type="checkbox" id="stppAcceptConditions">
-                <label id="">Aceptar condiciones</label>
+            <div id="cstppAcceptCheckbox" class="mtm">
+                <input type="checkbox" id="cstppAcceptConditions">
+                <label >Aceptar condiciones</label>
             </div>
-            <div class="divError" id="stppError2">Debe aceptar las condiciones</div>
+            <div class="divError" id="cstppError2">Debe aceptar las condiciones</div>
         </div>
 
-        
-
         <div class="divButtonsRow mtm mbs">
-            <div id="stppAccept" class="button1 bm">Guardar</div>
-            <div id="stppCancel" class="button1 bm">Cancelar</div>
+            <div id="cstppAccept" class="button1 bm">Guardar</div>
+            <div id="cstppCancel" class="button1 bm">Cancelar</div>
         </div>
 
     </div>
 </div>
 
-<div class="okPopup" id="stppOk">    
-    <div class="okContent" id="stppOkContent">
+<div class="okPopup" id="cstppOk">    
+    <div class="okContent" id="cstppOkContent">
         <div class="okDiv">
             <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
-            <div class="okText" id="stppOkText">Alumnos asignados con éxito</div>
+            <div class="okText" id="cstppOkText">Alumnos asignados con éxito</div>
         </div>
     </div>
 </div>

@@ -11,7 +11,6 @@ window.addEventListener('load',async()=>{
     //get data and complete globals
     eg.idCompanies = idCompanies.innerText
     eg.idUsersCategories = idUsersCategories.innerText
-    console.log(eg.idUsersCategories)
     
     const userData = {
         id_companies: eg.idCompanies,

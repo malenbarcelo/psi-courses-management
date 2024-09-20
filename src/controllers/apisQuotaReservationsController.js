@@ -3,6 +3,7 @@ const quotaReservationsQueries = require('./dbQueries/quotaReservationsQueries')
 //const quotationsQueries = require('./dbQueries/quotationsQueries')
 const coursesQueries = require('./dbQueries/coursesQueries')
 const eventsStudentsQueries = require('./dbQueries/eventsStudentsQueries')
+const ceicQueries = require('./dbQueries/coursesEventsInvitedCompaniesQueries')
 
 const apisQuotaReservations = {
   companiesPerCourse: async(req,res) =>{
@@ -24,6 +25,12 @@ const apisQuotaReservations = {
 
       //reserve quota
       await quotaReservationsQueries.reserveQuota(data.id_courses,data.id_events,data.id_companies,data.reserved_quota,idUser)
+
+      //findout if company has already been invited
+      const findCompany = await ceicQueries.findCompany(data.id_companies,data.id_events)
+      if (findCompany.length == 0) {
+        await ceicQueries.create([data.id_companies],data.id_courses,data.id_events)
+      }
 
       //create quotations_events_companies
       //await qecQueries.create(data.id_events,data.id_companies)

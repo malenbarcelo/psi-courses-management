@@ -60,4 +60,4 @@ app.use('/apis',apisRoutes)
 
 
 
-//console.log(bcrypt.hashSync('user1',10))
+//console.log(bcrypt.hashSync('malen',10))

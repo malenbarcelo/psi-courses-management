@@ -8,7 +8,7 @@ import { closePopupsEventListeners,acceptWithEnter,showOkPopup,clearInputs,showT
 import eg from "./globals.js"
 
 //popups event listeners
-import { stppEventListeners} from "./eventsSTPP.js"
+import { cstppEventListeners} from "./eventsCSTPP.js"
 import { ueppEventListeners} from "./eventsUEPP.js"
 import { ssppEventListeners} from "./eventsSSPP.js"
 import { deppEventListeners} from "./eventsDEPP.js"
@@ -35,7 +35,7 @@ window.addEventListener('load',async()=>{
     eg.reservationsPerEventCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
     
     //popups event listeners
-    stppEventListeners()
+    cstppEventListeners()
     ueppEventListeners()
     ssppEventListeners()
     deppEventListeners()
@@ -72,7 +72,7 @@ window.addEventListener('load',async()=>{
     printEvents(eg.eventsFiltered)
 
     //close popups
-    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, stppClose,stppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel]
+    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, cstppClose,cstppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel]
     closePopupsEventListeners(closePopups)
 
     //table info events listeners
@@ -82,44 +82,44 @@ window.addEventListener('load',async()=>{
         tableIcons = [
             {
                 icon:rqppIcon,
-                right:'14%'
+                right:'13%'
             },
             {
                 icon:erpp2Icon,
-                right:'11%'
+                right:'10%'
             },
             {
                 icon:crpp2Icon,
-                right:'8%'
+                right:'7%'
             },
             {
                 icon:stppIcon,
-                right:'5%'
+                right:'3.5%'
             }
         ]
     }else{
         tableIcons = [
             {
                 icon:ceppIcon,
-                right:'14%'
+                right:'13%'
             },
             {
                 icon:deppIcon,
-                right:'11%'
+                right:'10%'
             },
             {
                 icon:coppIcon,
-                right:'8%'
+                right:'7%'
             },
             {
                 icon:stppIcon,
-                right:'5%'
+                right:'3.5%'
             },
         ]
     }
     
 
-    showTableInfo(tableIcons,250,150)
+    showTableInfo(tableIcons,280,150)
 
     dsppAccept.addEventListener("click", async() => {
         eg.eventStudents = eg.eventStudents.filter(s => s.id != eg.idStudentToDelete)
@@ -143,6 +143,12 @@ window.addEventListener('load',async()=>{
                 eg.eventInvitedCompanies.push(company.id)                
             }else{
                 eg.eventInvitedCompanies = eg.eventInvitedCompanies.filter(c => c != company.id)
+            }
+
+            if (eg.companies.length == eg.eventInvitedCompanies.length) {
+                ceppAllCompanies.checked = true
+            }else{
+                ceppAllCompanies.checked = false
             }
         })
     })

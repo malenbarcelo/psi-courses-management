@@ -23,9 +23,9 @@ let eg = {
     editReservationFrom:'',    
     companyReservations: 0,
     idStudentToDelete:0,
-    studentsFrom:'',
     idQuoteToCancel:0,
-    idQuoteToReject:0
+    idQuoteToReject:0,
+    eventCompanyStudents:[]
 }
 
 export default eg

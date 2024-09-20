@@ -17,7 +17,7 @@ const loginValidations = {
                 return true
             }).bail(),
         body('password')
-            .notEmpty().withMessage('Ingrese una contraseña')
+            .notEmpty().withMessage('Ingrese una contraseña').bail()
             .custom(async(value,{ req }) => {
                 const email = req.body.email
                 const userToLogin = await usersQueries.findUserByEmail(email)

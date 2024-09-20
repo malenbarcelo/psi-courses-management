@@ -1,0 +1,108 @@
+<!---customer students popup (ccstpp)--->
+<div class="popup" id="cstpp">
+
+    <div class="popupContent" id="cstppContent">
+
+        <!------GENERAL ACTIONS------>
+        <div class="divDGAs" id="DGAsStpp">
+            <div class="divDGA divDGAxs" id="cstppUploadExcelIcon">
+                <i class="fa-solid fa-upload"></i>
+                <div class="DGAinfo">
+                    Subir datos desde excel
+                </div>        
+            </div>
+            <div class="divDGA divDGAxs" id="cstppDownloadExcelIcon">
+                <i class="fa-solid fa-download"></i>
+                <div class="DGAinfo">
+                    Descargar datos
+                </div>
+            </div>
+        </div>
+
+        <div class="popupIcons">
+            <div class="popupIcon3"><i class="fa-regular fa-user"></i></div>
+            <div class="popupClose3" id="cstppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon"></i></div>
+        </div>
+
+        <div class="popupTitle1 mts" id="cstppMainTitle"></div>
+        <div class="popupTitle2 mts" id="cstppSubtitle"></div>
+        <div class="popupTitle1 mtm">ALUMNOS</div>
+        
+        <div class="popupTitle2 mts" id="cstppSubtitle2"></div>
+
+        <div class="divInputsRow mtm">            
+            <div class="divInput">
+                <label class="label1 fwb" id="cstppLastNameLabel">Apellido</label>
+                <input type="text" class="input1 im ipm" id="cstppLastName" autocomplete="off">                    
+            </div>
+            <div class="divInput">
+                <label class="label1 fwb" id="cstppFirstNameLabel">Nombre</label>
+                <input type="text" class="input1 im ipm" id="cstppFirstName" autocomplete="off">                    
+            </div>            
+            <div class="divInput">
+                <label class="label1 fwb" id="cstppDNILabel">DNI</label>
+                <input type="number" class="input1 is ipm" id="cstppDNI" autocomplete="off">                    
+            </div>
+            <div class="divInput">
+                <label class="label1 fwb" id="cstppARTLabel">ART</label>
+                <input type="text" class="input1 il ipm" id="cstppART" autocomplete="off">
+            </div>
+            <div id="cstppCheckbox">
+                <input type="checkbox" id="cstppMedicalCert">
+                <label id="cstppCheckLabel">Apto médico vigente</label>
+            </div>
+            <div id="cstppAddStudent" class="stppAddStudent">
+                <i class="fa-solid fa-plus"></i>
+            </div>
+        </div>
+
+        <div class="divError" id="cstppError"></div>
+
+        <div class="divTable mtm" id="studentsTable">
+            <table>
+                <thead>
+                    <tr><th class="thCss fsm thl">Apellido</th>
+                        <th class="thCss fsm thl">Nombre</th>
+                        <th class="thCss fsm ths">DNI</th>
+                        <th class="thCss fsm thl">ART</th>
+                        <th class="thCss fsm ths">Apto médico vigente</th>                        
+                        <th class="thCss fsm thxs">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="bodyStudents"></tbody>
+            </table>
+        </div>
+
+        <div id="cstppText" class="mts">
+            <div><b>Enviar la siguiente documentación previa a la fecha de curso:</b></div>
+            <div class="mts">- Orden de compra/presupuesto aprobado.</div>
+            <div class="mts">- Registro de asistencia con los datos del/los participantes al curso. La misma, tiene carácter de declaración jurada y debe ser firmada por el responsable de RRHH, HSE o Medicina Laboral (excluyente).</div>
+            <div class="mts">- Recordar que es obligatorio asistir a la capacitación con los siguientes EPP: guantes, casco, mameluco, anteojos y calzado de seguridad.</div>
+            <div id="cstppAcceptCheckbox" class="mtm">
+                <input type="checkbox" id="cstppAcceptConditions">
+                <label >Aceptar condiciones</label>
+            </div>
+            <div class="divError" id="cstppError2">Debe aceptar las condiciones</div>
+        </div>
+
+        <div class="divButtonsRow mtm mbs">
+            <div id="cstppAccept" class="button1 bm">Guardar</div>
+            <div id="cstppCancel" class="button1 bm">Cancelar</div>
+        </div>
+
+    </div>
+</div>
+
+<div class="okPopup" id="cstppOk">    
+    <div class="okContent" id="cstppOkContent">
+        <div class="okDiv">
+            <div class="okIcon1"><i class="fa-regular fa-circle-check"></i></div>
+            <div class="okText" id="cstppOkText">Alumnos asignados con éxito</div>
+        </div>
+    </div>
+</div>
+
+<!----------LOADER---------->
+<div class="loader" id="studentsLoader"></div>

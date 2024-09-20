@@ -21,7 +21,7 @@ async function ueppEventListeners() {
 
         if (errors == 0) {
 
-            const inputs = [stppLastName,stppFirstName,stppDNI,stppART]
+            const inputs = [cstppLastName,cstppFirstName,cstppDNI,cstppART]
             const maxId = eg.eventStudents.length == 0 ? 0 : eg.eventStudents.reduce((max, st) => (st.id > max ? st.id : max), eg.eventStudents[0].id);
 
             data.forEach(element => {
@@ -36,15 +36,15 @@ async function ueppEventListeners() {
                     last_name:element[0],
                     medical_certificate:element[4] == 'si' ? 1 : 0,
                     company_data:{
-                        id:eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value,
-                        company_name: eg.companies.filter(c => c.id == (eg.studentsFrom == 'customer' ? eg.idCompanies : stppCompany.value))[0].company_name,
+                        id:eg.studentsFrom == eg.idCompanies,
+                        company_name: eg.companies.filter(c => c.id == eg.idCompanies)[0].company_name,
                     }
                 })
             })
 
             printStudents(eg.eventStudents)
             clearInputs(inputs)
-            stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length
+            cstppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length
 
             uepp.style.display = 'none'
         }

@@ -2,14 +2,13 @@ import eg from "./globals.js"
 import {dateToString, showOkPopup } from "../generalFunctions.js"
 
 function completeNextEventsGlobals(element) {
-    eg.studentsFrom = eg.idUserCategories == 4 ? 'customer' : 'administrator'
     eg.companyEventData = element
     eg.eventData = element
     eg.idEvents = element.id
     eg.eventCourseName = element.events_courses.course_name
     eg.idCourses = element.id_courses
     eg.companyReservations = element.companyReservations
-    eg.eventStudents = eg.studentsFrom == 'customer' ? element.events_students.filter(es => es.id_companies == eg.idCompanies && es.enabled == 1) : element.events_students.filter(es => es.enabled == 1)
+    eg.eventStudents = eg.idUserCategories == 4 ? element.events_students.filter(es => es.id_companies == eg.idCompanies && es.enabled == 1) : element.events_students.filter(es => es.enabled == 1)
     eg.eventStudentsFiltered = eg.eventStudents
     eg.eventInvitedCompanies = []
     element.events_invited_companies.forEach(company => {

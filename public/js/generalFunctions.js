@@ -201,15 +201,17 @@ function uncheckInputs(inputs) {
 
 function isValid(inputs) {
     inputs.forEach(input => {
-        const label = document.getElementById(input.id + 'Label')
-        const error = document.getElementById(input.id + 'Error')
-        input.classList.remove('invalidInput')
-        if (label) {
-            label.classList.remove('invalidLabel')
-        }
-        
-        if (error) {
-            error.style.display = 'none'
+        if (input) {
+            const label = document.getElementById(input.id + 'Label')
+            const error = document.getElementById(input.id + 'Error')
+            input.classList.remove('invalidInput')
+            if (label) {
+                label.classList.remove('invalidLabel')
+            }
+            
+            if (error) {
+                error.style.display = 'none'
+            }   
         }
     })    
 }

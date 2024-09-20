@@ -9,7 +9,7 @@
 </div>
 
 <!------MAIN FILTERS------>
-<div class="mainFilters mbl" id="eventsMainFilters">
+<div class="mainFilters mbs" id="eventsMainFilters">
     <div class="divInputsRow">            
         <div class="divInput">
             <label class="label1">Curso</label>
@@ -55,6 +55,16 @@
 </div>
 
 <!------MAIN CONTENT------>
+<% if (userLogged.id_users_categories == 4) { %>
+    <div id="askForQuotaBtn">
+        <i class="fa-solid fa-circle-info"></i>
+        SOLICITAR CUPO
+    </div>
+    <div id="askForQuotaInfo">En caso de requerir más cupos</div>
+    
+<% } %>
+
+
 <div class="eventsCheckboxs">    
     <div class="eventsCheckbox">
         <input type="checkbox" id="filterOnCourse">
@@ -137,7 +147,7 @@
 <!----------POPUPS---------->
 <%- include('./popupsCOPP') %>
 <%- include('./popupsRQPP') %>
-<%- include('./popupsSTPP') %>
+<%- include('./popupsCSTPP') %>
 <%- include('./popupsUEPP') %>
 <%- include('./popupsDEPP') %>
 <%- include('./eventsStudentsPopups') %>

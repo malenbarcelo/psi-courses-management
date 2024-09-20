@@ -129,13 +129,16 @@
 
 /*----------------------events.ejs----------------------*/
 .eventsCheckboxs{
-    position: absolute;
+    /*position: absolute;
     top: 20vh;
-    right: 120px;
+    right: 120px;*/
     padding: 8px;
     border: var(--color1) solid 2px;
     display: flex;
-    flex-direction: column;
+    column-gap: 15px;
+    width: fit-content;
+    margin: auto;
+    margin-bottom: 15px;
     row-gap: 8px;
 }
 
@@ -353,7 +356,7 @@
     width: 80px;
 }
 
-#stppAddStudent{
+.stppAddStudent{
     border: black solid 2px;
     padding:    1px 2px;
     border-radius: 0px;
@@ -361,7 +364,7 @@
     margin-left: -5px;
 }
 
-#stppAddStudent:hover{
+.stppAddStudent:hover{
     background-color: black;
     color: white;
 }

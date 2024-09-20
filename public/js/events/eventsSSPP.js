@@ -8,11 +8,11 @@ import { showOkPopup} from "../generalFunctions.js"
 async function ssppEventListeners() {
     
     ssppAccept.addEventListener("click", async() => {
+        
         const data = {
             id_events: eg.idEvents,
             id_companies: eg.idCompanies,
-            students:eg.eventStudents,
-            studentsFrom:eg.studentsFrom
+            students:eg.eventStudents
         }
 
         await fetch(dominio + 'apis/update-assigned-students/',{
@@ -36,8 +36,8 @@ async function ssppEventListeners() {
         printEvents(eg.eventsFiltered)
 
         sspp.style.display = 'none'
-        stpp.style.display = 'none'
-        showOkPopup(stppOk)
+        cstpp.style.display = 'none'
+        showOkPopup(cstppOk)
     })
 }
 

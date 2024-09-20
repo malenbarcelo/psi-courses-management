@@ -34,13 +34,7 @@
     left: calc(50vw - 210px);
 }
 
-#stppContent{
-    top: 3%;
-    width: 1300px;
-    left: calc(50vw - 660px);
-    max-height: 90vh;
-    position: relative;
-}
+
 
 #dsppContent,#ssppContent,#ueppContent{
     top: 30%;
@@ -89,7 +83,7 @@
 
 /*-----------------------------------*/
 /*------------OK CONTENTS------------*/
-#buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent,#ccoppOkContent,#ceppOkContent,#creppOkContent,#stppOkContent{
+#buppOkContent,#rpppOkContent,#euppOkContent,#cuppOkContent,#ccoppOkContent,#ceppOkContent,#creppOkContent{
     width: 300px;
     top: 40%;
     left: calc(50vw - 183px);
@@ -252,6 +246,22 @@
     top: 40%;
     left: calc(50vw - 183px);
 }
+
+/*customer students popup (cstpp)*/
+#cstppContent{
+    top: 3%;
+    width: 1300px;
+    left: calc(50vw - 660px);
+    max-height: 90vh;
+    position: relative;
+}
+
+#cstppOkContent{
+    width: 300px;
+    top: 40%;
+    left: calc(50vw - 183px);
+}
+
 
 /*-----------------------quotations.ejs-----------------------*/
 /*refuse quotation popup (reqpp)*/

@@ -81,6 +81,8 @@ window.addEventListener('load',async()=>{
     changePsw.addEventListener("click", async() => {
         const inputs = [chpppEmail, chpppPsw, chpppNewPsw, chpppConfirm]
         chpppEmail.value = email.value
+        chpppPsw.value = ''
+        
         isValid(inputs)
         chppp.style.display = 'block'
     })

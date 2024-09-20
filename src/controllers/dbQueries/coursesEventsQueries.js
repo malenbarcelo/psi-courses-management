@@ -81,7 +81,7 @@ const coursesEventsQueries = {
                             [Op.eq]: idCompany
                         }
                     },
-                    required: false
+                    required: true
                 },
                 {
                     association: 'events_quota_reservations',
