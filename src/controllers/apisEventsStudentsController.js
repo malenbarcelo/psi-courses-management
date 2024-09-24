@@ -36,7 +36,7 @@ const apisEventsStudentsController = {
 
       const companyId = req.body.id_companies
       const eventId = req.body.id_events
-      const students = req.body.students
+      const students = req.body.students.map(({ id, ...rest }) => rest)
       const studentsFrom = req.session.userLogged == 4 ? 'customer' : 'administrator'
 
       //delete assigned students

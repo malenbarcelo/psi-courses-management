@@ -262,6 +262,31 @@
     left: calc(50vw - 183px);
 }
 
+/*admisnitrator students popup (astpp)*/
+#astppContent{
+    top: 4%;
+    width: 1300px;
+    left: calc(50vw - 660px);
+    max-height: 90vh;
+    position: relative;
+}
+
+#astppOkContent{
+    width: 300px;
+    top: 40%;
+    left: calc(50vw - 183px);
+}
+
+/*ask for quota popup (afqpp)*/
+#afqppContent{
+    top: 32%;
+    width: 300px;
+    left: 1100px;
+    position: relative;
+    padding: 5px 0px 20px 15px;
+}
+
+
 
 /*-----------------------quotations.ejs-----------------------*/
 /*refuse quotation popup (reqpp)*/

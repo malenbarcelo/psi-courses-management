@@ -9,6 +9,7 @@ import eg from "./globals.js"
 
 //popups event listeners
 import { cstppEventListeners} from "./eventsCSTPP.js"
+import { astppEventListeners} from "./eventsASTPP.js"
 import { ueppEventListeners} from "./eventsUEPP.js"
 import { ssppEventListeners} from "./eventsSSPP.js"
 import { deppEventListeners} from "./eventsDEPP.js"
@@ -36,6 +37,7 @@ window.addEventListener('load',async()=>{
     
     //popups event listeners
     cstppEventListeners()
+    astppEventListeners()
     ueppEventListeners()
     ssppEventListeners()
     deppEventListeners()
@@ -72,7 +74,7 @@ window.addEventListener('load',async()=>{
     printEvents(eg.eventsFiltered)
 
     //close popups
-    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, cstppClose,cstppCancel,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel]
+    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, cstppClose,astppClose,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel,afqppClose]
     closePopupsEventListeners(closePopups)
 
     //table info events listeners
@@ -117,16 +119,69 @@ window.addEventListener('load',async()=>{
             },
         ]
     }
-    
 
     showTableInfo(tableIcons,280,150)
 
+    //download data
+    download.addEventListener("click", async() => {
+
+        const data = eg.eventsFiltered
+
+        const response = await fetch('/apis/events/download-events', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        if (response.ok) {
+            const blob = await response.blob()
+            const url = window.URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url
+            a.download = 'eventos.xlsx'
+            document.body.appendChild(a)
+            a.click()
+            a.remove()
+        } else {
+            console.error('Error al descargar el archivo')
+        }
+    })
+
+    //ask for quota 
+    askForQuotaBtn.addEventListener("click", async() => {
+        afqpp.style.display = 'block'
+    })
+
+
     dsppAccept.addEventListener("click", async() => {
         eg.eventStudents = eg.eventStudents.filter(s => s.id != eg.idStudentToDelete)
-        printStudents(eg.eventStudents)
-        const reservations = eg.studentsFrom == 'customer' ? eg.companyReservations : eg.eventData.eventReservations
-        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length
+        eg.eventStudentsFiltered = eg.eventStudentsFiltered.filter(s => s.id != eg.idStudentToDelete)
+        let loader
+        let body
+        let subtitle
+        
+        if (eg.idUserCategories == 4) {
+            loader = document.getElementById('cstppLoader')
+            body = document.getElementById('cstppBody')
+            subtitle = document.getElementById('cstppSubtitle2')
+            printStudents(eg.eventStudents,loader,body)
+        }else{
+            loader = document.getElementById('astppLoader')
+            body = document.getElementById('astppBody')
+            subtitle = document.getElementById('astppSubtitle2')
+            printStudents(eg.eventStudentsFiltered,loader,body)
+        }
+        
+        
+
+        const reservations = eg.idUserCategories == 4 ? eg.companyEventData.companyReservations : eg.eventData.eventReservations
+        
+        subtitle.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length
+        
         dspp.style.display = 'none'
+
 
     })
 

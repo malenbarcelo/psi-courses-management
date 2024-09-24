@@ -73,8 +73,6 @@ function editQuotaValidations() {
 
 async function uploadExcelValidations() {
 
-    console.log(eg.eventStudents)
-
     let errors = 0
     let data = []
 
@@ -105,9 +103,16 @@ async function uploadExcelValidations() {
             data = await response.json()
             data.shift()
 
-            if (eg.companyReservations < (eg.eventStudents.length + data.length)) {
-                errors += 1
-                ueppFileError.innerText = 'Supera la cantidad de cupos reservados'                
+            if (eg.idUserCategories == 4) {
+                if (eg.companyReservations < (eg.eventStudents.length + data.length)) {
+                    errors += 1
+                    ueppFileError.innerText = 'Supera la cantidad de cupos reservados'                
+                }
+            }else{
+                if (eg.companyEventData.companyReservations < (eg.eventStudentsFiltered.length + data.length)) {
+                    errors += 1
+                    ueppFileError.innerText = 'Supera la cantidad de cupos reservados por la empresa'                
+                }
             }
 
             if (errors == 0) {
@@ -132,13 +137,8 @@ async function uploadExcelValidations() {
                     
                     const set1 = new Set(dnis)
                     const set2 = new Set(assignedDnis)
-                    
-                    console.log(set1)
-                    console.log(set2)
 
                     const repeatedDnis = [...set1].filter(dni => set2.has(dni))
-
-                    console.log(repeatedDnis)
 
                     if (repeatedDnis.length > 0) {
                         errors +=1
@@ -171,10 +171,6 @@ async function addStudentValidations() {
 
     let inputs = [cstppLastName,cstppFirstName,cstppDNI,cstppART]
 
-    if (eg.studentsFrom == 'administrator') {
-        inputs.push(cstppCompany)
-    }
-    
     let errors = inputsValidation(inputs)
 
     if (errors == 0) {
@@ -190,18 +186,7 @@ async function addStudentValidations() {
                 cstppError.innerText = 'El alumno debe poseer el apto médico vigente'
                 isInvalid([cstppCheckbox])
             }else{
-                const company = document.getElementById('cstppCompany')
-                
-                if (company) {
-                    const companyEventsData = await (await fetch(dominio + 'apis/courses-events/company-events/' + company.value)).json()
-                    const companyEventData = companyEventsData.filter(ced => ced.id == eg.idEvents)
-                    eg.companyReservations = companyEventData[0].companyReservations
-                }
-
                 if (eg.companyReservations == eg.eventStudents.length) {
-                    console.log(eg.companyReservations)
-                    console.log(eg.eventStudents)
-
                     errors += 1
                     cstppError.innerText = 'Supera la cantidad de cupos reservados'                
                 }else{
@@ -212,11 +197,44 @@ async function addStudentValidations() {
             }
         }
     }else{
-        cstppError.innerText = 'Debe complear todos los datos'
+        cstppError.innerText = 'Debe completar todos los datos'
     }
 
     if (errors > 0) {
         cstppError.style.display = 'block'
+    }
+
+    return errors
+}
+
+async function addStudentAdmValidations() {
+
+    const inputs = [astppCompany,astppLastName,astppFirstName,astppDNI,astppART]
+
+    let errors = inputsValidation(inputs)
+
+    if (errors == 0) {
+
+        const findDNI  = eg.eventStudents.filter(s => s.dni == astppDNI.value)
+
+        if (findDNI.length > 0 ) {
+            errors += 1
+            astppError.innerText = 'Ya existe en la lista un alumno con el DNI ' + astppDNI.value
+            isInvalid([astppDNI])
+        }else{
+
+            if (eg.companyEventData.companyReservations == eg.eventStudentsFiltered.length) {
+                errors += 1
+                astppError.innerText = 'Supera la cantidad de cupos reservados por la empresa.'                
+            }
+
+        }
+    }
+
+    if (errors > 0) {
+        astppError.style.display = 'block'
+    }else{
+        astppError.style.display = 'none'
     }
 
     return errors
@@ -299,5 +317,5 @@ function editEventValidations() {
     return errors
 }
 
-export {reserveQuotaValidations,editQuotaValidations,addStudentValidations,uploadExcelValidations,editEventValidations}
+export {reserveQuotaValidations,editQuotaValidations,addStudentValidations,addStudentAdmValidations,uploadExcelValidations,editEventValidations}
 

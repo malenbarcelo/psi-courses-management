@@ -9,8 +9,11 @@
     font-size: 13px;
 }
 
-#stppCheckLabel{
-    width: 70px;
+#astppText{
+    margin: auto;
+    text-align: center;
+    width: 700px;
+    font-size: 13px;
 }
 
 #cstppCheckbox{
@@ -24,6 +27,18 @@
 }
 
 #cstppAcceptCheckbox{
+    font-size: 12px;
+    font-weight: lighter;
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+    border: rgb(171, 171, 171) solid 1px;
+    padding: 1px 3px;
+    width: fit-content;
+    margin: auto;
+}
+
+#astppAcceptCheckbox{
     font-size: 12px;
     font-weight: lighter;
     display: flex;
@@ -58,9 +73,30 @@
     color:black;
 }
 
-#askForQuotaInfo{
-    position: absolute;
-    border: red solid 1px;
-    top: 230px;
-    right: 80px;
+.askForQuotaLine{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.askForQuotaWhatsapp{
+    font-size: 18px;
+    color: green;
+}
+
+.askForQuotaEmail{
+    font-size: 18px;
+}
+
+.askForQuotaPhone{
+    color: blue;
+    text-decoration: underline;
+}
+
+.askForQuotaClose{
+    display: flex;
+    justify-content: right;
+    padding-right: 10px;
+    align-items: center;
 }

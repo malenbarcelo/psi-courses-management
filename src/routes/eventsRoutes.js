@@ -10,6 +10,7 @@ router.get('/events-history',eventsController.eventsHistory)
 ///APIS
 //courses events
 router.post('/delete-event',eventsApisController.deleteEvent)
+router.post('/download-events',eventsApisController.downloadEvents)
 router.post('/students/download-data',eventsApisController.downloadStudents)
 
 //events history

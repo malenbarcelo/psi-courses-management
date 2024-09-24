@@ -56,11 +56,36 @@
 
 <!------MAIN CONTENT------>
 <% if (userLogged.id_users_categories == 4) { %>
+    
     <div id="askForQuotaBtn">
         <i class="fa-solid fa-circle-info"></i>
         SOLICITAR CUPO
     </div>
-    <div id="askForQuotaInfo">En caso de requerir más cupos</div>
+
+    <div class="popup" id="afqpp">
+    
+        <div class="popupContent" id="afqppContent">
+    
+            <div class="askForQuotaClose">
+                <div class="popupIcon1" id="afqppClose"><i class="fa-solid fa-rectangle-xmark popupCloseIcon icon"></i></div>
+            </div>
+
+            <div>Los cupos adicionales deben solicitarse a través de los siguientes medios:</div>
+            <a href="https://wa.me/5492994246446" target="_blank" class="askForQuotaLine">
+                <i class="fa-brands fa-whatsapp askForQuotaWhatsapp"></i>
+                <div class="askForQuotaPhone">+54 9 299 424 6446</div>
+            </a>
+            <div class="askForQuotaLine">
+                <i class="fa-solid fa-at askForQuotaEmail"></i>
+                <div>coordinacion@psiservices.com.ar</div>
+            </div>
+    
+        </div>
+    </div>
+    
+    
+    
+    
     
 <% } %>
 
@@ -148,6 +173,7 @@
 <%- include('./popupsCOPP') %>
 <%- include('./popupsRQPP') %>
 <%- include('./popupsCSTPP') %>
+<%- include('./popupsASTPP') %>
 <%- include('./popupsUEPP') %>
 <%- include('./popupsDEPP') %>
 <%- include('./eventsStudentsPopups') %>

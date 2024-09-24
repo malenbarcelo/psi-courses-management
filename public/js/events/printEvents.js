@@ -5,121 +5,6 @@ import { printCompanies } from "./printEventCompanies.js"
 import { printStudents } from "./printEventStudents.js"
 import { completeNextEventsGlobals, clickCompanies, clickCancel } from "./functions.js"
 
-// async function printEvents(dataToPrint) {
-
-//     eventsLoader.style.display = 'block'
-//     divEvents.innerHTML = ''
-
-//     if (dataToPrint.length == 0) {
-//         noQuotationsToShow.style.display = 'flex'
-//         divEvents.style.display = 'none'
-//     }else{
-//         noQuotationsToShow.style.display = 'none'
-//         divEvents.style.display = 'flex'
-//         const fragment = document.createDocumentFragment()
-
-//     dataToPrint.forEach(element => {
-
-//         //get data
-//         const startTime = element.start_time.substring(0, 5)
-//         const endTime = element.end_time.substring(0, 5)
-//         const availableQuota = element.event_quota - element.eventReservations
-//         const reservations = eg.idUserCategories == 4 ? element.companyReservations : element.eventReservations
-//         const assignations = eg.idUserCategories == 4 ? element.companyAssignations : element.eventAssignations
-//         const missingAssignations = reservations - assignations
-        
-//         const divEvent = document.createElement('div');
-//         divEvent.id = 'divEvent';
-
-//         const eventCourseTitle = document.createElement('div');
-//         eventCourseTitle.id = 'eventCourseTitle';
-//         eventCourseTitle.textContent = element.events_courses.course_name
-
-//         const eventId = document.createElement('div');
-//         eventId.id = 'eventId';
-//         eventId.textContent = '#' + String(element.id).padStart(8, '0')
-
-//         const eventData = document.createElement('div');
-//         eventData.id = 'eventData';
-//         eventData.innerHTML = '<div>' + dateToString(element.start_date) + ' - ' + dateToString(element.end_date) + '</div><div>' + startTime + ' a ' + endTime + ' hs.</div>';
-
-//         const eventInfo = document.createElement('div');
-//         eventInfo.id = 'eventInfo';
-//         eventInfo.innerHTML = '<div>Disponible: ' + availableQuota + '</div><div>Reservado: ' + reservations + '</div><div>Asignado: ' + assignations + '</div>';
-
-//         const eventActions = document.createElement('div');
-//         eventActions.id = 'eventActions';
-
-//         const onCourse = document.createElement('div');
-//         onCourse.id = 'onCourse';
-//         onCourse.innerHTML = element.status == 'onCourse' ? 'En curso' : element.status == 'finished' ? 'Finalizado' : 'Por iniciar';
-
-//         const editEventAction = document.createElement('div');
-//         editEventAction.className = element.status == 'finished' ? 'courseAction notVisible' : 'courseAction';
-//         editEventAction.innerHTML = '<i class="fa-regular fa-pen-to-square icon" id="editE_' + element.id + '"></i><div class="courseActionInfo2">Editar evento</div>';
-
-//         const deleteEventAction = document.createElement('div');
-//         deleteEventAction.className = element.status == 'finished' ? 'courseAction notVisible' : 'courseAction';
-//         deleteEventAction.innerHTML = '<i class="fa-regular fa-trash-can icon" id="deleteE_' + element.id + '"></i><div class="courseActionInfo2">Eliminar evento</div>';
-        
-//         const editReservationAction = document.createElement('div');
-//         editReservationAction.className = element.companyReservations == 0 ? 'courseAction notVisible' : 'courseAction';
-//         editReservationAction.innerHTML = '<i class="fa-regular fa-pen-to-square icon" id="editR_' + element.id + '"></i><div class="courseActionInfo2">Editar reserva</div>';
-
-//         const cancelAction = document.createElement('div');
-//         cancelAction.className = element.companyReservations == 0 ? 'courseAction notVisible' : 'courseAction';
-//         cancelAction.innerHTML = '<i class="fa-regular fa-circle-xmark icon" id="cancel_' + element.id + '"></i><div class="courseActionInfo2">Cancelar reserva</div>';
-
-//         const studentsAction = document.createElement('div');
-//         studentsAction.className = ((eg.idUserCategories == 4 && element.companyReservations == 0) || (eg.idUserCategories != 4 && element.eventReservations == 0)) ? 'courseAction notVisible' : 'courseAction';
-//         studentsAction.innerHTML = '<i class="fa-solid fa-user icon" id="students_' + element.id + '"></i><div class="courseActionInfo2">Alumnos</div>';
-
-//         const companiesAction = document.createElement('div');
-//         companiesAction.className = 'courseAction';
-//         companiesAction.innerHTML = '<i class="fa-solid fa-industry icon" id="companies_' + element.id + '"></i><div class="courseActionInfo2">Empresas</div>';
-
-//         const reserveAction = document.createElement('div');
-//         reserveAction.className = element.companyReservations != 0 ? 'courseAction notVisible' : 'courseAction';
-//         reserveAction.innerHTML = '<i class="fa-solid fa-user-plus icon" id="reserve_' + element.id + '"></i><div class="courseActionInfo2">Reservar cupo</div>';
-
-//         const alert = document.createElement('div');
-//         alert.className = missingAssignations ? 'eventAlert' : 'notVisible';
-//         alert.innerHTML = '<i class="fa-solid fa-triangle-exclamation icon" id="alert_' + element.id + '"></i><div class="courseActionInfo3">Cupos reservados pendientes de asignación</div>';
-
-//         if (eg.idUserCategories == 4) {
-//             eventActions.appendChild(editReservationAction);
-//             eventActions.appendChild(cancelAction);
-//             eventActions.appendChild(studentsAction);
-//             eventActions.appendChild(reserveAction);
-//             eventActions.appendChild(alert);
-//         }else{
-//             eventActions.appendChild(editEventAction);
-//             eventActions.appendChild(deleteEventAction);
-//             eventActions.appendChild(studentsAction);
-//             eventActions.appendChild(companiesAction);
-//             eventActions.appendChild(alert);
-//         }        
-        
-//         divEvent.appendChild(eventCourseTitle);
-//         divEvent.appendChild(eventId);
-//         divEvent.appendChild(eventData);
-//         divEvent.appendChild(eventInfo);
-//         divEvent.appendChild(eventActions);
-//         divEvent.appendChild(onCourse);
-//         fragment.appendChild(divEvent);
-            
-        
-//     });
-
-//     divEvents.appendChild(fragment);
-
-//     await addEventsEventListeners(dataToPrint);
-
-//     }
-
-//     eventsLoader.style.display = 'none';
-// }
-
 async function printEvents(dataToPrint) {
 
     eventsLoader.style.display = 'block'
@@ -294,11 +179,38 @@ async function addEventsEventListeners(dataToPrint) {
                 cstppMainTitle.innerText = element.events_courses.course_name
                 cstppSubtitle.innerHTML = '<b>Fecha:</b> ' + dateToString(element.start_date) + ' - ' + dateToString(element.end_date) + ' || ' + element.start_time.substring(0,5) + 'hs. a ' + element.end_time.substring(0,5) + 'hs.'
                 cstppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + assignations
-    
                 cstppText.style.display = 'block'
-
-                printStudents(eg.eventStudents)
+                printStudents(eg.eventStudents,astppLoader,cstppBody)
                 cstpp.style.display = 'block'
+            })
+        }
+
+        //adm students
+        if (admStudents) {
+            admStudents.addEventListener('click',async()=>{
+                completeNextEventsGlobals(element)
+                const reservations = element.eventReservations
+                const assignations = element.eventAssignations
+                const inputs = [astppCompany,astppLastName,astppFirstName,astppART,astppDNI,astppAcceptCheckbox]
+                isValid(inputs)
+                clearInputs(inputs)
+                uncheckInputs([astppAcceptConditions])
+                astppError.style.display = 'none'
+                astppError2.style.display = 'none'
+                astppMainTitle.innerText = element.events_courses.course_name
+                astppSubtitle.innerHTML = '<b>Fecha:</b> ' + dateToString(element.start_date) + ' - ' + dateToString(element.end_date) + ' || ' + element.start_time.substring(0,5) + 'hs. a ' + element.end_time.substring(0,5) + 'hs.'
+                astppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + reservations + ' || <b>Cupos asignados: </b>' + assignations
+                astppText.style.display = 'block'
+                printStudents(eg.eventStudents,astppLoader,astppBody)
+
+                //complete companies
+                astppCompany.innerHTML = '<option value="">Todas las instituciones</option>'
+                eg.eventCompanies.forEach(company => {
+                    const companyName = eg.companies.filter(c => c.id == company)[0].company_name                    
+                    astppCompany.innerHTML += '<option value="' + company + '">' + companyName + '</option>'                
+                })
+
+                astpp.style.display = 'block'
             })
         }
         

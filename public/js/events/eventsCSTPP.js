@@ -7,15 +7,6 @@ import { acceptWithEnter,clearInputs, isInvalid, isValid} from "../generalFuncti
 //CUSTOMER STUDENTS POPUP (cstpp)
 async function cstppEventListeners() {
     
-    //change company
-    const cstppCompany = document.getElementById('cstppCompany')
-    if (cstppCompany) {
-        cstppCompany.addEventListener("change", async() => {
-            await filterStudents()
-            printStudents(eg.eventStudentsFiltered)
-        })
-    }
-
     //add student
     cstppAddStudent.addEventListener("click", async() => {
         
@@ -37,6 +28,7 @@ async function cstppEventListeners() {
                 id_courses:eg.idCourses,
                 id_events:eg.idEvents,
                 last_name:cstppLastName.value,
+                enabled:1,
                 company_data:{
                     id:eg.idCompanies,
                     company_name: eg.companies.filter(c => c.id == eg.idCompanies)[0].company_name,
@@ -47,12 +39,12 @@ async function cstppEventListeners() {
             
             cstppMedicalCert.checked = false
             clearInputs(inputs)
-            printStudents(eg.eventStudentsFiltered)
+            printStudents(eg.eventStudentsFiltered,cstppLoader,cstppBody)
         }
 
     })
 
-    acceptWithEnter(cstppDNI,cstppAddStudent)
+    acceptWithEnter(cstppART,cstppAddStudent)
 
     //accept
     cstppAccept.addEventListener("click", async() => {
@@ -71,15 +63,10 @@ async function cstppEventListeners() {
     //uploadExcelIcon
     cstppUploadExcelIcon.addEventListener("click", async() => {
         
-        const cstppCheckbox = document.getElementById('stppCheckbox')
-        const cstppMedicalCert = document.getElementById('stppMedicalCert')
-
         isValid([cstppLastName,cstppFirstName,cstppDNI,cstppART,cstppCheckbox,ueppDivInput])
         clearInputs([cstppLastName,cstppFirstName,cstppDNI,cstppART])
         
-        if (cstppMedicalCert) {
-            cstppMedicalCert.checked = false
-        }
+        cstppMedicalCert.checked = false
         
         ueppFile.value = ''
         cstppError.style.display = 'none'
@@ -109,7 +96,7 @@ async function cstppEventListeners() {
             const url = window.URL.createObjectURL(blob)
             const a = document.createElement('a')
             a.href = url
-            a.download = 'historial_de_eventos.xlsx'
+            a.download = 'alumnos.xlsx'
             document.body.appendChild(a)
             a.click()
             a.remove()

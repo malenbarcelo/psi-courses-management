@@ -34,12 +34,17 @@
     z-index: 1;
 }
 
-#coursesLoader,#eventsLoader{
+#coursesLoader{
     top: 45%;
     left: calc(50vw - 20px);
 }
 
-#studentsLoader,#eventsHistoryLoader{
+#eventsLoader{
+    top: 50%;
+    left: calc(50vw - 20px);
+}
+
+#astppLoader,#cstppLoader,#eventsHistoryLoader{
     top: 50%;
     left: calc(50vw - 30px);
     z-index: 1;

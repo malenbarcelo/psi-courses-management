@@ -95,19 +95,7 @@ const eventsStudentsQueries = {
         }
     },
     assignStudents: async(students) => {
-        for (let i = 0; i < students.length; i++) {
-            await model.create({
-                first_name:students[i].first_name,
-                last_name:students[i].last_name,
-                art:students[i].art,
-                medical_certificate:1,
-                dni:students[i].dni,
-                id_events:students[i].id_events,
-                id_companies:students[i].id_companies,
-                id_courses:students[i].id_courses,
-                enabled:1
-            })
-        }
+        await model.bulkCreate(students)
     },
     studentsPerCourse: async() => {        
         const studentsPerCourse = await model.findAll({

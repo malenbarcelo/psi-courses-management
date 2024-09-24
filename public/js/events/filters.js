@@ -36,16 +36,17 @@ function filterEvents() {
 
 async function filterStudents() {
 
-    if (stppCompany.value == '') {
+    if (astppCompany.value == '') {
         eg.eventStudentsFiltered = eg.eventStudents
-        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.eventData.eventReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length        
+        astppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.eventData.eventReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudents.length        
     }else{
-        const companyEvents = await (await fetch(dominio + 'apis/courses-events/company-events/' + stppCompany.value)).json()
-        const filterEvent = companyEvents.filter( e => e.id == eg.idEvents)[0]
 
-        eg.eventStudentsFiltered = eg.eventStudents.filter( es => es.id_companies == stppCompany.value)
+        const companyEvents = await (await fetch(dominio + 'apis/courses-events/company-events/' + astppCompany.value)).json()
+        eg.companyEventData = companyEvents.filter( e => e.id == eg.idEvents)[0]
 
-        stppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + filterEvent.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudentsFiltered.length
+        eg.eventStudentsFiltered = eg.eventStudents.filter( es => es.id_companies == astppCompany.value)
+
+        astppSubtitle2.innerHTML = '<b>Cupos reservados:</b> ' + eg.companyEventData.companyReservations + ' || <b>Cupos asignados: </b>' + eg.eventStudentsFiltered.length
         
     }
 }

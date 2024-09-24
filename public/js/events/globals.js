@@ -25,7 +25,8 @@ let eg = {
     idStudentToDelete:0,
     idQuoteToCancel:0,
     idQuoteToReject:0,
-    eventCompanyStudents:[]
+    eventCompanyStudents:[],
+    companyEventData:[],
 }
 
 export default eg

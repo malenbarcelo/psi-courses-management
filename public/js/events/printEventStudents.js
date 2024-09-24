@@ -1,11 +1,11 @@
 import { dominio } from "../dominio.js"
 import eg from "./globals.js"
 
-async function printStudents(dataToPrint) {
+async function printStudents(dataToPrint,loader,body) {
 
-    studentsLoader.style.display = 'block'
+    loader.style.display = 'block'
     
-    bodyStudents.innerHTML = ''
+    body.innerHTML = ''
     let counter = 0
 
     let html = '';
@@ -35,19 +35,19 @@ async function printStudents(dataToPrint) {
                 <th class="${rowClass}">si</th>
                 <th class="${rowClass}"><i class="fa-regular fa-trash-can allowedIcon" id="delete_${element.id}"></i></th>
             </tr>
-        `;
+            `
         }
         
         
         counter += 1;
     });
 
-// Insertar todo el HTML en el DOM de una sola vez
-bodyStudents.innerHTML += html;
+    // Insertar todo el HTML en el DOM de una sola vez
+    body.innerHTML += html;
 
     addStudentsEventListeners(dataToPrint)
 
-    studentsLoader.style.display = 'none'
+    loader.style.display = 'none'
 }
 
 async function addStudentsEventListeners(dataToPrint) {

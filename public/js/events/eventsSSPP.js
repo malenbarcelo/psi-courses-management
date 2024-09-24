@@ -6,6 +6,19 @@ import { showOkPopup} from "../generalFunctions.js"
 
 //SAVE STUDENTS POPUP (sspp)
 async function ssppEventListeners() {
+
+    const closeInputs = [ssppClose,ssppCancel]
+    closeInputs.forEach(input => {
+        input.addEventListener("click", async() => {
+            const acceptAdm = document.getElementById('astppAcceptConditions')
+            const acceptCust = document.getElementById('cstppAcceptConditions')
+            if (acceptAdm) {
+                acceptAdm.checked = false                
+            }else{
+                acceptCust.checked = false
+            }
+        })
+    })
     
     ssppAccept.addEventListener("click", async() => {
         
@@ -37,6 +50,8 @@ async function ssppEventListeners() {
 
         sspp.style.display = 'none'
         cstpp.style.display = 'none'
+        astpp.style.display = 'none'
+
         showOkPopup(cstppOk)
     })
 }
