@@ -9,14 +9,14 @@
 </div>
 
 <!------GENERAL ACTIONS------>
-<div class="divDGAs" id="DGAsEvents">
+<!-- <div class="divDGAs" id="DGAsEvents">
     <div class="divDGA divDGAm" id="DGAdownload">
         <i class="fa-solid fa-download"></i>
         <div class="DGAinfo">
             Descargar datos
         </div>        
     </div>
-</div>
+</div> -->
 
 <!------MAIN FILTERS------>
 <div class="mainFilters mbl">    
@@ -63,10 +63,20 @@
                 <% }) %>                
             </select>                      
         </div>
-        
-        <div class="divInput">
-            <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+        <div class="divIcons">
+            <div class="divIcon">
+                <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+                <div class="divIconInfo">Quitar filtros</div>
+            </div>
+            <div class="divIcon">
+                <i class="fa-solid fa-download unfilterIcon" id="DGAdownload"></i>
+                <div class="divIconInfo">Descargar datos</div>
+            </div>
         </div>
+        
+        <!-- <div class="divInput">
+            <i class="fa-solid fa-filter-circle-xmark unfilterIcon" id="unfilter"></i>
+        </div> -->
     </div>    
 </div>
 
