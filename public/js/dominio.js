@@ -1,1 +1,1 @@
-export const dominio = 'http://localhost:3006/'
+export const dominio = 'https://psi-courses-management.wnpower.host/'

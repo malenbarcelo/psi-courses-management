@@ -44,7 +44,7 @@
     left: calc(50vw - 20px);
 }
 
-#astppLoader,#cstppLoader,#eventsHistoryLoader{
+#astppLoader,#cstppLoader,#studentsLoader{
     top: 50%;
     left: calc(50vw - 30px);
     z-index: 1;

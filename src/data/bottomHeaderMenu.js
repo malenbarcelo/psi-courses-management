@@ -16,7 +16,7 @@ const bottomHeaderMenu = [
     {
         id:3,
         name:'ALUMNOS',
-        href:'/events/events-history',
+        href:'/students',
         subitems:[],
         idsUsersCategories:[1,2,3,4]
     },

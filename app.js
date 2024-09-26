@@ -12,7 +12,7 @@ const mainRoutes = require('./src/routes/mainRoutes.js')
 const usersRoutes = require('./src/routes/usersRoutes.js')
 const coursesRoutes = require('./src/routes/coursesRoutes.js')
 const eventsRoutes = require('./src/routes/eventsRoutes.js')
-//const quotationsRoutes = require('./src/routes/quotationsRoutes.js')
+const studentsRoutes = require('./src/routes/studentsRoutes.js')
 const apisRoutes = require('./src/routes/apisRoutes.js')
 
 const app = express()
@@ -33,11 +33,11 @@ app.set('view engine','ejs')
 
 //configure session
 app.use(session({
-    store: new FileStore(),
+    //store: new FileStore(),
     secret:'secret',
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false }
+    //cookie: { secure: false }
 }))
 
 //middlewares
@@ -54,10 +54,12 @@ app.use('/apis/users',usersRoutes)
 app.use('/courses',coursesRoutes)
 app.use('/events',eventsRoutes)
 app.use('/apis/events',eventsRoutes)
-//app.use('/quotations',quotationsRoutes)
-//app.use('/apis/quotations',quotationsRoutes)
+app.use('/students',studentsRoutes)
+app.use('/apis/students',studentsRoutes)
+
+
 app.use('/apis',apisRoutes)
 
 
 
-//console.log(bcrypt.hashSync('malen',10))
+console.log(bcrypt.hashSync('user1',10))

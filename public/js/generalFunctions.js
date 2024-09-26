@@ -26,6 +26,25 @@ function showOkPopup(popupToShow) {
     
 }
 
+async function applyPredictElement(elementsToPredict) {
+
+    for (let i = 0; i < elementsToPredict.length; i++) {
+        const input = elementsToPredict[i].input
+        const list = elementsToPredict[i].list
+        const apiUrl = elementsToPredict[i].apiUrl
+        const name = elementsToPredict[i].name
+        const elementName = elementsToPredict[i].elementName
+
+        input.addEventListener("input", async(e) => {
+            predictElements(input,list,apiUrl,name,elementName)
+        })
+
+        input.addEventListener("keydown", async(e) => {
+            selectFocusedElement(e,input,list,elementName)
+        })
+    }
+}
+
 async function predictElements(input,list,apiUrl,dataToPrint,elementName) {
     if (input.value.length >= 3) {
 
@@ -255,4 +274,4 @@ function emailValidation(email) {
     
 }
 
-export {dateToString,showOkPopup,predictElements,selectFocusedElement,closePopupsEventListeners,acceptWithEnter,showTableInfo,clearInputs, isValid, isInvalid,inputsValidation,emailValidation,uncheckInputs}
+export {dateToString,showOkPopup,predictElements,selectFocusedElement,closePopupsEventListeners,acceptWithEnter,showTableInfo,clearInputs, isValid, isInvalid,inputsValidation,emailValidation,uncheckInputs,applyPredictElement}

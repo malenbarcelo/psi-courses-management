@@ -6,6 +6,7 @@ const months = require('../data/months')
 const eventsController = {
     events: async(req,res) => {
         try{
+
             const idSelectedItem = 1
 
             const courses = await coursesQueries.courses()
@@ -18,23 +19,7 @@ const eventsController = {
             console.log(error)
             return res.send('Ha ocurrido un error')
         }
-    },
-    eventsHistory: async(req,res) => {
-        try{
-            const idSelectedItem = 3
-            const route = 'events-history'
-
-            const courses = await coursesQueries.courses()
-            const companies = await companiesQueries.companies()
-
-            return res.render('eventsHistory/eventsHistory',{title:'Eventos',bottomHeaderMenu,idSelectedItem,courses,companies,months,route})
-
-        }catch(error){
-
-            console.log(error)
-            return res.send('Ha ocurrido un error')
-        }
-    },
+    }
 }
 
 module.exports = eventsController

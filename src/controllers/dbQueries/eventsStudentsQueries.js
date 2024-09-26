@@ -11,9 +11,28 @@ const eventsStudentsQueries = {
                 {association: 'company_data'},
                 {association: 'course_data'}
             ],
+            order:[['last_name','ASC']],
             where:{
                 enabled:1
             },
+            raw:true,
+            nest:true
+
+        })
+        return allData
+    },
+    companyData: async(idCompany) => {        
+        const allData = await model.findAll({
+            include: [
+                {association: 'event_data'},
+                {association: 'company_data'},
+                {association: 'course_data'}
+            ],
+            where:{
+                id_companies:idCompany,
+                enabled:1
+            },
+            order:[['last_name','ASC']],
             raw:true,
             nest:true
 
@@ -114,8 +133,9 @@ const eventsStudentsQueries = {
     distinctStudents: async() => {
         const distinctStudents = await model.findAll({
             attributes: [
-                [sequelize.literal("DISTINCT CONCAT(last_name, ', ', first_name)"), 'student']
+                [sequelize.literal("DISTINCT CONCAT(last_name, ', ', first_name)"), 'student'],
             ],
+            order:[['student','ASC']],
             raw:true,
         })
         return distinctStudents

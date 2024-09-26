@@ -1,6 +1,6 @@
-const username = "root"
-const password = "30941767"
-const database = "psi_courses_management_db"
+const username = "psicoursesmanage_adm"
+const password = "duE~n$C}uNrN"
+const database = "psicoursesmanage_db"
 
 module.exports =
 {

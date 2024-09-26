@@ -33,6 +33,15 @@
             </div>
         <% } %>
         <div class="divInput">
+            <label class="label1">Nombre y apellido</label>
+            <input type="text" class="input1 ixl ipm" id="filterName"> 
+            <ul class="predictedElements" id="ulPredictedName"></ul>                     
+        </div>
+        <div class="divInput">
+            <label class="label1">DNI</label>
+            <input type="text" class="input1 is ipm" id="filterDni">                      
+        </div>
+        <div class="divInput">
             <label class="label1">Curso</label>
             <select class="input1 sl spm" id="filterCourse">
                 <option value="">Todos los cursos</option>
@@ -40,20 +49,6 @@
                     <option value="<%= course.id %>"><%= course.course_name %></option>
                 <% }) %>                
             </select>            
-        </div>
-        <div class="divInput">
-            <label class="label1">Apellido</label>
-            <input type="text" class="input1 im ipm" id="filterLastName"> 
-            <ul class="predictedElements" id="ulPredictedLastName"></ul>                     
-        </div>
-        <div class="divInput">
-            <label class="label1">Nombre</label>
-            <input type="text" class="input1 im ipm" id="filterFirstName"> 
-            <ul class="predictedElements" id="ulPredictedFirstName"></ul>                     
-        </div>
-        <div class="divInput">
-            <label class="label1">DNI</label>
-            <input type="text" class="input1 is ipm" id="filterDni">                      
         </div>
         <div class="divInput">
             <label class="label1">AÑO</label>
@@ -77,35 +72,24 @@
 
 <!------MAIN CONTENT------>
 <div class="divTable" id="eventsHistoryTable">
-
-    <div class="thInfo" id="vdppInfo">Ver / Editar</div>
-    <div class="thInfo" id="dfppInfo">Descargar OC</div>
-
     <table>
         <thead>
             <tr>
-                <th class="thCss thl">Empresa</th>
-                <th class="thCss thm">Apellido</th>
-                <th class="thCss thm">Nombre</th>
+                <th class="thCss thxl">Alumno</th>
                 <th class="thCss thxs">DNI</th>
-                <th class="thCss thl">Curso</th>
+                <th class="thCss thl">Empresa</th>
+                <th class="thCss thxl">Curso</th>
                 <th class="thCss ths">Evento</th>
                 <th class="thCss ths">Inicio</th>
                 <th class="thCss ths">Fin</th>        
             </tr>
         </thead>
-        <tbody id="bodyEventsHistory"></tbody>
+        <tbody id="studentsBody"></tbody>
     </table>
 </div>
 
-<div id="divQuotesHistory"></div>
-
-
 <!----------LOADER---------->
-<div class="loader" id="eventsHistoryLoader"></div>
-
-<!----------POPUPS---------->
-<%- include('./eventsHistoryPopups') %>
+<div class="loader" id="studentsLoader"></div>
 
 <!----------SCRIPTS---------->
-<script type="module" src="/js/eventsHistory/eventsHistory.js"></script>
+<script type="module" src="/js/students/students.js"></script>

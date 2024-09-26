@@ -74,7 +74,11 @@ window.addEventListener('load',async()=>{
     printEvents(eg.eventsFiltered)
 
     //close popups
-    const closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, cstppClose,astppClose,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel,afqppClose]
+    let closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, cstppClose,astppClose,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel]
+    if (eg.idUserCategories == 4) {
+        closePopups.push(afqppClose)
+    }
+
     closePopupsEventListeners(closePopups)
 
     //table info events listeners
@@ -150,9 +154,13 @@ window.addEventListener('load',async()=>{
     })
 
     //ask for quota 
-    askForQuotaBtn.addEventListener("click", async() => {
-        afqpp.style.display = 'block'
-    })
+    const askForQuotaBtn = document.getElementById('askForQuotaBtn')
+    if (askForQuotaBtn) {
+        askForQuotaBtn.addEventListener("click", async() => {
+            afqpp.style.display = 'block'
+        })
+    }
+    
 
 
     dsppAccept.addEventListener("click", async() => {
