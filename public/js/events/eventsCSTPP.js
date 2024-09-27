@@ -6,6 +6,10 @@ import { acceptWithEnter,clearInputs, isInvalid, isValid} from "../generalFuncti
 
 //CUSTOMER STUDENTS POPUP (cstpp)
 async function cstppEventListeners() {
+
+    cstppClose.addEventListener("click", async() => {
+        ccstpp.style.display = 'block'
+    })
     
     //add student
     cstppAddStudent.addEventListener("click", async() => {

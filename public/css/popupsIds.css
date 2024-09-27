@@ -262,7 +262,7 @@
     left: calc(50vw - 183px);
 }
 
-/*admisnitrator students popup (astpp)*/
+/*administrator students popup (astpp)*/
 #astppContent{
     top: 4%;
     width: 1300px;
@@ -277,11 +277,18 @@
     left: calc(50vw - 183px);
 }
 
+/*Confirm close stpp*/
+#ccstppContent{
+    top: 25%;
+    width: 400px;
+    left: calc(50vw - 210px);
+}
+
 /*ask for quota popup (afqpp)*/
 #afqppContent{
     top: 32%;
-    width: 300px;
-    left: 1100px;
+    width: 400px;
+    left: 1000px;
     position: relative;
     padding: 5px 0px 20px 15px;
 }

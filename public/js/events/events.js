@@ -17,6 +17,7 @@ import { rqppEventListeners} from "./eventsRQPP.js"
 import { crppEventListeners} from "./eventsCRPP.js"
 import { creppEventListeners} from "./eventsCREPP.js"
 import { coppEventListeners} from "./eventsCOPP.js"
+import { ccstppEventListeners} from "./eventsCCSTPP.js"
 
 window.addEventListener('load',async()=>{
 
@@ -45,8 +46,8 @@ window.addEventListener('load',async()=>{
     crppEventListeners()
     creppEventListeners()
     coppEventListeners()
-          
-    
+    ccstppEventListeners()
+
     //print events
     printEvents(eg.eventsFiltered)
 
@@ -74,7 +75,7 @@ window.addEventListener('load',async()=>{
     printEvents(eg.eventsFiltered)
 
     //close popups
-    let closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, cstppClose,astppClose,dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel]
+    let closePopups = [rqppClose,rqppCancel,crppClose,crppCancel,creppClose, creppCancel, dsppClose,dsppCancel,ssppClose,ssppCancel,ueppClose,ueppCancel,ceppClose,ceppCancel,coppClose,coppCancel,deppClose, deppCancel,ccstppClose, ccstppCancel]
     if (eg.idUserCategories == 4) {
         closePopups.push(afqppClose)
     }

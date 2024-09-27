@@ -6,6 +6,12 @@ import { acceptWithEnter,clearInputs, isInvalid, isValid} from "../generalFuncti
 
 //ADMINISTARTOR STUDENTS POPUP (astpp)
 async function astppEventListeners() {
+
+    astppClose.addEventListener("click", async() => {
+        ccstpp.style.display = 'block'
+    })
+
+
     
     //change company
     const astppCompany = document.getElementById('astppCompany')
