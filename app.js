@@ -20,6 +20,12 @@ const app = express()
 //use public as statis
 app.use(express.static(publicPath))
 
+//don'7 save data in cache
+app.use(express.static('public', {
+    etag: false,
+    maxAge: 0
+  }))
+
 //get forms info as objects
 app.use(bodyParser.json({ limit: '50mb' }))
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }))
