@@ -18,10 +18,10 @@ const apisRoutes = require('./src/routes/apisRoutes.js')
 const app = express()
 
 //use public as statis
-app.use(express.static(publicPath))
+//app.use(express.static(publicPath))
 
-//don'7 save data in cache
-app.use(express.static('public', {
+//use public as statis and don't save data in cache
+app.use(express.static(publicPath, {
     etag: false,
     maxAge: 0
   }))
