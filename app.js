@@ -18,13 +18,7 @@ const apisRoutes = require('./src/routes/apisRoutes.js')
 const app = express()
 
 //use public as statis
-//app.use(express.static(publicPath))
-
-//use public as statis and don't save data in cache
-app.use(express.static(publicPath, {
-    etag: false,
-    maxAge: 0
-  }))
+app.use(express.static(publicPath))
 
 //get forms info as objects
 app.use(bodyParser.json({ limit: '50mb' }))
@@ -33,6 +27,12 @@ app.use(express.json())
 
 //set views folder in src/views
 app.set('views', path.join(__dirname, 'src/views'));
+
+//spanish language
+app.use((req, res, next) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    next();
+});
 
 //set templates extension (ejs)
 app.set('view engine','ejs')
