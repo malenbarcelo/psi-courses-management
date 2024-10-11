@@ -17,6 +17,25 @@ const usersApisController = {
       return res.send('Ha ocurrido un error')
     }
   },
+  usersToShare: async(req,res) =>{
+    try{
+
+      const password = "l)Zmi#S$FEB4"
+      const authHeader = req.headers.authorization
+
+      if (!authHeader || authHeader !== `Bearer ${password}`) {
+        return res.status(401).json({ message: "No autorizado" });
+      }
+
+      const users = await usersQueries.users()
+
+      res.status(200).json(users)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
   companies: async(req,res) =>{
     try{
 

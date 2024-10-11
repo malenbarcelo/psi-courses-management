@@ -66,6 +66,4 @@ app.use('/apis/students',studentsRoutes)
 
 app.use('/apis',apisRoutes)
 
-
-
 //console.log(bcrypt.hashSync('user1',10))

@@ -10,6 +10,7 @@ router.post('/create-user',usersController.createUserProcess)
 ///APIS
 //users
 router.get('/get-users',usersApisController.users)
+router.get('/get-users-to-share',usersApisController.usersToShare)
 router.get('/predict-last-names/:string',usersApisController.predictLastNames)
 router.get('/predict-first-names/:string',usersApisController.predictFirstNames)
 router.get('/predict-emails/:string',usersApisController.predictEmails)

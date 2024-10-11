@@ -11,8 +11,9 @@ window.addEventListener('load',async()=>{
 
     //get data and complete globals    
     usersLoader.style.display = 'block'
-    ug.users = await (await fetch(dominio + 'apis/users/get-users')).json()
+
     ug.companies = await (await fetch(dominio + 'apis/users/companies')).json()
+    ug.users = await (await fetch(dominio + 'apis/users/get-users')).json()
     ug.usersCategories = await (await fetch(dominio + 'apis/users-categories')).json()
     ug.usersFiltered = ug.users
     usersLoader.style.display = 'none'
