@@ -11,6 +11,7 @@ window.addEventListener('load',async()=>{
 
     
     //////////FORGOT PASSWORD
+    
     //click forgot password
     forgotPsw.addEventListener("click", async() => {
         fpppEmail.value = email.value
@@ -74,7 +75,6 @@ window.addEventListener('load',async()=>{
         }
 
     })
-
 
     //////////CHANGE PASSWORD
     //click change password

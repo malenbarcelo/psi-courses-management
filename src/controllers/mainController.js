@@ -20,7 +20,7 @@ const mainController = {
             const resultValidation = validationResult(req)
 
             if (resultValidation.errors.length > 0){
-                console.log(resultValidation)
+                
                 return res.render('login',{
                     errors:resultValidation.mapped(),
                     oldData: req.body,
@@ -46,6 +46,17 @@ const mainController = {
         req.session.destroy()
 
         return res.redirect('/')
+    },
+    customers: (req,res) => {
+        try{
+
+            return res.render('customerPortal',{title:'Portal clientes'})
+
+        }catch(error){
+
+            console.log(error)
+            return res.send('Ha ocurrido un error')
+        }
     },
 }
 

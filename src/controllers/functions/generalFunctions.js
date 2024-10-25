@@ -35,7 +35,19 @@ function transporterData() {
           user: 'administracion@psi-courses-management.wnpower.host', // Tu nombre de usuario
           pass: 'K918;.JWwlq]' // Tu contraseña
         }
-      })
+    })
+
+    // const transporterData = nodemailer.createTransport({
+    //     host: 'l0010657.ferozo.com', // Servidor de correo saliente
+    //     port: 465, // Puerto SMTP
+    //     secure: true, // true para puerto 465, false para otros puertos
+    //     auth: {
+    //       user: 'cursos@psismartservices.com.ar', // Tu nombre de usuario
+    //       pass: 'N**ujCk4hX' // Tu contraseña
+    //     }
+    // })
+
+
 
     return transporterData
 }

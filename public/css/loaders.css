@@ -30,7 +30,7 @@
 
 #loginLoader{
     top: 45%;
-    left: calc(50vw - 20px);
+    left: calc(50vw - 35px);
     z-index: 1;
 }
 
