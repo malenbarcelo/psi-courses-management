@@ -5,7 +5,7 @@ const apisEventsStudentsController = {
   eventCompanyAssignedStudents: async(req,res) =>{
     try{
 
-      const companyId = req.params.companyId
+      const companyId = req.params.idCompany
       const eventId = req.params.eventId      
 
       const assignedStudents = await eventsStudentsQueries.eventCompanyAssignedStudents(companyId,eventId)

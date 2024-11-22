@@ -8,6 +8,13 @@ const usersApisController = {
   users: async(req,res) =>{
     try{
 
+      // const password = "l)Zmi#S$FEB4"
+      // const authHeader = req.headers.authorization
+
+      // if (!authHeader || authHeader !== `Bearer ${password}`) {
+      //   return res.status(401).json({ message: "No autorizado" });
+      // }
+
       const users = await usersQueries.users()
 
       res.status(200).json(users)
@@ -180,29 +187,32 @@ const usersApisController = {
   restorePassword: async(req,res) =>{
     try{
 
-        const user = req.body
+        const data = req.body
+        const user = await usersQueries.findUserByEmail(data.email)
 
-        const password = createPassword()
+        if (user != null) {
+          const password = createPassword()
 
-        //restore password
-        await usersQueries.restorePassword(user.id,password.password)
+          //restore password
+          await usersQueries.restorePassword(user.id,password.password)
 
-        //send email
-        const transporter = transporterData()
+          //send email
+          const transporter = transporterData()
 
-        const mailOptions = {
-          from: 'administracion@psi-courses-management.wnpower.host',
-          to: user.email,
-          subject: 'PSI Smart Services - Recuperación de contraseña',
-          html: `
-          <p style="color:black;">PSI Smart Services le informa que ha restablecido su contraseña: </p>
-          <p style="color:black;"><strong>Usuario:</strong> ${user.email}</p>
-          <p style="color:black;"><strong>Contraseña:</strong> ${password.randomPassword}</p>
-          <p>Puede ingresar a https://psi-courses-management.wnpower.host con sus datos para administrar cursos </p>                
-          `
+          const mailOptions = {
+            from: 'administracion@psi-courses-management.wnpower.host',
+            to: user.email,
+            subject: 'PSI Smart Services - Recuperación de contraseña',
+            html: `
+            <p style="color:black;">PSI Smart Services le informa que ha restablecido su contraseña: </p>
+            <p style="color:black;"><strong>Usuario:</strong> ${user.email}</p>
+            <p style="color:black;"><strong>Contraseña:</strong> ${password.randomPassword}</p>
+            <p>Puede ingresar a https://psi-courses-management.wnpower.host con sus datos para administrar cursos </p>                
+            `
+          }
+
+          await transporter.sendMail(mailOptions)
         }
-
-        await transporter.sendMail(mailOptions)
 
         res.status(200).json()
 
@@ -217,8 +227,11 @@ const usersApisController = {
     try{
 
       const data = req.body
+      const user = await usersQueries.findUserByEmail(data.email)
+      
+      let validation = user ? (bcrypt.compareSync(data.password, user.password) ? true : false) : false
 
-      res.status(200).json(bcrypt.compareSync(data.password, data.user.password))
+      res.status(200).json(validation)
 
     }catch(error){
       console.log(error)
@@ -228,8 +241,9 @@ const usersApisController = {
   changePassword: async(req,res) =>{
     try{
 
-        const user = req.body.user      
+        const email = req.body.email      
         const password = req.body.password
+        const user = await usersQueries.findUserByEmail(email)
 
         //change password
         const newPassword = bcrypt.hashSync(password,10)

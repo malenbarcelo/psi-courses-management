@@ -3,15 +3,12 @@ import { closePopupsEventListeners, isInvalid, inputsValidation, emailValidation
 
 window.addEventListener('load',async()=>{
 
-    let users = await (await fetch(dominio + 'apis/users/get-users')).json()
-
     //close popups
     const closePopups = [fpppClose,fpppCancel,chpppClose,chpppCancel]
     closePopupsEventListeners(closePopups)
 
     
-    //////////FORGOT PASSWORD
-    
+    //////////FORGOT PASSWORD    
     //click forgot password
     forgotPsw.addEventListener("click", async() => {
         fpppEmail.value = email.value
@@ -23,39 +20,13 @@ window.addEventListener('load',async()=>{
     //accept restore password
     fpppAccept.addEventListener("click", async() => {
 
-        const findUser = users.filter(u => u.email == fpppEmail.value)
-
-        fpppEmailError2.style.display = 'none'
-
         let errors = 0
         
-        errors = inputsValidation([fpppEmail])
-        
-        //email validation
         if (errors == 0) {
-            errors = emailValidation(fpppEmail.value)
-            if (errors > 0) {
-                fpppEmailError2.innerText = 'Email inválido'
-                isInvalid([fpppEmail])
-                fpppEmailError.style.display = 'none'
-                fpppEmailError2.style.display = 'block'
+
+            const data = {
+                email: fpppEmail.value
             }
-        }
-
-        //find user
-        if (errors == 0) {
-            if (findUser.length == 0) {
-                errors += 1
-                fpppEmailError2.innerText = 'Usuario inválido'
-                isInvalid([fpppEmail])
-                fpppEmailError.style.display = 'none'
-                fpppEmailError2.style.display = 'block'
-            }
-        }
-
-        if (errors == 0) {
-
-            const data = findUser[0]
 
             loginLoader.style.display = 'block'
 
@@ -65,7 +36,6 @@ window.addEventListener('load',async()=>{
                 body: JSON.stringify(data)
             })
 
-            users = await (await fetch(dominio + 'apis/users/get-users')).json()
             fppp.style.display = 'none'
 
             loginLoader.style.display = 'none'
@@ -93,54 +63,52 @@ window.addEventListener('load',async()=>{
         //validations
         let errors = 0
 
-        const findUser = users.filter(u => u.email == chpppEmail.value)
-
-        //user
-        if (findUser.length == 0) {
+        //all data completed
+        if (chpppEmail.value == '' || chpppPsw.value == '' || chpppNewPsw.value == '' || chpppConfirm.value == '') {
             errors += 1
-            isInvalid([chpppEmail])
+            chpppEmailError.innerText = 'Debe completar todos los datos'
+            chpppPswError.innerText = 'Debe completar todos los datos'
+            chpppNewPswError.innerText = 'Debe completar todos los datos'
+            chpppConfirmError.innerText = 'Debe completar todos los datos'
+            isInvalid([chpppEmail,chpppPsw,chpppNewPsw,chpppConfirm])
         }else{
-            isValid([chpppEmail])
-        }
-
-        //password
-        if (findUser.length > 0) {
 
             const data = {
-                password: chpppPsw.value,
-                user: findUser[0]
+                email:chpppEmail.value,
+                password: chpppPsw.value
             }
-
+    
             const pswValidation = await fetch(dominio + 'apis/users/psw-validation',{
                 method:'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             })
-
+    
             const result = await pswValidation.json()
-
+    
             if (!result) {
                 errors += 1
-                isInvalid([chpppPsw])
+                chpppEmailError.innerText = 'Datos inválidos'
+                chpppPswError.innerText = 'Datos inválidos'
+                isInvalid([chpppPsw,chpppEmail])
+                isValid([chpppNewPsw,chpppConfirm])
             }else{
-                isValid([chpppPsw])
-            }            
+                isValid([chpppPsw,chpppEmail])
+                if (chpppNewPsw.value != chpppConfirm.value) {
+                    errors += 1
+                    chpppNewPswError.innerText = 'Las contraseñas no coinciden'
+                    chpppConfirmError.innerText = 'Las contraseñas no coinciden'
+                    isInvalid([chpppNewPsw,chpppConfirm])
+                }else{
+                    isValid([chpppNewPsw,chpppConfirm])
+                }
+            }
         }
 
-        //new password
-        if (chpppNewPsw.value == '' || chpppConfirm.value == '' || chpppNewPsw.value != chpppConfirm.value) {
-            errors += 1
-            isInvalid([chpppNewPsw,chpppConfirm])
-        }else{
-            isValid([chpppNewPsw,chpppConfirm])
-        }
-
-        //validation
         if (errors == 0) {
-
             const data = {
                 password: chpppNewPsw.value,
-                user: findUser[0]
+                email: chpppEmail.value
             }
 
             await fetch(dominio + 'apis/users/change-password',{
@@ -149,7 +117,6 @@ window.addEventListener('load',async()=>{
                 body: JSON.stringify(data)
             })
 
-            users = await (await fetch(dominio + 'apis/users/get-users')).json()
             chppp.style.display = 'none'
             showOkPopup(chpppOk)
             
