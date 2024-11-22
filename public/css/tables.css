@@ -162,5 +162,10 @@ border-top-right-radius: 15px;
     height: 320px; /*to avoid overflow, it depends on the website landscape*/
 }
 
+#eventsTable{
+    height: 400px; /*to avoid overflow, it depends on the website landscape*/
+}
+
+
 
 
