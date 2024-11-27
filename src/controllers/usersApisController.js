@@ -24,6 +24,18 @@ const usersApisController = {
       return res.send('Ha ocurrido un error')
     }
   },
+  allUsers: async(req,res) =>{
+    try{
+
+      const users = await usersQueries.users()
+
+      res.status(200).json(users)
+
+    }catch(error){
+      console.group(error)
+      return res.send('Ha ocurrido un error')
+    }
+  },
   usersToShare: async(req,res) =>{
     try{
 

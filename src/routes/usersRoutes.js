@@ -12,6 +12,7 @@ router.post('/create-user',admMiddleware, usersController.createUserProcess)
 ///APIS
 //users
 router.get('/get-users', usersApisController.users)
+router.get('/get-all-users', usersApisController.allUsers) //withous bearer
 router.get('/get-users-to-share',usersApisController.usersToShare)
 router.get('/predict-last-names/:string',admMiddleware,usersApisController.predictLastNames)
 router.get('/predict-first-names/:string',admMiddleware,usersApisController.predictFirstNames)
