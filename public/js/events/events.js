@@ -34,7 +34,6 @@ window.addEventListener('load',async()=>{
     
     eg.eventsFiltered = eg.events
     const companies = await (await fetch(dominio + 'apis/users/companies')).json()
-    console.log(companies)
     eg.companies = companies.filter(c => c.company_name != 'PSI Smart Services')
     eg.reservationsPerEventCompany = await (await fetch(dominio + 'apis/quota-reservations/reservations-per-event-company')).json()
     
