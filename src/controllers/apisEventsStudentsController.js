@@ -13,7 +13,7 @@ const apisEventsStudentsController = {
       res.status(200).json(assignedStudents)
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -27,7 +27,7 @@ const apisEventsStudentsController = {
       res.status(200).json(assignedStudents)
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -48,7 +48,7 @@ const apisEventsStudentsController = {
       res.status(200).json()
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -60,7 +60,7 @@ const apisEventsStudentsController = {
       res.status(200).json(studentsPerCourse)
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },

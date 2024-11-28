@@ -25,7 +25,7 @@ router.post('/psw-validation',usersApisController.pswValidation)
 router.post('/change-password',usersApisController.changePassword)
 
 //companies
-router.get('/companies',admMiddleware,usersApisController.companies)
+router.get('/companies',authMiddleware,usersApisController.companies)
 router.post('/companies/create-company',admMiddleware, usersApisController.createCompany)
 router.post('/companies/edit-company',admMiddleware, usersApisController.editCompany)
 

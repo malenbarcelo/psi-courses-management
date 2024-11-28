@@ -15,7 +15,7 @@ const apisCoursesEventsController = {
       res.status(200).json(events)
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -34,7 +34,7 @@ const apisCoursesEventsController = {
       res.status(200).json(nextEvents)
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -47,11 +47,10 @@ const apisCoursesEventsController = {
       events = events.map(event => event.get({ plain: true })) //get plain data to edit json
 
       addEventInformation(events,idCompany)
-
       res.status(200).json(events)
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -71,7 +70,7 @@ const apisCoursesEventsController = {
       res.status(200).json(nextEvents)
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -89,7 +88,7 @@ const apisCoursesEventsController = {
       res.status(200).json()
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
@@ -109,7 +108,7 @@ const apisCoursesEventsController = {
       res.status(200).json()
 
     }catch(error){
-      console.group(error)
+      console.log(error)
       return res.send('Ha ocurrido un error')
     }
   },
