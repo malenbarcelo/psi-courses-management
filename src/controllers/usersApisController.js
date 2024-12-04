@@ -203,10 +203,12 @@ const usersApisController = {
         const user = await usersQueries.findUserByEmail(data.email)
 
         if (user != null) {
-          const password = createPassword()
+
+          const password = user.email.split("@")[0]
+          const passwordHashed = bcrypt.hashSync(password,10)
 
           //restore password
-          await usersQueries.restorePassword(user.id,password.password)
+          await usersQueries.restorePassword(user.id,passwordHashed)
 
           //send email
           const transporter = transporterData()
@@ -218,7 +220,7 @@ const usersApisController = {
             html: `
             <p style="color:black;">PSI Smart Services le informa que ha restablecido su contraseña: </p>
             <p style="color:black;"><strong>Usuario:</strong> ${user.email}</p>
-            <p style="color:black;"><strong>Contraseña:</strong> ${password.randomPassword}</p>
+            <p style="color:black;"><strong>Contraseña:</strong> ${password}</p>
             <p>Puede ingresar a https://psi-courses-management.wnpower.host con sus datos para administrar cursos </p>                
             `
           }
